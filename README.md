@@ -1,9 +1,10 @@
-# 🎓 Plataforma de Cursos Online
+# 🎓 Plataforma web de Cursos
 
 Proyecto Final de la materia **Programación III**
 
-Aplicación web desarrollada con **ASP.NET WebForms**, **C#**, **ADO.NET** y **.NET Framework 4.8**.  
-Permite gestionar cursos, docentes, alumnos e inscripciones dentro de una plataforma educativa.
+## Descripción
+La plataforma permite a los usuarios registrarse como estudiantes o administradores, explorar cursos, inscribirse en ellos y llevar un seguimiento de su progreso.
+Los administradores pueden gestionar cursos, usuarios y visualizar reportes.
 
 ---
 

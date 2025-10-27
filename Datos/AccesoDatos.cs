@@ -10,19 +10,38 @@ namespace Datos
 {
     public class AccesoDatos
     {
-        public List <CategoriaCurso> listar()
+
+        private SqlConnection conexion;
+        private SqlCommand comando;
+        private SqlDataReader lector;
+
+        public SqlDataReader Lector
         {
-            List<CategoriaCurso> lista = new List<CategoriaCurso>();
-            SqlConnection conexion = new SqlConnection();
-            SqlCommand comando = new SqlCommand();
-            SqlDataReader lector;
+            get { return lector; }
+        }
+
+        public AccesoDatos()
+        {
+            conexion = new SqlConnection("server=.\\SQLEXPRESS;database=PLATAFORMACURSO_DB;integrated security=true");
+            comando = new SqlCommand();
+        }
+
+
+        public void setearConsulta(string consulta)
+        {
+            comando.CommandType = System.Data.CommandType.Text;
+            comando.CommandText = consulta;
+        }
+
+
+        public void ejecutarLectura()
+        {
+            comando.Connection = conexion;
 
             try
             {
-                conexion. ConnectionString = "server=.\\SQLEXPRESS;database=PLATAFORMACURSO_DB;integrated security=true";
-
-
-                return lista;
+                conexion.Open();
+                lector = comando.ExecuteReader();
             }
             catch (Exception ex)
             {
@@ -30,6 +49,16 @@ namespace Datos
                 throw ex;
             }
 
+
+        }
+
+        //Cierro la conexion y el lector
+        public void cerrarConexion()
+        {
+            if (lector != null)
+                lector.Close();
+
+            conexion.Close();
         }
     }
 }

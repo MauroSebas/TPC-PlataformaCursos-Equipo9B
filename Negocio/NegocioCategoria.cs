@@ -8,26 +8,27 @@ using Datos;
 
 namespace Negocio
 {
-    public class NegocioCategoriaCurso
+    public class NegocioCategoria
     {
 
-        public List<CategoriaCurso> listar()
+        public List<Categoria> listar()
         {
-            List<CategoriaCurso> lista = new List<CategoriaCurso>();
+            List<Categoria> lista = new List<Categoria>();
             AccesoDatos datos = new AccesoDatos();
 
             try
             {
       
-                datos.setearConsulta("SELECT IDCategoria,NombreCategoria FROM CategoriaCurso");
+                datos.setearConsulta("SELECT CategoriaID,NombreCategoria,EstaActivo FROM Categoria");
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
                 {
               
-                    CategoriaCurso aux = new CategoriaCurso();
-                    aux.Id = (int)datos.Lector["IDCategoria"];
+                    Categoria aux = new Categoria();
+                    aux.Id = (int)datos.Lector["CategoriaID"];
                     aux.Nombre = (string)datos.Lector["NombreCategoria"];
+                    aux.EstaActivo = (bool)datos.Lector["EstaActivo"];
 
                     lista.Add(aux);
                 }

@@ -22,7 +22,7 @@ namespace Datos
 
         public AccesoDatos()
         {
-            conexion = new SqlConnection("server=.\\SQLEXPRESS;database=PLATAFORMACURSO_DB;integrated security=true");
+            conexion = new SqlConnection("server=.\\SQLEXPRESS;database=PlataformaCursosDB;integrated security=true");
             comando = new SqlCommand();
         }
 

@@ -2,7 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="row justify-content-center align-items-center" style="min-height: 60vh;"> <
+    <div class="row justify-content-center align-items-center" style="min-height: 60vh;"> 
     <div class="col-md-6 col-lg-5 col-xl-4"> 
 
         <div class="card shadow-sm border-0 rounded-lg">
@@ -41,9 +41,9 @@
 
                 <div class="text-center mt-4">
                     <span class="text-muted small">¿No tienes una cuenta?</span>
-                    <asp:HyperLink NavigateUrl="~/Registro.aspx" Text="Regístrate" CssClass="fw-semibold text-decoration-none ms-1" runat="server" />
+                    <asp:HyperLink NavigateUrl="Registro.aspx" Text="Regístrate" CssClass="fw-semibold text-decoration-none ms-1" runat="server" />
                 </div>
-
+            
             </div>
         </div>
 

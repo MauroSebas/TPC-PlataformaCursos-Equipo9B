@@ -1,0 +1,81 @@
+﻿/* === IMPORTAR FUENTE MANROPE === */
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap');
+
+/* === VARIABLES CSS GLOBALES === */
+:root {
+    /* Sobrescribimos el color primario de Bootstrap */
+    --bs-primary: #13a4ec;
+    --bs-primary-rgb: 19, 164, 236;
+    /* Ajustamos el borde redondeado por defecto (más redondeado) */
+    --bs-border-radius: 0.5rem;
+    --bs-border-radius-sm: 0.4rem;
+    --bs-border-radius-lg: 0.75rem; /* Más redondeado para cards */
+    --bs-border-radius-xl: 1rem;
+    --bs-border-radius-pill: 50rem;
+}
+
+/* === ESTILOS GLOBALES === */
+body {
+    font-family: 'Manrope', sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn {
+    border-radius: var(--bs-border-radius);
+}
+
+/* === ESTILOS GENERALES PARA TODAS LAS TARJETAS === */
+.card {
+    /* Usamos el borde redondeado más grande que definimos */
+    border-radius: var(--bs-border-radius-lg);
+    /* Quitamos el borde por defecto de Bootstrap */
+    border: none;
+    /* Sombra sutil por defecto (similar a shadow-md de Tailwind) */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    /* Transición suave para el hover (similar a transition-all duration-300) */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    /* Efecto hover para TODAS las tarjetas */
+    .card:hover {
+        /* Se mueve un poco hacia arriba (similar a hover:-translate-y-1) */
+        transform: translateY(-5px);
+        /* Sombra más pronunciada al pasar el mouse (similar a hover:shadow-xl) */
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1) !important;
+    }
+
+
+/* === ARREGLOS PARA EL MODO OSCURO === */
+[data-bs-theme="dark"] {
+    /* Botón "Iniciar Sesión" */
+    .navbar .btn-light
+
+{
+    background-color: var(--bs-secondary-bg) !important;
+    border-color: var(--bs-gray-700) !important;
+    color: var(--bs-light) !important;
+}
+
+.navbar .btn-light:hover {
+    background-color: var(--bs-gray-600) !important;
+    border-color: var(--bs-gray-500) !important;
+}
+
+/* Botón Primario (azul) */
+.navbar .btn-primary {
+    filter: brightness(85%);
+}
+
+/* Tarjetas en modo oscuro */
+.card {
+    /* Usamos una variable de Bootstrap para un fondo oscuro sutil */
+    background-color: var(--bs-dark-bg-subtle);
+    /* Ajustamos la sombra para modo oscuro si es necesario (opcional) */
+     box-shadow: 0 4px 6px -1px rgba(255, 255, 255, 0.05), 0 2px 4px -2px rgba(255, 255, 255, 0.05); 
+}
+
+    /* Sombra hover para tarjetas en modo oscuro (opcional, puede ser la misma) */
+    .card:hover {
+         box-shadow: 0 10px 15px -3px rgba(255, 255, 255, 0.05), 0 4px 6px -4px rgba(255, 255, 255, 0.05) !important; 
+    }
+}

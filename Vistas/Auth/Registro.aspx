@@ -47,14 +47,14 @@
 
                     <div class="d-grid">
                         <%-- El botón que simula el registro y redirige a Loguin --%>
-                        <asp:HyperLink NavigateUrl="~/Loguin.aspx" Text="Registrarse" CssClass="btn btn-primary btn-lg" runat="server" />
+                        <asp:HyperLink NavigateUrl="Loguin.aspx" Text="Registrarse" CssClass="btn btn-primary btn-lg" runat="server" />
                     </div>
 
                     <div class="text-center mt-4">
                         <span class="text-muted small">¿Ya tienes una cuenta?</span>
-                        <asp:HyperLink NavigateUrl="~/Loguin.aspx" Text="Inicia sesión" CssClass="fw-semibold text-decoration-none ms-1" runat="server" />
+                        <asp:HyperLink NavigateUrl="Loguin.aspx" Text="Inicia sesión" CssClass="fw-semibold text-decoration-none ms-1" runat="server" />
                     </div>
-
+               
                 </div>
             </div>
 

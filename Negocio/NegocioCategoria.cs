@@ -26,7 +26,7 @@ namespace Negocio
                 {
               
                     Categoria aux = new Categoria();
-                    aux.Id = (int)datos.Lector["CategoriaID"];
+                    //aux.Id = (int)datos.Lector["CategoriaID"];
                     aux.Nombre = (string)datos.Lector["NombreCategoria"];
                     aux.EstaActivo = (bool)datos.Lector["EstaActivo"];
 

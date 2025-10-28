@@ -13,9 +13,9 @@ namespace Vistas
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            NegocioCategoria negocio = new NegocioCategoria();
-            dgvCategorias.DataSource = negocio.listar();
-            dgvCategorias.DataBind();
+            //NegocioCategoria negocio = new NegocioCategoria();
+            //dgvCategorias.DataSource = negocio.listar();
+            //dgvCategorias.DataBind();
             
         }
     }

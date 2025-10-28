@@ -19,14 +19,15 @@ namespace Negocio
             try
             {
       
-                datos.setearConsulta("SELECT CategoriaID,NombreCategoria,EstaActivo FROM Categoria");
+                datos.setearConsulta("SELECT CategoriaID,NombreCategoria, EstaActivo FROM Categoria;");
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
                 {
               
                     Categoria aux = new Categoria();
-                    //aux.Id = (int)datos.Lector["CategoriaID"];
+
+                    aux.CategoriaID = (int)datos.Lector["CategoriaID"];
                     aux.Nombre = (string)datos.Lector["NombreCategoria"];
                     aux.EstaActivo = (bool)datos.Lector["EstaActivo"];
 

@@ -1,7 +1,9 @@
-﻿<%@ Page Title="Inicio" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="Home.aspx.cs" Inherits="Vistas.Home" %>
+
+<%@ Page Title="Inicio" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="Home.aspx.cs" Inherits="Vistas.Home" %>
 
 
 <asp:Content ID="ContentHead" ContentPlaceHolderID="head" runat="server">
+
 </asp:Content>
 
 

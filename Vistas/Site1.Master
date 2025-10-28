@@ -1,0 +1,175 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site1.master.cs" Inherits="Vistas.Site1" %>
+
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="light">
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Plataforma Cursos</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+
+        <header>
+            <nav class="navbar navbar-expand-lg bg-white border-bottom shadow-sm" id="main-navbar">
+                <div class="container">
+
+                    <a class="navbar-brand d-flex align-items-center" href="~/Home.aspx" runat="server">
+                        <asp:Image runat="server" ID="imgLogo" Height="30" CssClass="me-2" />
+                        <asp:Literal runat="server" ID="litNombrePlataforma" Text="Plataforma LMS" />
+                    </a>
+
+                    <button class="navbar-toggler" type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navbarMenu"
+                        aria-controls="navbarMenu"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarMenu">
+
+                        <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <asp:HyperLink NavigateUrl="~/Home.aspx" Text="Cursos" CssClass="nav-link" runat="server" />
+                            </li>
+                            <li class="nav-item">
+                                <asp:HyperLink NavigateUrl="~/MisCursos.aspx" Text="Mis Cursos" CssClass="nav-link" runat="server" />
+                            </li>
+                            <li class="nav-item">
+                                <asp:HyperLink NavigateUrl="~/Contacto.aspx" Text="Contacto" CssClass="nav-link" runat="server" />
+                            </li>
+                        </ul>
+
+                        <div class="d-flex align-items-center">
+
+                            <a href="#" class="nav-link fs-5 me-3">
+                                <i class="bi bi-cart"></i>
+                            </a>
+
+                            <a href="#" class="nav-link fs-5 me-3" id="theme-toggler">
+                                <i class="bi bi-sun" id="theme-icon"></i> 
+                            </a>
+
+                            <asp:HyperLink NavigateUrl="~/Login.aspx" Text="Iniciar Sesión"
+                                CssClass="btn btn-light me-2" runat="server" />
+                            <asp:HyperLink NavigateUrl="~/Registro.aspx" Text="Registrarse"
+                                CssClass="btn btn-primary" runat="server" />
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <main class="container mt-4">
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </main>
+
+        <footer class="container mt-5 py-4 border-top">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <h5>
+                        <asp:Literal runat="server" ID="litNombrePlataformaFooter" Text="Plataforma LMS" /></h5>
+                    <p class="text-muted">
+                        <asp:Literal runat="server" ID="litSloganFooter" Text="Tu slogan aquí" />
+                    </p>
+                    <p class="text-muted">&copy; <%= DateTime.Now.Year %></p>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <h5>Contacto y Redes</h5>
+                    <ul class="list-unstyled text-small">
+                        <li>Email:
+                            <asp:Literal runat="server" ID="litEmailContacto" Text="contacto@lms.com" /></li>
+                        <li>Tel:
+                            <asp:Literal runat="server" ID="litTelefonoContacto" Text="+54 9 11 123456" /></li>
+                        <li>
+                            <asp:HyperLink runat="server" ID="linkFacebook" NavigateUrl="#" Target="_blank">
+                                <i class="bi bi-facebook fs-4 me-2"></i>
+                            </asp:HyperLink>
+                            <asp:HyperLink runat="server" ID="linkInstagram" NavigateUrl="#" Target="_blank">
+                                <i class="bi bi-instagram fs-4"></i>
+                            </asp:HyperLink>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
+
+    </form>
+    
+    <script type="text/javascript">
+        (function () {
+            'use strict';
+
+            const mainNavbar = document.getElementById('main-navbar');
+            const themeIcon = document.getElementById('theme-icon');
+
+            const getStoredTheme = () => localStorage.getItem('theme');
+            const setStoredTheme = theme => localStorage.setItem('theme', theme);
+
+            // Función de SetTheme actualizada
+            const setTheme = theme => {
+                if (theme === 'dark') {
+                    // 1. Cambia el tema general
+                    document.documentElement.setAttribute('data-bs-theme', 'dark');
+
+                    // 2. Cambia el ícono
+                    if (themeIcon) {
+                        themeIcon.classList.remove('bi-sun');
+                        themeIcon.classList.add('bi-moon');
+                    }
+
+                    // 3. (LA SOLUCIÓN) Cambia las clases del Navbar
+                    if (mainNavbar) {
+                        mainNavbar.classList.remove('bg-white', 'navbar-light');
+                        mainNavbar.classList.add('bg-dark', 'navbar-dark');
+                    }
+                } else {
+                    document.documentElement.setAttribute('data-bs-theme', 'light');
+
+                    if (themeIcon) {
+                        themeIcon.classList.remove('bi-moon');
+                        themeIcon.classList.add('bi-sun');
+                    }
+
+                    if (mainNavbar) {
+                        mainNavbar.classList.remove('bg-dark', 'navbar-dark');
+                        mainNavbar.classList.add('bg-white', 'navbar-light');
+                    }
+                }
+            };
+
+            // 1. APLICAR TEMA AL CARGAR LA PÁGINA
+            const storedTheme = getStoredTheme();
+            const currentTheme = storedTheme ? storedTheme : 'light';
+            setTheme(currentTheme);
+
+            // 2. AGREGAR EL CLICK AL BOTÓN
+            const themeToggler = document.getElementById('theme-toggler');
+
+            if (themeToggler) {
+                themeToggler.addEventListener('click', (event) => {
+                    event.preventDefault();
+
+                    const currentTheme = document.documentElement.getAttribute('data-bs-theme');
+                    const newTheme = (currentTheme === 'light') ? 'dark' : 'light';
+
+                    setStoredTheme(newTheme);
+                    setTheme(newTheme);
+                });
+            }
+
+        })();
+    </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -12,13 +12,11 @@ namespace Dominio
         public string Email { get; set; }
         public string PasswordHash { get; set; } 
         public bool EstaActivo { get; set; } // Baja lógica
-        public string UrlFotoPerfil { get; set; } 
-
         
         public int RolID { get; set; }
         public int EstadoCuentaID { get; set; }
 
-        // --- Propiedades de Navegación (Opcionales) ---
+        // --- Propiedades de Navegación
         public Rol Rol { get; set; } //ADMIN - PARTICIPANTE
         public EstadoCuenta EstadoCuenta { get; set; } //Pendiente - Activo
 

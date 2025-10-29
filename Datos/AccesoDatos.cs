@@ -23,7 +23,6 @@ namespace Datos
 
         public AccesoDatos()
         {
-            // Es mejor leer la cadena de conexión desde Web.config
             string connectionString = ConfigurationManager.ConnectionStrings["ConexionDB"].ConnectionString;
             conexion = new SqlConnection(connectionString);
             comando = new SqlCommand();

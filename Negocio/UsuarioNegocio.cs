@@ -10,8 +10,8 @@ namespace Negocio
 {
     public class UsuarioNegocio
     {
-        // Método para registrar un nuevo usuario
-        public bool RegistrarUsuario(Usuario nuevoUsuario) // Devuelve true si fue exitoso, false si no
+        
+        public bool RegistrarUsuario(Usuario nuevoUsuario) 
         {
             UsuarioDatos datos = new UsuarioDatos();
             try
@@ -20,19 +20,16 @@ namespace Negocio
                 if (datos.BuscarPorEmail(nuevoUsuario.Email) != null)
                 {
                     // El email ya está registrado, no se puede insertar
-                    return false; // Indicamos fallo por email duplicado
+                    return false; 
                 }
 
-                // 2. Hashear la contraseña (¡Necesitas instalar BCrypt.Net-Next!)
-                // Asegúrate de tener: using BCrypt.Net;
-                // Si no has instalado el paquete NuGet:
-                // Click derecho en el proyecto Negocio > Administrar paquetes NuGet > Buscar "BCrypt.Net-Next" > Instalar
-                nuevoUsuario.PasswordHash = BCrypt.Net.BCrypt.HashPassword(nuevoUsuario.PasswordHash); // Sobrescribimos la pass plana con el hash
+                // 2. Hashear la contraseña ( BCrypt.Net-Next)
+                nuevoUsuario.PasswordHash = BCrypt.Net.BCrypt.HashPassword(nuevoUsuario.PasswordHash); // Sobrescribe la pass plana con el hash
 
                 // 3. Establecer valores por defecto (IMPORTANTE: Verifica IDs)
                 // Asumimos RolID 2 = Participante y EstadoCuentaID 1 = Activo (o Pendiente si requiere verificación)
                 nuevoUsuario.RolID = 2; // ID de "Participante"
-                nuevoUsuario.EstadoCuentaID = 1; // ID de "Activo" (o 2 si es "PendienteActivacion")
+                nuevoUsuario.EstadoCuentaID = 2; // ID de "Activo" (o 2 si es "PendienteActivacion")
                 nuevoUsuario.EstaActivo = true; // Por defecto, activo
 
                 // 4. Llamar a la capa de Datos para insertar

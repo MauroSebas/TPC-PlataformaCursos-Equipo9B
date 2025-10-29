@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="Crear Cuenta" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="Registro.aspx.cs" Inherits="Vistas.Registro" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <%-- Estilos específicos si fueran necesarios --%>
+   
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -64,8 +64,8 @@
                         </div>
                     </div>
 
-                </div> <%-- Fin col --%>
-            </div> <%-- Fin row --%>
+                </div>
+            </div> 
         </ContentTemplate>
     </asp:UpdatePanel>
 

@@ -74,12 +74,9 @@
 
     </style>
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <%-- Quitamos el container de la Master Page para usar el ancho completo --%>
-    <%-- NOTA: Esto requiere un ajuste en Site1.Master si quieres que funcione bien --%>
-    <%-- Por ahora, lo dejamos dentro del container normal --%>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">   
 
-    <div class="d-flex flex-grow-1 overflow-hidden" style="height: calc(100vh - 56px - 73px);"> <%-- Altura total menos header y footer (aprox) --%>
+    <div class="d-flex flex-grow-1 overflow-hidden" style="height: calc(100vh - 56px - 73px);"> 
 
         <%-- Sidebar (Aside) --%>
         <aside class="aula-sidebar bg-body-tertiary p-3">
@@ -133,13 +130,13 @@
                         </div>
                     </div>
                 </div>
-                <%-- Puedes agregar más módulos aquí --%>
+                
             </div>
         </aside>
 
         <%-- Contenido Principal (Section) --%>
         <section class="aula-content">
-            <div class="container-fluid"> <%-- Usamos container-fluid para que ocupe el ancho disponible --%>
+            <div class="container-fluid">
 
                 <%-- Video Player --%>
                 <div class="ratio ratio-16x9 mb-4 rounded-3 overflow-hidden shadow-sm">
@@ -161,5 +158,5 @@
             </div>
         </section>
 
-    </div> <%-- Fin d-flex --%>
+    </div> 
 </asp:Content>

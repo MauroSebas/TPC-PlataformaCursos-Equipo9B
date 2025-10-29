@@ -2,8 +2,8 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <%-- Título de la página --%>
-    <div class="my-4 pt-4"> <%-- Margen vertical --%>
+   
+    <div class="my-4 pt-4">
         <h1 class="display-5 fw-bold">Mis Cursos</h1>
         <p class="lead text-muted">¡Hola Julieta! Continúa tu aprendizaje donde lo dejaste.</p>
     </div>

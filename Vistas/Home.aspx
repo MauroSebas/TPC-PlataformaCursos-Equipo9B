@@ -7,10 +7,10 @@
 </asp:Content>
 
 
-<%-- Este es el placeholder para el <main>. Aquí va todo el contenido de tu página. --%>
+
 <asp:Content ID="ContentBody" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-    <%-- 1. SECCIÓN "HERO" (TRADUCIDA A BOOTSTRAP) --%>
+  
     <div class="container my-5 py-5">
         <div class="row align-items-center g-5">
             <div class="col-lg-6 text-center text-lg-start">
@@ -140,8 +140,8 @@
                     </asp:HyperLink>
                 </div>
 
-            </div> <%-- Fin del .row --%>
-        </div> <%-- Fin del .container --%>
-    </div> <%-- Fin del .bg-body-tertiary --%>
+            </div> 
+        </div> 
+    </div> 
 
 </asp:Content>

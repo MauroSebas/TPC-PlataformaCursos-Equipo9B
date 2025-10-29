@@ -26,10 +26,10 @@ namespace Negocio
                 // 2. Hashear la contraseña ( BCrypt.Net-Next)
                 nuevoUsuario.PasswordHash = BCrypt.Net.BCrypt.HashPassword(nuevoUsuario.PasswordHash); // Sobrescribe la pass plana con el hash
 
-                // 3. Establecer valores por defecto (IMPORTANTE: Verifica IDs)
-                // Asumimos RolID 2 = Participante y EstadoCuentaID 1 = Activo (o Pendiente si requiere verificación)
+                // 3. Establecer valores por defecto.
+                //RolID 2 = Participante y EstadoCuentaID 2 = PendienteActivación para que confirme el correo.
                 nuevoUsuario.RolID = 2; // ID de "Participante"
-                nuevoUsuario.EstadoCuentaID = 2; // ID de "Activo" (o 2 si es "PendienteActivacion")
+                nuevoUsuario.EstadoCuentaID = 2; // ID de  "PendienteActivacion"
                 nuevoUsuario.EstaActivo = true; // Por defecto, activo
 
                 // 4. Llamar a la capa de Datos para insertar
@@ -42,10 +42,10 @@ namespace Negocio
             catch (Exception ex)
             {
                 // Loggear el error ex
-                // Considerar lanzar una excepción personalizada si es necesario
-                return false; // Indicamos fallo general
+                // Acá manejar mejor casos de expcepción.
+                return false; 
             }
-            // No necesitamos finally aquí, Datos ya cierra su conexión
+           
         }
     }
 }

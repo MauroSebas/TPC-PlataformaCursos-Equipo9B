@@ -5,15 +5,15 @@
             background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCuRQWZfRPVEnP6kdCoXxcdLIErxFUFJoJ0RyzKFbpHE0dZ7S8oLeErDwFN-V_vv8-zIJqCg_JBNX3FwKIb96kaadWEnD2lnWHhbLEpl1-c4aJciFP3EOCSn0HWVCw7MZbtji0_7WG3rIwZpNvWhyU5FDP4xOJJ5PEnPf1MhB45-NkCpmWtbgme2q8jIT3uWXiMWo7XZc_EUH5YyX6ckZ4hMEGOVpNvQETsP6YtSvs03dHmUxxkrpMlj_j-n-8bgKFvS-7MKk931MY'); /* Imagen del prototipo */
             background-size: cover;
             background-position: center;
-            height: 350px; /* Ajusta la altura como prefieras */
+            height: 350px; 
         }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <%-- 1. Imagen de Encabezado --%>
-    <div class="container px-0 mb-4"> <%-- Container sin padding horizontal para que la imagen ocupe todo --%>
+    <div class="container px-0 mb-4">
         <div class="course-header-image rounded-3 shadow-sm">
-            <%-- La imagen se aplica por CSS --%>
+           
         </div>
     </div>
 
@@ -72,7 +72,7 @@
 
             <%-- Columna Derecha: Sidebar de Compra --%>
             <div class="col-lg-4">
-                <div class="sticky-top" style="top: 80px;"> <%-- position:sticky para que siga al scroll --%>
+                <div class="sticky-top" style="top: 80px;">
                     <div class="card border-0 shadow-sm rounded-lg overflow-hidden">
                         <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeIpC9Xeki8K6ezXauGeZiGg6y4w8QB_FCNA04WrpUgm0dnNq377-nix8YWpzX2AXZd9WUiYqqWHFXfCMzvOTl96K5jxkO2wteKaH3X5s6KClGrFAuNqzW09PutdEDQOVT5aAs-QnSDwKoJg6tck6ohPua0LlCkjPRcT0e2WEVqxb28h4q0WETb36o1dPCF_iqJnjNTCLg4RSwYUYbQjMxtIMziEIMSe7dG3N1kLr1yPriV6-hM9AW8SLwqSORkj7GHmC7CYpHD4A" class="card-img-top" alt="Thumbnail curso">
                         <div class="card-body p-4">
@@ -95,8 +95,8 @@
                         </div>
                     </div>
                 </div>
-            </div> <%-- Fin Columna Derecha --%>
+            </div> 
 
-        </div> <%-- Fin .row --%>
-    </div> <%-- Fin .container --%>
+        </div> 
+    </div> 
 </asp:Content>

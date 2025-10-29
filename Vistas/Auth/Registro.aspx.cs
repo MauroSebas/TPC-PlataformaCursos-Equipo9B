@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Web.UI;
-using Dominio; // <-- Agregá esto para usar la clase Usuario
-using Negocio; // <-- Agregá esto para usar UsuarioNegocio
+using Dominio; 
+using Negocio; 
 
 namespace Vistas
 {
@@ -36,7 +36,7 @@ namespace Vistas
                 nuevoUsuario.Email = txtEmailRegistro.Text.Trim();
                 nuevoUsuario.PasswordHash = txtPasswordRegistro.Text; // Pasa la contraseña plana, Negocio la hashea
 
-                // Llamar a negocio (que ahora setea EstadoCuentaID = 2 por defecto)
+                // Llamar a negocio (setea EstadoCuentaID = 2 por defecto)
                 bool registroExitoso = negocio.RegistrarUsuario(nuevoUsuario);
 
                 if (registroExitoso)
@@ -47,7 +47,7 @@ namespace Vistas
                     txtConfirmPassword.Text = "";
 
                     
-                    //   modal por su ID y usamos el método 'show' de Bootstrap
+                    //   modal por su ID y usa el método 'show' de Bootstrap
                     string script = $@"
                         document.getElementById('{emailUsuarioModal.ClientID}').innerText = '{nuevoUsuario.Email}';
                         var modal = new bootstrap.Modal(document.getElementById('{registroExitosoModal.ClientID}'));
@@ -67,7 +67,7 @@ namespace Vistas
             catch (Exception ex)
             {
                 // Error inesperado -> Mostrar error genérico
-                // Considera loggear el error 'ex' para depuración
+                // Meter log para depuración si se rompe
                 litErrorMessage.Text = "Ocurrió un error inesperado. Por favor, intenta de nuevo más tarde.";
                 pnlError.Visible = true;
             }

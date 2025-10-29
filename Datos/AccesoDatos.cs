@@ -1,19 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.SqlClient;
-using Dominio;
+using System.Configuration;
 
 namespace Datos
 {
     public class AccesoDatos
     {
-
         private SqlConnection conexion;
         private SqlCommand comando;
         private SqlDataReader lector;
+
+        public SqlCommand Comando
+        {
+            get { return comando; }
+        }
+       
 
         public SqlDataReader Lector
         {
@@ -22,10 +23,11 @@ namespace Datos
 
         public AccesoDatos()
         {
-            conexion = new SqlConnection("server=.\\SQLEXPRESS;database=PlataformaCursosDB;integrated security=true");
+            // Es mejor leer la cadena de conexión desde Web.config
+            string connectionString = ConfigurationManager.ConnectionStrings["ConexionDB"].ConnectionString;
+            conexion = new SqlConnection(connectionString);
             comando = new SqlCommand();
         }
-
 
         public void setearConsulta(string consulta)
         {
@@ -33,11 +35,9 @@ namespace Datos
             comando.CommandText = consulta;
         }
 
-
         public void ejecutarLectura()
         {
-            comando.Connection = conexion;
-
+            comando.Connection = conexion; 
             try
             {
                 conexion.Open();
@@ -45,20 +45,35 @@ namespace Datos
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
-
-
         }
 
-        //Cierro la conexion y el lector
+        // --- NUEVO MÉTODO ---
+        // Método para ejecutar INSERT, UPDATE, DELETE o consultas que devuelven un solo valor
+        public int ejecutarAccionScalar()
+        {
+            comando.Connection = conexion; 
+            try
+            {
+                conexion.Open();                
+                return Convert.ToInt32(comando.ExecuteScalar());
+            }
+            catch (Exception ex)
+            {
+                throw ex; 
+            }
+           
+        }
+       
+
+
         public void cerrarConexion()
         {
-            if (lector != null)
+            if (lector != null && !lector.IsClosed) 
                 lector.Close();
-
-            conexion.Close();
+            if (conexion != null && conexion.State == System.Data.ConnectionState.Open) 
+                conexion.Close();
         }
     }
 }

@@ -46,6 +46,7 @@
     <Compile Include="Configuracion.cs" />
     <Compile Include="Curso.cs" />
     <Compile Include="CursoObjetivo.cs" />
+    <Compile Include="EstadoCuenta.cs" />
     <Compile Include="Examen.cs" />
     <Compile Include="Inscripcion.cs" />
     <Compile Include="Leccion.cs" />
@@ -55,6 +56,7 @@
     <Compile Include="Pregunta.cs" />
     <Compile Include="ProgresoLeccion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rol.cs" />
     <Compile Include="Usuario.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -10,10 +10,13 @@ using Negocio;
 namespace Vistas
 {
     public partial class Home : System.Web.UI.Page
-    {
+    {   
+        public List<Categoria>ListaCategoria { get; set;}
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+            NegocioCategoria negocio = new NegocioCategoria();
+            ListaCategoria = negocio.listarConSP();
+
         }
     }
 }

@@ -32,7 +32,7 @@ namespace Negocio
                 nuevoUsuario.EstadoCuentaID = 2; // ID de  "PendienteActivacion"
                 nuevoUsuario.EstaActivo = true; // Por defecto, activo
 
-                // 4. Llamar a la capa de Datos para insertar
+                // 4. capa de Datos para insertar
                 int idGenerado = datos.InsertarNuevo(nuevoUsuario);
 
                 // 5. Verificar si la inserción fue exitosa
@@ -42,7 +42,7 @@ namespace Negocio
             catch (Exception ex)
             {
                 // Loggear el error ex
-                // Acá manejar mejor casos de expcepción.
+                // Acá tengo que manejar mejor las excepciones. 
                 return false; 
             }
            

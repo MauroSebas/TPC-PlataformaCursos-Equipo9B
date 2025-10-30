@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="Contacto.aspx.cs" Inherits="Vistas.Contacto" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -17,7 +18,7 @@
         <div class="col-lg-7">
             <div class="card shadow-sm border-0 rounded-lg">
                 <div class="card-body p-4 p-sm-5">
-                   
+
                     <div class="row g-3 mb-3">
                         <div class="col-md-6">
                             <label for="txtNombreContacto" class="form-label">Nombre Completo</label>
@@ -40,7 +41,7 @@
                     </div>
 
                     <div class="d-grid">
-                        <asp:Button runat="server" ID="btnEnviarMensaje" Text="Enviar Mensaje" CssClass="btn btn-primary btn-lg"  />
+                        <asp:Button runat="server" ID="btnEnviarMensaje" Text="Enviar Mensaje" CssClass="btn btn-primary btn-lg" />
                     </div>
                 </div>
             </div>
@@ -48,7 +49,7 @@
 
         <%-- Columna Derecha: Información de Contacto --%>
         <div class="col-lg-5">
-             <div class="card shadow-sm border-0 rounded-lg h-100">
+            <div class="card shadow-sm border-0 rounded-lg h-100">
                 <div class="card-body p-4 p-sm-5">
                     <h4 class="fw-bold mb-3">Otras formas de contactar</h4>
                     <p class="text-muted mb-4">
@@ -63,26 +64,23 @@
                             </div>
                             <div>
                                 <h6 class="fw-semibold mb-0">Email</h6>
-                                <asp:HyperLink NavigateUrl='mailto:<%= litEmailContacto.Text %>' Text='<%= litEmailContacto.Text %>' ToolTip="Enviar Email" CssClass="text-decoration-none text-muted" runat="server" />
-                              
-                                <asp:Literal runat="server" ID="litEmailContacto" Text="soporte@learnify.com" Visible="false" />
+                                <asp:HyperLink ID="linkEmail" ToolTip="Enviar Email" CssClass="text-decoration-none text-muted" runat="server" />
                             </div>
                         </li>
 
                         <%-- Teléfono --%>
                         <li class="d-flex align-items-start mb-4">
                             <div class="contact-icon-box me-3">
-                                 <i class="bi bi-telephone-fill fs-5"></i>
+                                <i class="bi bi-telephone-fill fs-5"></i>
                             </div>
                             <div>
                                 <h6 class="fw-semibold mb-0">Teléfono</h6>
-                                 <asp:HyperLink NavigateUrl='tel:<%= litTelefonoContacto.Text %>' Text='<%= litTelefonoContacto.Text %>' ToolTip="Llamar" CssClass="text-decoration-none text-muted" runat="server" />
-                                <asp:Literal runat="server" ID="litTelefonoContacto" Text="+34 900 123 456" Visible="false" />
+                                <asp:HyperLink ID="linkTelefono" ToolTip="Llamar" CssClass="text-decoration-none text-muted" runat="server" />
                             </div>
                         </li>
 
                         <%-- Dirección --%>
-                         <li class="d-flex align-items-start">
+                        <li class="d-flex align-items-start">
                             <div class="contact-icon-box me-3">
                                 <i class="bi bi-geo-alt-fill fs-5"></i>
                             </div>
@@ -98,5 +96,5 @@
             </div>
         </div>
 
-    </div> 
+    </div>
 </asp:Content>

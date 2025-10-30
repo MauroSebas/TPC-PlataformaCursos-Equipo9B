@@ -11,11 +11,11 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <%-- 1. Imagen de Encabezado --%>
-    <div class="container px-0 mb-4">
+   <%-- <div class="container px-0 mb-4">
         <div class="course-header-image rounded-3 shadow-sm">
            
         </div>
-    </div>
+    </div>--%>
 
     <%-- 2. Contenido Principal (Título, Descripción, Sidebar) --%>
     <div class="container">
@@ -25,13 +25,13 @@
             <div class="col-lg-8">
 
                 <%-- Breadcrumbs (Migas de Pan) --%>
-                <nav aria-label="breadcrumb" class="mb-3">
+                <%--<nav aria-label="breadcrumb" class="mb-3">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><asp:HyperLink NavigateUrl="~/Home.aspx" Text="Inicio" runat="server" /></li>
                         <li class="breadcrumb-item"><asp:HyperLink NavigateUrl="~/Home.aspx#cursos" Text="Desarrollo" runat="server" /></li>
                         <li class="breadcrumb-item active" aria-current="page">Desarrollo Web</li>
                     </ol>
-                </nav>
+                </nav>--%>
 
                 <%-- Título y Descripción --%>
                 <h1 class="display-5 fw-bold mb-3">Curso Completo de Desarrollo Web: De Cero a Experto</h1>

@@ -26,13 +26,10 @@ body {
 
 /* === ESTILOS GENERALES PARA TODAS LAS TARJETAS === */
 .card {
-    /* Usamos el borde redondeado más grande que definimos */
-    border-radius: var(--bs-border-radius-lg);
-    /* Quitamos el borde por defecto de Bootstrap */
-    border: none;
-    /* Sombra sutil por defecto (similar a shadow-md de Tailwind) */
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
-    /* Transición suave para el hover (similar a transition-all duration-300) */
+    
+    border-radius: var(--bs-border-radius-lg);  
+    border: none;  
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);    
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -49,6 +46,7 @@ body {
 [data-bs-theme="dark"] {
     /* Botón "Iniciar Sesión" */
     .navbar .btn-light
+}
 
 {
     background-color: var(--bs-secondary-bg) !important;
@@ -68,13 +66,11 @@ body {
 
 /* Tarjetas en modo oscuro */
 .card {
-    /* Usamos una variable de Bootstrap para un fondo oscuro sutil */
-    background-color: var(--bs-dark-bg-subtle);
-    /* Ajustamos la sombra para modo oscuro si es necesario (opcional) */
+    
+    background-color: var(--bs-dark-bg-subtle);    
      box-shadow: 0 4px 6px -1px rgba(255, 255, 255, 0.05), 0 2px 4px -2px rgba(255, 255, 255, 0.05); 
 }
 
-    /* Sombra hover para tarjetas en modo oscuro (opcional, puede ser la misma) */
     .card:hover {
          box-shadow: 0 10px 15px -3px rgba(255, 255, 255, 0.05), 0 4px 6px -4px rgba(255, 255, 255, 0.05) !important; 
     }

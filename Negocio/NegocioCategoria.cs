@@ -55,7 +55,7 @@ namespace Negocio
 
             try
             {
-                datos.setearConSP("sp_Listar");
+                datos.setearConSP("sp_Categoria_ListarActivas");
                 datos.ejecutarLectura();
                 while (datos.Lector.Read())
                 {

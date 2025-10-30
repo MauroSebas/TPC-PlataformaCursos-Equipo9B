@@ -15,15 +15,6 @@ namespace Vistas
     {
 
         /// <summary>
-        /// Control upRegistro.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel upRegistro;
-
-        /// <summary>
         /// Control pnlError.
         /// </summary>
         /// <remarks>
@@ -76,6 +67,15 @@ namespace Vistas
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnRegistrarse;
+
+        /// <summary>
+        /// Control litScriptModal.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litScriptModal;
 
         /// <summary>
         /// Control registroExitosoModal.

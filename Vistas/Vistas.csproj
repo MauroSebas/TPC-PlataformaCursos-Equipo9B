@@ -69,6 +69,7 @@
   <ItemGroup>
     <Content Include="Assets\css\styles.css" />
     <Content Include="Assets\js\main.js" />
+    <Content Include="Assets\js\togglePassword.js" />
     <Content Include="Aula.aspx" />
     <Content Include="Contacto.aspx" />
     <Content Include="CursoDetalle.aspx" />

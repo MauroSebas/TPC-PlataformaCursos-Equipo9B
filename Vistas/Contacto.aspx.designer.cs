@@ -60,22 +60,22 @@ namespace Vistas
         protected global::System.Web.UI.WebControls.Button btnEnviarMensaje;
 
         /// <summary>
-        /// Control litEmailContacto.
+        /// Control linkEmail.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litEmailContacto;
+        protected global::System.Web.UI.WebControls.HyperLink linkEmail;
 
         /// <summary>
-        /// Control litTelefonoContacto.
+        /// Control linkTelefono.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litTelefonoContacto;
+        protected global::System.Web.UI.WebControls.HyperLink linkTelefono;
 
         /// <summary>
         /// Control litDireccion.

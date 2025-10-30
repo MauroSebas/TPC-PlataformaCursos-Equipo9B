@@ -11,6 +11,22 @@ namespace Vistas
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            {
+               
+                string emailSoporte = "soporte@learnify.com";
+                string telefonoSoporte = "+34 900 123 456";
+
+                
+                linkEmail.Text = emailSoporte;
+                linkEmail.NavigateUrl = "mailto:" + emailSoporte;
+
+                
+                linkTelefono.Text = telefonoSoporte;
+                linkTelefono.NavigateUrl = "tel:" + telefonoSoporte;
+
+                
+            }
 
         }
     }

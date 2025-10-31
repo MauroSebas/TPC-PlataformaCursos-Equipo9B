@@ -52,7 +52,7 @@ namespace Datos
                     Usuario user = new Usuario();
                     user.UsuarioID = (int)datos.Lector["UsuarioID"];
                     user.Email = (string)datos.Lector["Email"];
-                    // PasswordHash, puede ser DBNull -- Para futuro agregar loguin externos como Gmail.
+                    // PasswordHash, puede ser DBNull -- Para futuro agregar login externos como Gmail.
                     user.PasswordHash = datos.Lector["PasswordHash"] is DBNull ? null : (string)datos.Lector["PasswordHash"];
                     user.RolID = (int)datos.Lector["RolID"];
                     user.EstadoCuentaID = (int)datos.Lector["EstadoCuentaID"];

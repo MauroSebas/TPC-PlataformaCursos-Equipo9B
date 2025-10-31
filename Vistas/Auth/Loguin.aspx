@@ -31,9 +31,9 @@
                 </div>
 
                 <div class="d-flex justify-content-end mb-4">
-                    <asp:HyperLink NavigateUrl="#" Text="¿Olvidaste tu contraseña?" CssClass="small text-decoration-none" runat="server" />
+                    <asp:HyperLink NavigateUrl="RecuperarContraseña.aspx" Text="¿Olvidaste tu contraseña?" CssClass="small text-decoration-none" runat="server" />
                 </div>
-
+               
                 <div class="d-grid">
                     
                     <asp:HyperLink NavigateUrl="~/MisCursos.aspx" Text="Iniciar Sesión" CssClass="btn btn-primary btn-lg" runat="server" />

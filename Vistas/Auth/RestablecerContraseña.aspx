@@ -65,15 +65,12 @@
 
                 </div>
             </div>
-
         </div>
     </div>
 
     <script src="../Assets/js/togglePassword.js"></script>
-    <script type="text/javascript">
-        // Lógica para los ojitos (asumiendo que tu JS está en Assets/js/togglePassword.js)
-        document.addEventListener('DOMContentLoaded', function () {
-            // Revisa el archivo togglePassword.js para asegurarte que la función acepte selectores
+    <script type="text/javascript">   
+        document.addEventListener('DOMContentLoaded', function () {            
             togglePassword('#btnShowNuevaPassword', '#<%= txtNuevaPassword.ClientID %>');
             togglePassword('#btnShowConfirmacionPassword', '#<%= txtConfirmacionPassword.ClientID %>');
         });

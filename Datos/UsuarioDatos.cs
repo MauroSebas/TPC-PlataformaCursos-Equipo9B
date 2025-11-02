@@ -27,7 +27,7 @@ namespace Datos
             }
             catch (Exception ex)
             {
-                // tengo que loguear el error acá -- No olvidarme.             
+                Console.WriteLine(ex);             
                 return -1; // Indica error
             }
             finally

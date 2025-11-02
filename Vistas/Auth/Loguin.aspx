@@ -15,15 +15,15 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="txtEmail" class="form-label">Email o Nombre de Usuario</label>
-                    <asp:TextBox runat="server" ID="txtEmail" type="email" CssClass="form-control form-control-lg" placeholder="Ingresa tu email o nombre de usuario" Text="julieta.prandi@lms.com" />
+                    <label for="txtEmail" class="form-label">Email</label>
+                    <asp:TextBox runat="server" ID="txtEmail" type="email" CssClass="form-control form-control-lg" placeholder="Ingresa tu email" Text="" />
                 </div>
 
                 <div class="mb-3">
                     <label for="txtPassword" class="form-label">Contraseña</label>
                     
                     <div class="input-group input-group-lg">
-                        <asp:TextBox runat="server" ID="txtPassword" type="password" CssClass="form-control" placeholder="Ingresa tu contraseña" Text="********" />
+                        <asp:TextBox runat="server" ID="txtPassword" type="password" CssClass="form-control" placeholder="Ingresa tu contraseña" Text="" />
                         <button class="btn btn-outline-secondary" type="button" id="togglePassword">
                             <i class="bi bi-eye"></i>
                         </button>

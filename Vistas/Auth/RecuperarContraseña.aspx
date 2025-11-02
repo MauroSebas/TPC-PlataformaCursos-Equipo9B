@@ -33,7 +33,7 @@
                         </div>
 
                         <div class="d-grid">
-                            <asp:Button runat="server" ID="btnRestablecer" Text="Restablecer Contraseña" CssClass="btn btn-primary btn-lg" ValidationGroup="RecuperarGroup" />
+                            <asp:Button runat="server" ID="btnRestablecer" Text="Restablecer Contraseña" OnClick="btnRestablecer_Click" CssClass="btn btn-primary btn-lg" ValidationGroup="RecuperarGroup" />
                         </div>
                     </asp:Panel>
                     

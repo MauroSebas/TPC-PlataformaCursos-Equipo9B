@@ -75,6 +75,7 @@
     <Content Include="Auth\RestablecerContraseña.aspx" />
     <Content Include="Contacto.aspx" />
     <Content Include="CursoDetalle.aspx" />
+    <Content Include="GestionCursos.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Home.aspx" />
     <Content Include="Auth\Loguin.aspx" />
@@ -83,6 +84,13 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminPanel.Master.cs">
+      <DependentUpon>AdminPanel.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminPanel.Master.designer.cs">
+      <DependentUpon>AdminPanel.Master</DependentUpon>
+    </Compile>
     <Compile Include="Aula.aspx.cs">
       <DependentUpon>Aula.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -117,6 +125,13 @@
     </Compile>
     <Compile Include="CursoDetalle.aspx.designer.cs">
       <DependentUpon>CursoDetalle.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="GestionCursos.aspx.cs">
+      <DependentUpon>GestionCursos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GestionCursos.aspx.designer.cs">
+      <DependentUpon>GestionCursos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -159,6 +174,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AdminPanel.Master" />
     <None Include="packages.config" />
     <Content Include="Site1.Master" />
     <None Include="Web.Debug.config">

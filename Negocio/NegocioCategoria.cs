@@ -10,7 +10,6 @@ namespace Negocio
 {
     public class NegocioCategoria
     {
-
         public List<Categoria> listar()
         {
             List<Categoria> lista = new List<Categoria>();
@@ -18,13 +17,13 @@ namespace Negocio
 
             try
             {
-      
+
                 datos.setearConsulta("SELECT CategoriaID,NombreCategoria, EstaActivo FROM Categoria;");
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
                 {
-              
+
                     Categoria aux = new Categoria();
 
                     aux.CategoriaID = (int)datos.Lector["CategoriaID"];
@@ -62,7 +61,7 @@ namespace Negocio
 
                     Categoria aux = new Categoria();
 
-                    aux.CategoriaID = (int)datos.Lector["CategoriaID"];
+                    aux.Id = (int)datos.Lector["CategoriaID"];
                     aux.Nombre = (string)datos.Lector["NombreCategoria"];
                     aux.EstaActivo = (bool)datos.Lector["EstaActivo"];
 
@@ -81,6 +80,35 @@ namespace Negocio
                 datos.cerrarConexion();
             }
 
+        }
+
+        public void agregarConSP(Categoria nuevo)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConSP("sp_AltaCategoria");
+                datos.setearParametro("@nombre", nuevo.Nombre);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public Categoria filtrarSP(int id)
+        {
+            Categoria cat = new Categoria();
+            NegocioCategoria negocio = new NegocioCategoria();
+
+
+            
+            return cat;
         }
 
     }

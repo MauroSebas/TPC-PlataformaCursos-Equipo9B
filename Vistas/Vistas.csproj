@@ -73,6 +73,7 @@
     <Content Include="Aula.aspx" />
     <Content Include="Auth\RecuperarContraseña.aspx" />
     <Content Include="Auth\RestablecerContraseña.aspx" />
+    <Content Include="CategoriaEditarEliminar.aspx" />
     <Content Include="CategoriaGestion.aspx" />
     <Content Include="Contacto.aspx" />
     <Content Include="CursoDetalle.aspx" />
@@ -104,6 +105,13 @@
     </Compile>
     <Compile Include="Auth\RestablecerContraseña.aspx.designer.cs">
       <DependentUpon>RestablecerContraseña.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CategoriaEditarEliminar.aspx.cs">
+      <DependentUpon>CategoriaEditarEliminar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CategoriaEditarEliminar.aspx.designer.cs">
+      <DependentUpon>CategoriaEditarEliminar.aspx</DependentUpon>
     </Compile>
     <Compile Include="CategoriaGestion.aspx.cs">
       <DependentUpon>CategoriaGestion.aspx</DependentUpon>

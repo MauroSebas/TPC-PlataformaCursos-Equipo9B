@@ -20,16 +20,16 @@
     <asp:TextBox ID="txtFiltro" runat="server"></asp:TextBox>
 
 
-    <asp:GridView ID="dgvCategorias" runat="server"  CssClass="table table-hover" AutoGenerateColumns="false">
+    <asp:GridView ID="dgvCategorias" DataKeyNames="Id" OnSelectedIndexChanged="dgvCategorias_SelectedIndexChanged" runat="server" CssClass="table table-hover" AutoGenerateColumns="false">
         <Columns>
             <asp:BoundField HeaderText="Nombre" DataField="Nombre" />
             <asp:BoundField HeaderText="Cantidad de Cursos" DataField="" />
-            <asp:ButtonField HeaderText="Acciones"  />
+            <asp:CommandField ShowSelectButton="true" SelectText="Seleccionar" HeaderText="Accion" />
         </Columns>
     </asp:GridView>
 
-    
-    <!-- Modal -->
+
+    <!-- Modal Agregar -->
     <div class="modal fade" id="modalAgregar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -37,12 +37,12 @@
                     <h1 class="modal-title fs-5" id="staticBackdropLabel">Nueva Categoria</h1>
                 </div>
                 <div class="modal-body">
-                    <asp:Label ID="lblAgregar" runat="server" Text="Nombre: "></asp:Label>
-                    <asp:TextBox ID="txtAgregar" runat="server"></asp:TextBox>
+                    <asp:Label ID="lblNombre" runat="server" Text="Nombre: "></asp:Label>
+                    <asp:TextBox ID="txtNombre" runat="server"></asp:TextBox>
                 </div>
                 <div class="modal-footer">
-                    <asp:Button ID="btnCancelar" runat="server" Text="Cancelar" OnClick="btnCancelar_Click"/>
-                    <asp:Button ID="btnAgregarCategoria" runat="server" Text="Agregar" class="btn btn-primary" OnClick="btnAgregarCategoria_Click"/>
+                    <asp:Button ID="btnCancelar" runat="server" Text="Cancelar" OnClick="btnCancelar_Click" />
+                    <asp:Button ID="btnAgregarCategoria" runat="server" Text="Agregar" class="btn btn-primary" OnClick="btnAgregarCategoria_Click" />
                 </div>
             </div>
         </div>

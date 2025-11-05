@@ -73,16 +73,27 @@
     <Content Include="Aula.aspx" />
     <Content Include="Auth\RecuperarContraseña.aspx" />
     <Content Include="Auth\RestablecerContraseña.aspx" />
+    <Content Include="Categorias.aspx" />
     <Content Include="Contacto.aspx" />
     <Content Include="CursoDetalle.aspx" />
+    <Content Include="GestionCursos.aspx" />
+    <Content Include="GestionUsuarios.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Home.aspx" />
     <Content Include="Auth\Loguin.aspx" />
     <Content Include="MisCursos.aspx" />
     <Content Include="Auth\Registro.aspx" />
     <Content Include="Web.config" />
+    <Content Include="Dashboard.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminPanel.Master.cs">
+      <DependentUpon>AdminPanel.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminPanel.Master.designer.cs">
+      <DependentUpon>AdminPanel.Master</DependentUpon>
+    </Compile>
     <Compile Include="Aula.aspx.cs">
       <DependentUpon>Aula.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -104,6 +115,13 @@
     <Compile Include="Auth\RestablecerContraseña.aspx.designer.cs">
       <DependentUpon>RestablecerContraseña.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Categorias.aspx.cs">
+      <DependentUpon>Categorias.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Categorias.aspx.designer.cs">
+      <DependentUpon>Categorias.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Contacto.aspx.cs">
       <DependentUpon>Contacto.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -117,6 +135,20 @@
     </Compile>
     <Compile Include="CursoDetalle.aspx.designer.cs">
       <DependentUpon>CursoDetalle.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="GestionCursos.aspx.cs">
+      <DependentUpon>GestionCursos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GestionCursos.aspx.designer.cs">
+      <DependentUpon>GestionCursos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="GestionUsuarios.aspx.cs">
+      <DependentUpon>GestionUsuarios.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GestionUsuarios.aspx.designer.cs">
+      <DependentUpon>GestionUsuarios.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -157,8 +189,16 @@
     <Compile Include="Site1.Master.designer.cs">
       <DependentUpon>Site1.Master</DependentUpon>
     </Compile>
+    <Compile Include="Dashboard.aspx.cs">
+      <DependentUpon>Dashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Dashboard.aspx.designer.cs">
+      <DependentUpon>Dashboard.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AdminPanel.Master" />
     <None Include="packages.config" />
     <Content Include="Site1.Master" />
     <None Include="Web.Debug.config">

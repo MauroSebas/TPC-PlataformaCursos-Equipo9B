@@ -28,7 +28,7 @@ namespace Vistas
         {
             var id = dgvCategorias.SelectedDataKey.Value.ToString();
 
-            Response.Redirect("CategoriaEditarEliminar.aspx?Id+" + id);
+            Response.Redirect("CategoriaEliminarEditar.aspx?id=" + id);
             
         }
 

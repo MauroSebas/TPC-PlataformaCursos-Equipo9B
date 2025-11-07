@@ -80,7 +80,7 @@
                             <div class="d-grid gap-2">
                                 <asp:Button runat="server" ID="btnAgregarCarrito" Text="Añadir al Carrito" CssClass="btn btn-primary btn-lg" />
                                 <%-- Simulamos que "Comprar" te lleva a Mis Cursos (como si ya estuvieras logueado) --%>
-                                <asp:HyperLink NavigateUrl="~/MisCursos.aspx" Text="Comprar Curso" CssClass="btn btn-outline-primary btn-lg" runat="server" />
+                                <asp:HyperLink NavigateUrl="~/Transaccion/ProcesoPago.aspx" Text="Comprar Curso" CssClass="btn btn-outline-primary btn-lg" runat="server" />
                             </div>
 
                             <hr class="my-4">

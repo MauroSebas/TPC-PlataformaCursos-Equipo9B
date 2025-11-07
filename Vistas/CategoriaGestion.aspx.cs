@@ -38,6 +38,7 @@ namespace Vistas
             Categoria nueva = new Categoria();
             nueva.Nombre = txtNombre.Text;
             negocio.agregarConSP(nueva);
+            Response.Redirect("CategoriaGestion.aspx");
 
         }
     }

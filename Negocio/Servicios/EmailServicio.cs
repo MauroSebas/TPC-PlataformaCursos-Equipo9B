@@ -5,8 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Configuration; // Necesario para ConfigurationManager (leer Web.config)
-using MailKit.Net.Smtp;    // Para la conexión SMTP
+using System.Configuration; 
+using MailKit.Net.Smtp;   
 
 namespace Negocio.Servicios
 {

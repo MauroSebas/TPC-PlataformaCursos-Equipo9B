@@ -10,8 +10,8 @@ namespace Dominio
 
     public class Pago
     {
-        public int PagoID { get; set; }
-        public int InscripcionID { get; set; }
+        public int Id { get; set; }
+        public Inscripcion Inscripcion { get; set; }
         public decimal Monto { get; set; }
         public string MetodoPago { get; set; }
         public string Estado { get; set; }

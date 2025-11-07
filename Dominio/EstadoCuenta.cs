@@ -8,7 +8,7 @@ namespace Dominio
 {
     public class EstadoCuenta
     {
-        public int EstadoCuentaID { get; set; }
+        public int Id { get; set; }
         public string NombreEstado { get; set; }
     }
 }

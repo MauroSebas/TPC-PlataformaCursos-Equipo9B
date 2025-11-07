@@ -9,9 +9,10 @@ namespace Dominio
 {
     public class Modulo
     {
-        public int ModuloID { get; set; }
-        public int CursoID { get; set; }
-        public string NombreModulo { get; set; }
+        public int Id { get; set; }
+        public Curso Curso { get; set; }
+        public List<Leccion> Lecciones { get; set; }
+        public string Nombre { get; set; }
         public int Orden { get; set; }
         public bool EstaActivo { get; set; }
     }

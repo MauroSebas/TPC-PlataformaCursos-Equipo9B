@@ -8,7 +8,7 @@ namespace Dominio
 {
     public class Rol
     {
-        public int RolID { get; set; }
+        public int Id { get; set; }
         public string NombreRol { get; set; }
     }
 }

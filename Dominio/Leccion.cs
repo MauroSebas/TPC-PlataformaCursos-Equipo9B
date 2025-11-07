@@ -12,7 +12,7 @@ namespace Dominio
         public Modulo Modulo { get; set; }
         public string Titulo { get; set; }
         public string TipoMaterial { get; set; }
-        public string URLRecurso { get; set; }
+        public string UrlRecurso { get; set; }
         public bool EstaActivo { get; set; }
 
     }

@@ -8,9 +8,9 @@ namespace Dominio
 {
     public class ProgresoLeccion
     {
-        public int ProgresoID { get; set; }
-        public int InscripcionID { get; set; }
-        public int LeccionID { get; set; }
+        public int Id { get; set; }
+        public Inscripcion Inscripcion { get; set; }
+        public Leccion Leccion{ get; set; }
         public bool Completada { get; set; }
     }
 }

@@ -9,17 +9,18 @@ namespace Dominio
 {
     public class Curso
     {
-        public int CursoID { get; set; }
+        public int Id { get; set; }
         public string Titulo { get; set; }
-        public string Descripcion { get; set; }
-        public float Precio { get; set; }
+        public string Descripcion { get; set; }//TextArea
         public string UrlImagenPortada { get; set; }
-        public string ModalidadPago { get; set; }
-        public int DuracionAccesoDias { get; set; }
-        public bool Publicado { get; set; }
-        public int CategoriaID { get; set; }
-        public string NivelDificultad { get; set; }
-        public string Idioma { get; set; }
+        public  List<Modulo> Modulos { get; set; }
+        public string ModalidadPago { get; set; }//DropDownList Transferencia / Otra
+        public int DuracionAccesoDias { get; set; }// DropDownList
+        public bool Publicado { get; set; } //Calendar
+        public Categoria Categoria { get; set; }//ComboBox
+        public decimal Precio { get; set; }
+        public string NivelDificultad { get; set; } //DropDownList
+        public string Idioma { get; set; }//ComboBox
         public bool EstaActivo { get; set; }
         public string PrecioFormateado
         {

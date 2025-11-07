@@ -8,8 +8,8 @@ namespace Dominio
 {
     public class Certificado
     {
-        public int CertificadoID { get; set; }
-        public int InscripcionID { get; set; }
+        public int Id { get; set; }
+        public Inscripcion Inscripcion { get; set; }
         public DateTime FechaEmision { get; set; }
         public string CodigoValidacion { get; set; }
 

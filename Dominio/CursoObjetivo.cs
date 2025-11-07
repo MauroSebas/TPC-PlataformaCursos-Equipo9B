@@ -8,9 +8,9 @@ namespace Dominio
 {
     public class CursoObjetivo
     {
-        public int ObjetivoID { get; set; }
-        public int CursoID {get;set;}
-        public string Descriocion { get; set; }
+        public int Id { get; set; }
+        public Curso Curso {get;set;}
+        public string Descripcion { get; set; }
 
     }
 }

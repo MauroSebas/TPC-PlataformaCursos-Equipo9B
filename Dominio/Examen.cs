@@ -9,8 +9,8 @@ namespace Dominio
 
     public class Examen
     {
-        public int ExamenID { get; set; }
-        public int LeccionID { get; set; }
+        public int Id { get; set; }
+        public Leccion Leccion { get; set; }
         public int LimiteIntentos { get; set; }
         public int LimiteTiempoMinutos { get; set; }
         public bool HabilitacionCondicional { get; set; }

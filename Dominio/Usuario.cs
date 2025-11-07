@@ -12,7 +12,6 @@ namespace Dominio
         public string Email { get; set; }
         public string PasswordHash { get; set; } 
         public bool EstaActivo { get; set; } // Baja lógica
-        
         public int RolID { get; set; }
         public int EstadoCuentaID { get; set; }
 

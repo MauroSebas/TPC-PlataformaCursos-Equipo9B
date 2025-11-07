@@ -73,8 +73,7 @@
     <Content Include="Aula.aspx" />
     <Content Include="Auth\RecuperarContraseña.aspx" />
     <Content Include="Auth\RestablecerContraseña.aspx" />
-    <Content Include="CategoriaEliminarEditar.aspx" />
-    <Content Include="CategoriaGestion.aspx" />
+    <Content Include="Categorias.aspx" />
     <Content Include="Contacto.aspx" />
     <Content Include="CursoDetalle.aspx" />
     <Content Include="GestionCursos.aspx" />
@@ -116,19 +115,12 @@
     <Compile Include="Auth\RestablecerContraseña.aspx.designer.cs">
       <DependentUpon>RestablecerContraseña.aspx</DependentUpon>
     </Compile>
-    <Compile Include="CategoriaEliminarEditar.aspx.cs">
-      <DependentUpon>CategoriaEliminarEditar.aspx</DependentUpon>
+    <Compile Include="Categorias.aspx.cs">
+      <DependentUpon>Categorias.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="CategoriaEliminarEditar.aspx.designer.cs">
-      <DependentUpon>CategoriaEliminarEditar.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="CategoriaGestion.aspx.cs">
-      <DependentUpon>CategoriaGestion.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="CategoriaGestion.aspx.designer.cs">
-      <DependentUpon>CategoriaGestion.aspx</DependentUpon>
+    <Compile Include="Categorias.aspx.designer.cs">
+      <DependentUpon>Categorias.aspx</DependentUpon>
     </Compile>
     <Compile Include="Contacto.aspx.cs">
       <DependentUpon>Contacto.aspx</DependentUpon>

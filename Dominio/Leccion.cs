@@ -8,11 +8,11 @@ namespace Dominio
 {
     public class Leccion
     {
-        public int Id { get; set; }
-        public Modulo Modulo { get; set; }
+        public int LeccionID { get; set; }
+        public int ModuloID { get; set; }
         public string Titulo { get; set; }
         public string TipoMaterial { get; set; }
-        public string URLRecurso { get; set; }
+        public string URLCurso { get; set; }
         public bool EstaActivo { get; set; }
 
     }

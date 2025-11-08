@@ -1,12 +1,9 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="MisCursos.aspx.cs" Inherits="Vistas.MisCursos" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Alumno.Master" AutoEventWireup="true" CodeBehind="MisCursos.aspx.cs" Inherits="Vistas.MisCursos" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
    
-    <div class="my-4 pt-4">
-        <h1 class="display-5 fw-bold">Mis Cursos</h1>
-        <p class="lead text-muted">¡Hola Julieta! Continúa tu aprendizaje donde lo dejaste.</p>
-    </div>
+   
 
     <%-- Grilla de Cursos del Usuario --%>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4 mb-5">
@@ -70,7 +67,7 @@
                     <div class="mt-auto pt-3">
                          <div class="d-flex justify-content-between small mb-1">
                             <span class="text-muted">Progreso</span>
-                            <span class="fw-medium text-success">100% Completado</span> <
+                            <span class="fw-medium text-success">100% Completado</span> 
                         </div>
                         <div class="progress" role="progressbar" aria-label="Progreso del curso" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="height: 8px;">
                             <div class="progress-bar bg-success" style="width: 100%;"></div> 

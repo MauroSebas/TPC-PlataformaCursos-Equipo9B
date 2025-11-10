@@ -44,9 +44,7 @@ namespace Negocio
                 // Loggear el error ex
                 // Acá tengo que manejar mejor las excepciones. 
                 return false; 
-            }
-           
+            }          
         }
-
     }
 }

@@ -1,6 +1,40 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Administrador.Master" AutoEventWireup="true" CodeBehind="CursoForm.aspx.cs" Inherits="Vistas.Aministrador.CursoForm" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
+<style>
+    body {
+        /* Fuente personalizada del diseño original */
+        font-family: 'Lexend', sans-serif;
+        /* bg-body-tertiary es el gris claro de Bootstrap */
+        background-color: var(--bs-body-tertiary);
+    }
+
+    .material-symbols-outlined {
+        vertical-align: middle;
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+
+    /* Tamaño fijo del avatar (size-10 de Tailwind -> 2.5rem/40px) */
+    .avatar {
+        width: 40px;
+        height: 40px;
+    }
+    /* Estilos para el campo de subida de archivos */
+    .file-drop-zone {
+        border: 2px dashed var(--bs-border-color);
+        transition: border-color 0.15s ease-in-out, background-color 0.15s ease-in-out;
+    }
+
+    .file-drop-zone:hover {
+        border-color: var(--bs-primary);
+        background-color: var(--bs-tertiary-bg);
+    }
+    /* Estilos para el switch 'Publicado' */
+    .form-switch .form-check-input {
+        width: 2.75em; /* w-11 */
+        height: 1.5em; /* h-6 */
+    }
+</style>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">

@@ -1,6 +1,24 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Administrador.Master" AutoEventWireup="true" CodeBehind="PagosPanel.aspx.cs" Inherits="Vistas.Aministrador.PagosPanel" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
+    <style>
+        body {
+            /* Fuente personalizada del diseño original */
+            font-family: 'Inter', sans-serif;
+            /* bg-body-tertiary es el gris claro de Bootstrap */
+            background-color: var(--bs-body-tertiary);
+        }
+        .material-symbols-outlined {
+            vertical-align: middle;
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Ancho fijo del sidebar (w-64 de Tailwind -> 16rem) */
+        .sidebar {
+            width: 16rem;
+            min-height: 100vh;
+        }
+    </style>
+
 </asp:Content>
 
 

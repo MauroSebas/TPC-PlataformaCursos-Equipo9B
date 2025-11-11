@@ -1,0 +1,25 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Dominio
+{
+    public class Usuario
+    {
+        public int UsuarioID { get; set; }
+        public string Email { get; set; }
+        public string PasswordHash { get; set; } 
+        public bool EstaActivo { get; set; } // Baja lógica
+        public int RolID { get; set; }
+        public int EstadoCuentaID { get; set; }
+
+        public Rol Rol { get; set; } //ADMIN - PARTICIPANTE
+        public EstadoCuenta EstadoCuenta { get; set; } //Pendiente - Activo
+        public Perfil Perfil { get; set; }
+        public bool EsAdmin => Rol?.NombreRol == "ADMIN";
+        public Usuario() { }
+
+    }
+}

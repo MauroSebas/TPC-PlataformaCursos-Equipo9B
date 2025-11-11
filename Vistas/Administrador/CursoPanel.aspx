@@ -2,6 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
+
     <style>
         body {
             /* Fuente personalizada del diseño original */

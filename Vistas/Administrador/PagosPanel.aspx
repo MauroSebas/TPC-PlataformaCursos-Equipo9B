@@ -1,5 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Administrador.Master" AutoEventWireup="true" CodeBehind="PagosPanel.aspx.cs" Inherits="Vistas.Aministrador.PagosPanel" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+
     <style>
         body {
             /* Fuente personalizada del diseño original */

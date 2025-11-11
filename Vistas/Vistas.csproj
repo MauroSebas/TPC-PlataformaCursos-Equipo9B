@@ -67,14 +67,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Administrador\AdminPanel.aspx" />
+    <Content Include="Administrador\CursoForm.aspx" />
+    <Content Include="Administrador\CursoPanel.aspx" />
+    <Content Include="Administrador\LeccionForm.aspx" />
+    <Content Include="Administrador\ModuloGestion.aspx" />
+    <Content Include="Administrador\PagosPanel.aspx" />
+    <Content Include="Assets\css\admin-style.css" />
     <Content Include="Assets\css\styles.css" />
+    <Content Include="Assets\js\admin.js" />
     <Content Include="Assets\js\main.js" />
     <Content Include="Assets\js\togglePassword.js" />
     <Content Include="Alumno\Aula.aspx" />
     <Content Include="Auth\RecuperarContraseña.aspx" />
     <Content Include="Auth\RestablecerContraseña.aspx" />
-    <Content Include="CategoriaEliminarEditar.aspx" />
-    <Content Include="CategoriaGestion.aspx" />
+    <Content Include="Administrador\CategoriaEliminarEditar.aspx" />
+    <Content Include="Administrador\CategoriaGestion.aspx" />
     <Content Include="Contacto.aspx" />
     <Content Include="CursoDetalle.aspx" />
     <Content Include="Global.asax" />
@@ -87,6 +95,13 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Administrador.Master.cs">
+      <DependentUpon>Administrador.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administrador.Master.designer.cs">
+      <DependentUpon>Administrador.Master</DependentUpon>
+    </Compile>
     <Compile Include="Alumno.Master.cs">
       <DependentUpon>Alumno.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -100,6 +115,48 @@
     </Compile>
     <Compile Include="Alumno\Aula.aspx.designer.cs">
       <DependentUpon>Aula.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Administrador\AdminPanel.aspx.cs">
+      <DependentUpon>AdminPanel.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administrador\AdminPanel.aspx.designer.cs">
+      <DependentUpon>AdminPanel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Administrador\CursoForm.aspx.cs">
+      <DependentUpon>CursoForm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administrador\CursoForm.aspx.designer.cs">
+      <DependentUpon>CursoForm.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Administrador\CursoPanel.aspx.cs">
+      <DependentUpon>CursoPanel.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administrador\CursoPanel.aspx.designer.cs">
+      <DependentUpon>CursoPanel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Administrador\LeccionForm.aspx.cs">
+      <DependentUpon>LeccionForm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administrador\LeccionForm.aspx.designer.cs">
+      <DependentUpon>LeccionForm.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Administrador\ModuloGestion.aspx.cs">
+      <DependentUpon>ModuloGestion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administrador\ModuloGestion.aspx.designer.cs">
+      <DependentUpon>ModuloGestion.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Administrador\PagosPanel.aspx.cs">
+      <DependentUpon>PagosPanel.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administrador\PagosPanel.aspx.designer.cs">
+      <DependentUpon>PagosPanel.aspx</DependentUpon>
     </Compile>
     <Compile Include="Auth\RecuperarContraseña.aspx.cs">
       <DependentUpon>RecuperarContraseña.aspx</DependentUpon>
@@ -115,18 +172,18 @@
     <Compile Include="Auth\RestablecerContraseña.aspx.designer.cs">
       <DependentUpon>RestablecerContraseña.aspx</DependentUpon>
     </Compile>
-    <Compile Include="CategoriaEliminarEditar.aspx.cs">
+    <Compile Include="Administrador\CategoriaEliminarEditar.aspx.cs">
       <DependentUpon>CategoriaEliminarEditar.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="CategoriaEliminarEditar.aspx.designer.cs">
+    <Compile Include="Administrador\CategoriaEliminarEditar.aspx.designer.cs">
       <DependentUpon>CategoriaEliminarEditar.aspx</DependentUpon>
     </Compile>
-    <Compile Include="CategoriaGestion.aspx.cs">
+    <Compile Include="Administrador\CategoriaGestion.aspx.cs">
       <DependentUpon>CategoriaGestion.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="CategoriaGestion.aspx.designer.cs">
+    <Compile Include="Administrador\CategoriaGestion.aspx.designer.cs">
       <DependentUpon>CategoriaGestion.aspx</DependentUpon>
     </Compile>
     <Compile Include="Contacto.aspx.cs">
@@ -199,6 +256,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Alumno.Master" />
+    <Content Include="Administrador.Master" />
     <None Include="packages.config" />
     <Content Include="Site1.Master" />
     <None Include="Web.Debug.config">

@@ -38,10 +38,11 @@
                     <h1 class="h2 fw-bolder text-body-emphasis mb-0">Gestión de Cursos</h1>
                     <p class="text-body-secondary fs-6">Visualiza, filtra y gestiona todos los cursos de forma eficiente.</p>
                 </div>
+                
+                <%-- Utilizo LinkButton para rediccionar a la pagina de CursoForm >--%>
                 <asp:LinkButton runat="server" ID="btnAgregarCurso"
                     CssClass="btn btn-primary btn-lg d-flex align-items-center gap-2 shadow-sm fw-bold small"
                     OnClick="btnAgregarCurso_Click1">
-    
                     <span class="material-symbols-outlined fs-6">add_circle</span>
                     <span>Agregar Nuevo Curso</span>
     

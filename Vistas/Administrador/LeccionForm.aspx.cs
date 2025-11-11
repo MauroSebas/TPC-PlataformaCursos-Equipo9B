@@ -13,5 +13,15 @@ namespace Vistas.Aministrador
         {
 
         }
+
+        protected void btnCancelar_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("CursoPanel.aspx");
+        }
+
+        protected void btnGuardaryContinuar_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("ModuloGestion.aspx");
+        }
     }
 }

@@ -2,30 +2,6 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
-    <style>
-        body {
-            /* Fuente personalizada del diseño original */
-            font-family: 'Inter', sans-serif;
-            /* bg-body-tertiary es el gris claro de Bootstrap */
-            background-color: var(--bs-body-tertiary);
-        }
-
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-            font-size: 24px;
-            vertical-align: middle;
-        }
-        /* Estilo para el ícono de "Courses" con relleno */
-        .material-symbols-fill {
-            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        /* Ancho fijo del sidebar (w-64 de Tailwind) */
-        .sidebar {
-            width: 16rem; /* 64 * 0.25rem = 16rem */
-            min-height: 100vh;
-        }
-    </style>
-
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 

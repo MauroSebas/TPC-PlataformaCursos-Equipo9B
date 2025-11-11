@@ -5,7 +5,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-    <div class="row justify-content-center align-items-center" style="min-height: 70vh;">
+    <div class="row justify-content-center align-items-center" ">
         <div class="col-md-7 col-lg-6 col-xl-5">
             <div class="card shadow-sm border-0 rounded-lg">
                 <div class="card-body p-4 p-sm-5">

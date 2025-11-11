@@ -15,10 +15,10 @@ namespace Dominio
         public int RolID { get; set; }
         public int EstadoCuentaID { get; set; }
 
-        // --- Propiedades de Navegación
         public Rol Rol { get; set; } //ADMIN - PARTICIPANTE
         public EstadoCuenta EstadoCuenta { get; set; } //Pendiente - Activo
-
+        public Perfil Perfil { get; set; }
+        public bool EsAdmin => Rol?.NombreRol == "ADMIN";
         public Usuario() { }
 
     }

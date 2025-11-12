@@ -1,80 +1,126 @@
-﻿using MailKit.Security;
-using MimeKit;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Configuration; 
-using MailKit.Net.Smtp;   
+using System.IO;            
+using System.Web;           
+using MailKit.Net.Smtp;   // El "Camión de Correo" de MailKit
+using MailKit.Security;   // Para SecureSocketOptions
+using MimeKit;            // La "Carta" de MailKit
 
 namespace Negocio.Servicios
 {
+    /// <summary>
+    /// Servicio "Especialista" en envío de correos.
+    /// Usa MailKit para la conexión y lee templates HTML.
+    /// </summary>
     public class EmailServicio
     {
-        // Propiedades privadas para almacenar los datos del Web.config
-        private string servidorSMTP;
-        private int puertoSMTP;
-        private string usuarioSMTP;
-        private string passwordSMTP;
-        private string remitente;
-
-        public EmailServicio()
-        {
-            // Leemos la configuración del Web.config al instanciar la clase
-            servidorSMTP = ConfigurationManager.AppSettings["Email_SMTP_Server"];
-            puertoSMTP = int.Parse(ConfigurationManager.AppSettings["Email_SMTP_Port"]);
-            usuarioSMTP = ConfigurationManager.AppSettings["Email_User"];
-            passwordSMTP = ConfigurationManager.AppSettings["Email_Password"];
-            remitente = ConfigurationManager.AppSettings["Email_Remitente"];
-
-            // NOTA: En un proyecto real, se deben validar que estos valores no sean null/vacíos.
-        }
+        // Propiedades privadas leídas desde Web.config
+        private readonly string servidorSMTP;
+        private readonly int puertoSMTP;
+        private readonly string usuarioSMTP;
+        private readonly string passwordSMTP;
+        private readonly string remitenteNombre;
 
         /// <summary>
-        /// Envía un correo electrónico a un destinatario específico.
+        /// Constructor: Lee la configuración desde el Web.config
+        /// en el momento en que se crea el servicio.
         /// </summary>
-        /// <param name="destinatario">Email del destinatario (ej. "usuario@mail.com").</param>
-        /// <param name="asunto">Asunto del correo.</param>
-        /// <param name="cuerpoHtml">Cuerpo del correo en formato HTML.</param>
-        /// <returns>True si el envío fue exitoso, False si falló (por credenciales o conexión).</returns>
-        public bool EnviarEmail(string destinatario, string asunto, string cuerpoHtml)
+        public EmailServicio()
         {
             try
             {
-                // 1. Crear el mensaje con MimeKit
-                var email = new MimeMessage();
-                // Usamos el remitente configurado y el email de autenticación
-                email.From.Add(new MailboxAddress(remitente, usuarioSMTP));
-                email.To.Add(MailboxAddress.Parse(destinatario));
-                email.Subject = asunto;
+                // Leemos la configuración (Tarea 2)
+                servidorSMTP = ConfigurationManager.AppSettings["Email_SMTP_Server"];
+                puertoSMTP = int.Parse(ConfigurationManager.AppSettings["Email_SMTP_Port"]);
+                usuarioSMTP = ConfigurationManager.AppSettings["Email_User"];
+                passwordSMTP = ConfigurationManager.AppSettings["Email_Password"];
+                remitenteNombre = ConfigurationManager.AppSettings["Email_Remitente"];
 
-                // 2. Definir el contenido (usando BodyBuilder para manejar HTML)
-                var builder = new BodyBuilder { HtmlBody = cuerpoHtml };
-                email.Body = builder.ToMessageBody();
-
-                // 3. Conectar, Autenticar y Enviar con MailKit
-                using (var clienteSmtp = new SmtpClient())
+                if (string.IsNullOrEmpty(servidorSMTP) || string.IsNullOrEmpty(usuarioSMTP) || string.IsNullOrEmpty(passwordSMTP))
                 {
-                    // SecureSocketOptions.StartTls es el estándar para el puerto 587
-                    clienteSmtp.Connect(servidorSMTP, puertoSMTP, SecureSocketOptions.StartTls);
-
-                    // Autenticación con el usuario y la App Password de Gmail
-                    clienteSmtp.Authenticate(usuarioSMTP, passwordSMTP);
-
-                    clienteSmtp.Send(email);
-                    clienteSmtp.Disconnect(true);
+                    throw new Exception("Faltan configuraciones de email en el Web.config.");
                 }
-                return true;
             }
             catch (Exception ex)
             {
-                // Deberías usar un sistema de logs para registrar este error ex 
-                // (ej. si las credenciales de Gmail fallan).
-                // throw ex; // Podrías relanzar la excepción si la capa superior necesita saber el error específico.
-                return false; // Indicamos un fallo en el envío
+                // Si falta algo en Web.config o el puerto no es un nro, esto explota.
+                throw new Exception("Error fatal al configurar EmailServicio. Revisa el Web.config.", ex);
+            }
+        }
+
+        /// <summary>
+        /// Método público "inteligente" que lee un template HTML, reemplaza
+        /// los placeholders y lo envía.
+        /// </summary>
+        /// <param name="emailDestino">El email del destinatario.</param>
+        /// <param name="asunto">El asunto del correo.</param>
+        /// <param name="nombreTemplate">El nombre del archivo (ej. "ActivacionCuenta.html").</param>
+        /// <param name="reemplazos">Un diccionario con los placeholders y sus valores.</param>
+        public void EnviarTemplateEmail(string emailDestino, string asunto, string nombreTemplate, Dictionary<string, string> reemplazos)
+        {
+            string cuerpoHtml;
+            try
+            {
+                // 1. Obtenemos la ruta física del template
+                // ¡¡ESTA LÍNEA AHORA FUNCIONA!!
+                string templatePath = HttpContext.Current.Server.MapPath($"~/EmailTemplates/{nombreTemplate}");
+
+                // 2. Leemos todo el archivo HTML
+                cuerpoHtml = File.ReadAllText(templatePath);
+
+                // 3. Reemplazamos los placeholders (ej. {{NOMBRE_USUARIO}}, {{LINK_ACTIVACION}})
+                foreach (var item in reemplazos)
+                {
+                    cuerpoHtml = cuerpoHtml.Replace(item.Key, item.Value);
+                }
+            }
+            catch (FileNotFoundException ex)
+            {
+                throw new Exception($"No se encontró el template de email: {nombreTemplate}", ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al leer o reemplazar los placeholders del template.", ex);
+            }
+
+            // 4. Llamamos al método "tonto" para que lo envíe
+            EnviarEmailInterno(emailDestino, asunto, cuerpoHtml);
+        }
+
+
+        /// <summary>
+        /// Método privado "tonto" que solo se conecta y envía el correo.
+        /// Usa MailKit.
+        /// </summary>
+        private void EnviarEmailInterno(string emailDestino, string asunto, string cuerpoHtml)
+        {
+            try
+            {
+                // 1. Crear el mensaje (La "Carta")
+                var email = new MimeMessage();
+                email.From.Add(new MailboxAddress(remitenteNombre, usuarioSMTP));
+                email.To.Add(MailboxAddress.Parse(emailDestino));
+                email.Subject = asunto;
+
+                // 2. Definir el contenido (El cuerpo HTML)
+                var builder = new BodyBuilder { HtmlBody = cuerpoHtml };
+                email.Body = builder.ToMessageBody();
+
+                // 3. Conectar, Autenticar y Enviar (El "Camión")
+                using (var clienteSmtp = new SmtpClient())
+                {
+                    clienteSmtp.Connect(servidorSMTP, puertoSMTP, SecureSocketOptions.StartTls);
+                    clienteSmtp.Authenticate(usuarioSMTP, passwordSMTP);
+                    clienteSmtp.Send(email);
+                    clienteSmtp.Disconnect(true);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Si falla (credenciales mal puestas, sin internet), lanzamos la excepción
+                throw new Exception($"Error al enviar el email: {ex.Message}", ex);
             }
         }
     }
 }
-

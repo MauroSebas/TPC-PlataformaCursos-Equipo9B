@@ -78,19 +78,27 @@ namespace Datos
         // Método para ejecutar INSERT, UPDATE, DELETE o consultas que devuelven un solo valor
         public int ejecutarAccionScalar()
         {
-            comando.Connection = conexion; 
+            comando.Connection = conexion;
             try
             {
-                conexion.Open();                
+                conexion.Open();
                 return Convert.ToInt32(comando.ExecuteScalar());
             }
             catch (Exception ex)
             {
-                throw ex; 
+                throw ex;
             }
-           
+            //Se ejecutara siempre
+            finally
+            {
+                if(conexion.State == System.Data.ConnectionState.Open)
+                {
+                    conexion.Close();
+                }
+            }
+
         }
-       
+
 
 
         public void cerrarConexion()

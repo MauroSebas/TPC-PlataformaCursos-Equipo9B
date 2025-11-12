@@ -14,9 +14,19 @@ namespace Vistas
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            NegocioCategoria negocio = new NegocioCategoria();
-            dgvCategorias.DataSource = negocio.listarConSP();
-            dgvCategorias.DataBind();
+            CategoriaNegocio negocio = new CategoriaNegocio();
+            try
+            {
+                if (!IsPostBack)
+                {
+                    dgvCategorias.DataSource = negocio.listarConSP();
+                    dgvCategorias.DataBind();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         protected void btnCancelar_Click(object sender, EventArgs e)
@@ -34,7 +44,7 @@ namespace Vistas
 
         protected void btnAgregarCategoria_Click(object sender, EventArgs e)
         {
-            NegocioCategoria negocio = new NegocioCategoria();
+            CategoriaNegocio negocio = new CategoriaNegocio();
             Categoria nueva = new Categoria();
             nueva.Nombre = txtNombre.Text;
             negocio.agregarConSP(nueva);

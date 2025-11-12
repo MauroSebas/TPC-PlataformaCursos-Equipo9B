@@ -46,6 +46,7 @@
     <Compile Include="Configuracion.cs" />
     <Compile Include="Curso.cs" />
     <Compile Include="CursoObjetivo.cs" />
+    <Compile Include="ArchivoLeccion.cs" />
     <Compile Include="Enums\EstadoCuentaEnum.cs" />
     <Compile Include="Enums\RolEnum.cs" />
     <Compile Include="Seguridad\EstadoCuenta.cs" />

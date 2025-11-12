@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Negocio;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,6 +12,20 @@ namespace Vistas.Aministrador
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            CursoNegocio negocio = new CursoNegocio();
+            try
+            {
+                if (!IsPostBack)
+                {
+                    dgvCurso.DataSource = negocio.listarConSP();
+                    dgvCurso.DataBind();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
 
         }
 
@@ -18,6 +33,11 @@ namespace Vistas.Aministrador
         protected void btnAgregarCurso_Click1(object sender, EventArgs e)
         {
             Response.Redirect("CursoForm.aspx");
+        }
+
+        protected void dgvCurso_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

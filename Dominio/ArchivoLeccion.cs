@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace Dominio
 {
-    internal class DocumentoLeccion
+    public class ArchivoLeccion
     {
+        public int Id { get; set;}
+        public Leccion Leccion { get; set;}
+        public string Nombre { get; set; }
+        public string UrlArchivo { get; set; }
+        public string TipoArchivo { get; set; }
+
     }
 }

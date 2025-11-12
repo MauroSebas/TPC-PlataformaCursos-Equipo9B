@@ -11,13 +11,13 @@ namespace Dominio
     {
         public int Id { get; set; }
         public string Titulo { get; set; }
-        public string Descripcion { get; set; }//TextArea
+        public string Descripcion { get; set; }
         public string UrlImagenPortada { get; set; }
         public  List<Modulo> Modulos { get; set; }
-        public string ModalidadPago { get; set; }//DropDownList Transferencia / Otra
-        public int DuracionAccesoDias { get; set; }// DropDownList
-        public DateTime Publicado { get; set; }
-        public Categoria Categoria { get; set; }//ComboBox
+        public string ModalidadPago { get; set; }
+        public int DuracionAccesoDias { get; set; }
+        public bool Publicado { get; set; }
+        public Categoria Categoria { get; set; }
         public decimal Precio { get; set; }
         public bool EstaActivo { get; set; }
         public string PrecioFormateado

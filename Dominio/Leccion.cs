@@ -13,6 +13,7 @@ namespace Dominio
         public string Titulo { get; set; }
         public string TipoMaterial { get; set; }
         public string UrlRecurso { get; set; }
+        public List <ArchivoLeccion> Archivos { get; set; }
         public bool EstaActivo { get; set; }
 
     }

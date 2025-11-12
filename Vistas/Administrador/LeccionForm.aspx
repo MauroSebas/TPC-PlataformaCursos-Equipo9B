@@ -14,40 +14,25 @@
                         <h1 class="modal-title h4 fw-bold" id="addLessonModalLabel">Añadir Nueva Lección</h1>
                         <p class="text-body-secondary small mb-0">Completa los detalles a continuación para crear una nueva lección.</p>
                     </div>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
                 <div class="modal-body p-4 p-md-5 d-flex flex-column gap-4">
 
                     <div>
-                        <label for="lessonTitle" class="form-label fw-medium">Título de la Lección</label>
-                        <input type="text" class="form-control form-control-lg" id="lessonTitle" placeholder="Ej: Introducción al Cálculo">
+                        <asp:Label ID="lblTituloLeccion" AssociatedControlID="txtTituloLeccion" CssClass="form-label" runat="server" Text="Titulo de la Lección"></asp:Label>
+                        <asp:TextBox ID="txtTituloLeccion" runat="server" CssClass="form-control" placeholder ="Ej: Fundamentos del Algebra"></asp:TextBox>
                     </div>
 
                     <div>
-                        <label for="videoUrl" class="form-label fw-medium">Incrustar Enlace de Video</label>
-                        <div class="input-group input-group-lg">
-                            <span class="input-group-text bg-body-tertiary">
-                                <span class="material-symbols-outlined fs-5 text-body-secondary">link</span>
-                            </span>
-                            <input type="text" class="form-control" id="videoUrl" placeholder="Pega una URL de YouTube, Vimeo, etc.">
-                        </div>
+                        <asp:Label ID="lblVideoUrl" AssociatedControlID="txtVideoUrl" CssClass="form-label" runat="server" Text="Ingrese el Enlace de Video"></asp:Label>
+                        
+                        <asp:TextBox ID="txtVideoUrl" runat="server" CssClass="form-control" placeholder ="Pega una URL de Youtube,Vimeo,etc."></asp:TextBox>
+
                     </div>
 
                     <div class="d-flex flex-column gap-3">
                         <p class="mb-0 fw-medium">Documentos Asociados</p>
 
-                        <label class="file-drop-zone d-flex flex-column align-items-center justify-content-center w-100 rounded-3 text-center p-4" style="cursor: pointer;">
-                            <div class="d-flex align-items-center justify-content-center rounded-circle bg-primary-subtle" style="width: 3rem; height: 3rem;">
-                                <span class="material-symbols-outlined fs-4 text-primary">upload_file</span>
-                            </div>
-                            <div class="d-flex flex-column py-2">
-                                <p class="mb-0 fw-medium">Arrastra y suelta archivos aquí, o haz clic para buscar.</p>
-                                <p class="text-body-secondary small mb-0">Soporta PDF, DOCX, PPTX, y más</p>
-                            </div>
-                            <button type="button" class="btn btn-light fw-bold small mt-2">Buscar Archivos</button>
-                            <input type="file" class="d-none" multiple />
-                        </label>
 
                         <div class="d-flex flex-column gap-3">
                             <div class="d-flex align-items-center justify-content-between rounded-3 border bg-body p-3">

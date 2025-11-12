@@ -80,8 +80,11 @@
   <ItemGroup>
     <Compile Include="Seguridad\EstadoCuentaNegocio.cs" />
     <Compile Include="CategoriaNegocio.cs" />
-    <Compile Include="Seguridad\PerfilNegocio.cs" />
+<Compile Include="Seguridad\PerfilNegocio.cs" />
     <Compile Include="Seguridad\RolNegocio.cs" />
+    
+   
+    <Compile Include="CursoNegocio.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Seguridad\UsuarioTokenNegocio.cs" />
     <Compile Include="Servicios\EmailServicio.cs" />

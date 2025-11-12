@@ -15,8 +15,19 @@ namespace Vistas
         protected void Page_Load(object sender, EventArgs e)
         {
             CategoriaNegocio negocio = new CategoriaNegocio();
-            dgvCategorias.DataSource = negocio.listarConSP();
-            dgvCategorias.DataBind();
+
+            try
+            {
+                if (!IsPostBack)
+                {
+                    dgvCategorias.DataSource = negocio.listarConSP();
+                    dgvCategorias.DataBind();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         protected void btnCancelar_Click(object sender, EventArgs e)

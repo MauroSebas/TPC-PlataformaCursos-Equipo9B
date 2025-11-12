@@ -13,7 +13,7 @@ namespace Vistas.Aministrador
     {
         protected void Page_Load(object sender, EventArgs e)
         {   
-            NegocioCategoria negocioCat = new NegocioCategoria();
+            CategoriaNegocio negocioCat = new CategoriaNegocio();
             try
             {
                 if (!IsPostBack)

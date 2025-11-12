@@ -14,7 +14,7 @@ namespace Vistas
         public List<Categoria>ListaCategoria { get; set;}
         protected void Page_Load(object sender, EventArgs e)
         {
-            NegocioCategoria negocio = new NegocioCategoria();
+            CategoriaNegocio negocio = new CategoriaNegocio();
             ListaCategoria = negocio.listarConSP();
 
         }

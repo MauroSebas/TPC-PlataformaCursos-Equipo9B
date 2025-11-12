@@ -15,11 +15,18 @@ namespace Dominio
         public int RolID { get; set; }
         public int EstadoCuentaID { get; set; }
 
+        public DateTime FechaCreacion { get; set; }
+        public DateTime? FechaUltimoLogin { get; set; }
+        public DateTime? FechaBaja { get; set; }
+
         public Rol Rol { get; set; } //ADMIN - PARTICIPANTE
         public EstadoCuenta EstadoCuenta { get; set; } //Pendiente - Activo
         public Perfil Perfil { get; set; }
         public bool EsAdmin => Rol?.NombreRol == "ADMIN";
-        public Usuario() { }
+        public Usuario()
+        {
+            FechaCreacion = DateTime.Now;
+        }
 
     }
 }

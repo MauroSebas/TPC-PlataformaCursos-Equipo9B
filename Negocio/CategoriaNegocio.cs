@@ -8,7 +8,7 @@ using Datos;
 
 namespace Negocio
 {
-    public class NegocioCategoria
+    public class CategoriaNegocio
     {
         public List<Categoria> listar()
         {

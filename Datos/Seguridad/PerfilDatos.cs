@@ -81,5 +81,25 @@ namespace Datos
                 datos.cerrarConexion();
             }
         }
+
+        public void InsertarPerfilVacio(int usuarioID)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("INSERT INTO Perfil (UsuarioID) VALUES (@UsuarioID)");
+                datos.setearParametro("@UsuarioID", usuarioID);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
 }

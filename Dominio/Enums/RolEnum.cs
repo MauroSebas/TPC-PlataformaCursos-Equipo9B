@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Dominio.Enums
 {
-    
-        public enum RolEnum
-        {
-            PendienteActivacion = 1,
-            Activo = 2
-        }
-    
+
+    public enum RolEnum
+    {
+        Administrador = 1,
+        Participante = 2
+    }
+
 }

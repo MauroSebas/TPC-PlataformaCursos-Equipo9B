@@ -16,7 +16,7 @@ namespace Vistas
             if (!IsPostBack)// Va a precargar si no es un postback de la pantalla
             {
 
-                NegocioCategoria negocio = new NegocioCategoria();
+                CategoriaNegocio negocio = new CategoriaNegocio();
                 Categoria seleccionada = new Categoria();
 
                 int id = Request.QueryString["Id"] != null ? int.Parse(Request.QueryString["Id"].ToString()) : 0;//Operador ternario
@@ -40,7 +40,7 @@ namespace Vistas
         protected void btnModificar_Click(object sender, EventArgs e)
         {
            
-            NegocioCategoria negocio = new NegocioCategoria();
+            CategoriaNegocio negocio = new CategoriaNegocio();
             Categoria seleccionada = new Categoria();
 
             int id = int.Parse(Request.QueryString["Id"].ToString());
@@ -59,7 +59,7 @@ namespace Vistas
 
         protected void btnEliminar_Click(object sender, EventArgs e)
         {
-            NegocioCategoria negocio = new NegocioCategoria();
+            CategoriaNegocio negocio = new CategoriaNegocio();
             Categoria seleccionada = new Categoria();
 
             int id = int.Parse(Request.QueryString["Id"].ToString());

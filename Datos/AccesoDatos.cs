@@ -59,6 +59,19 @@ namespace Datos
                 throw ex;
             }
         }
+        public int ejecutarAccion(bool devolverFilas)
+        {
+            comando.Connection = conexion;
+            try
+            {
+                conexion.Open();
+                return comando.ExecuteNonQuery(); 
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
         public void ejecutarLectura()
         {

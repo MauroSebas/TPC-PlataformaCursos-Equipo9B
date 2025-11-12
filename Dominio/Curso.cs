@@ -16,11 +16,9 @@ namespace Dominio
         public  List<Modulo> Modulos { get; set; }
         public string ModalidadPago { get; set; }//DropDownList Transferencia / Otra
         public int DuracionAccesoDias { get; set; }// DropDownList
-        public bool Publicado { get; set; } //Calendar
+        public DateTime Publicado { get; set; }
         public Categoria Categoria { get; set; }//ComboBox
         public decimal Precio { get; set; }
-        public string NivelDificultad { get; set; } //DropDownList
-        public string Idioma { get; set; }//ComboBox
         public bool EstaActivo { get; set; }
         public string PrecioFormateado
         {

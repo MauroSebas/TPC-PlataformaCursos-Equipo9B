@@ -14,23 +14,23 @@
                         <h1 class="modal-title h4 fw-bold" id="addLessonModalLabel">Añadir Nueva Lección</h1>
                         <p class="text-body-secondary small mb-0">Completa los detalles a continuación para crear una nueva lección.</p>
                     </div>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
                 <div class="modal-body p-4 p-md-5 d-flex flex-column gap-4">
 
                     <div>
-                        <label for="lessonTitle" class="form-label fw-medium">Título de la Lección</label>
-                        <input type="text" class="form-control form-control-lg" id="lessonTitle" placeholder="Ej: Introducción al Cálculo">
+                        <asp:Label ID="lblTituloLeccion" AssociatedControlID="txtTituloLeccion" CssClass="form-label" runat="server" Text="Titulo de la Lección"></asp:Label>
+                        <asp:TextBox ID="txtTituloLeccion" runat="server" CssClass="form-control" placeholder ="Ej: Fundamentos del Algebra"></asp:TextBox>
                     </div>
 
                     <div>
-                        <label for="videoUrl" class="form-label fw-medium">Incrustar Enlace de Video</label>
+                        <asp:Label ID="lblVideoUrl" AssociatedControlID="txtVideoUrl" CssClass="form-label" runat="server" Text="Ingrese el Enlace de Video"></asp:Label>
+                        
+                        <asp:TextBox ID="txtVideoUrl" runat="server" CssClass="form-control" placeholder ="Pega una URL de Youtube,Vimeo,etc."></asp:TextBox>
                         <div class="input-group input-group-lg">
                             <span class="input-group-text bg-body-tertiary">
                                 <span class="material-symbols-outlined fs-5 text-body-secondary">link</span>
                             </span>
-                            <input type="text" class="form-control" id="videoUrl" placeholder="Pega una URL de YouTube, Vimeo, etc.">
                         </div>
                     </div>
 

@@ -8,7 +8,7 @@ namespace Datos
 {
     public class UsuarioDatos
     {
-        // === MÉTODO DE LISTADO "GIGANTE Y GENÉRICO" ===
+        
         public List<Usuario> Listar(
             string email = null, string nombre = null, string apellido = null,
             int? rolId = null, int? estadoCuentaId = null, bool? estaActivo = null,
@@ -21,7 +21,6 @@ namespace Datos
             List<Usuario> lista = new List<Usuario>();
             StringBuilder consulta = new StringBuilder();
 
-            // CONSULTA CORREGIDA (Usa los nombres plurales de tu BBDD)
             consulta.Append(@"
                 SELECT 
                     U.UsuarioID, U.Email, U.PasswordHash, U.EstaActivo, 
@@ -35,7 +34,7 @@ namespace Datos
                 INNER JOIN Perfil P ON U.UsuarioID = P.UsuarioID
                 WHERE 1=1 ");
 
-            // --- Armado Dinámico de Filtros (Esto estaba perfecto) ---
+            // --- Armado Dinámico de Filtros  ---
             if (!string.IsNullOrEmpty(email))
             {
                 consulta.Append(" AND U.Email LIKE @Email");
@@ -67,7 +66,7 @@ namespace Datos
                 datos.Comando.Parameters.AddWithValue("@EstaActivo", estaActivo.Value);
             }
 
-            // --- Filtros de Fechas (Esto estaba perfecto) ---
+            // --- Filtros de Fechas  ---
             if (fechaCreacionDesde.HasValue)
             {
                 consulta.Append(" AND U.FechaCreacion >= @FechaCreacionDesde");
@@ -121,7 +120,7 @@ namespace Datos
             }
         }
 
-        // --- MÉTODOS DE BÚSQUEDA (CON JOINs CORREGIDOS) ---
+        
         public Usuario BuscarPorID(int id)
         {
             AccesoDatos datos = new AccesoDatos();
@@ -198,7 +197,7 @@ namespace Datos
             }
         }
 
-        // --- MÉTODOS DE ALTA Y MODIFICACIÓN (Estaban perfectos) ---
+       
         public int InsertarNuevo(Usuario nuevo)
         {
             AccesoDatos datos = new AccesoDatos();
@@ -270,7 +269,6 @@ namespace Datos
             }
         }
 
-        // --- MÉTODO PRIVADO HELPER (Este estaba perfecto) ---
         private Usuario MapearUsuarioCompleto(SqlDataReader lector)
         {
             Usuario user = new Usuario
@@ -283,21 +281,21 @@ namespace Datos
                 FechaUltimoLogin = lector["FechaUltimoLogin"] is DBNull ? null : (DateTime?)lector["FechaUltimoLogin"],
                 FechaBaja = lector["FechaBaja"] is DBNull ? null : (DateTime?)lector["FechaBaja"],
 
-                RolID = (int)lector["RolID"], // <-- Dato del JOIN
+                RolID = (int)lector["RolID"], 
                 Rol = new Rol
                 {
                     RolID = (int)lector["RolID"],
                     NombreRol = (string)lector["NombreRol"]
                 },
 
-                EstadoCuentaID = (int)lector["EstadoCuentaID"], // <-- Dato del JOIN
+                EstadoCuentaID = (int)lector["EstadoCuentaID"], 
                 EstadoCuenta = new EstadoCuenta
                 {
                     EstadoCuentaID = (int)lector["EstadoCuentaID"],
                     NombreEstado = (string)lector["NombreEstado"]
                 },
 
-                Perfil = new Perfil // <-- Dato del JOIN
+                Perfil = new Perfil 
                 {
                     PerfilID = (int)lector["PerfilID"],
                     UsuarioID = (int)lector["UsuarioID"],

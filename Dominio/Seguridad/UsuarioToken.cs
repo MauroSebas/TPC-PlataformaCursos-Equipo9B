@@ -13,6 +13,7 @@ namespace Dominio.Seguridad
         public int UsuarioID { get; set; }
         public string Token { get; set; }
         public int TipoToken { get; set; }
+        public DateTime FechaCreacion { get; set; }
         public DateTime FechaVencimiento { get; set; }
 
     }

@@ -52,15 +52,14 @@ namespace Negocio
                 // 6. Crear perfil vacío automáticamente
                 this.CrearPerfilVacio(idGenerado);
 
-                // --- ¡¡AQUÍ CONECTAMOS LOS CABLES!! ---
 
                 // 7. Generar el Token de Activación
                 string token = tokenNegocio.GenerarToken(idGenerado, TipoTokenEnum.ActivacionCuenta);
 
-                // 8. Armar el link de activación completo (ej: http://localhost:12345/Auth/ActivarCuenta.aspx?token=...)
+                
                 string host = HttpContext.Current.Request.Url.Scheme + "://" + HttpContext.Current.Request.Url.Authority;
                 string applicationPath = HttpContext.Current.Request.ApplicationPath;
-                // Asegurarnos de que el path no termine con '/' si no es la raíz
+                //  path no termine con '/' si no es la raíz
                 if (!applicationPath.Equals("/"))
                     applicationPath += "/";
 
@@ -68,7 +67,7 @@ namespace Negocio
 
                 // 9. Armar los reemplazos para el template HTML
                 var reemplazos = new Dictionary<string, string>();
-                reemplazos.Add("{{NOMBRE_USUARIO}}", nuevoUsuario.Email); // No tenemos el nombre aún
+                reemplazos.Add("{{NOMBRE_USUARIO}}", nuevoUsuario.Email); 
                 reemplazos.Add("{{LINK_ACTIVACION}}", linkActivacion);
 
                 // 10. Enviar el Email
@@ -81,11 +80,11 @@ namespace Negocio
             }
             catch (Exception ex)
             {
-                // Re-lanzamos la excepción para que la capa de Vistas (CodeBehind) la atrape
+                
                 if (ex.Message.Contains("El email ingresado") || ex.Message.Contains("La contraseña debe"))
-                    throw ex; // Pasamos los errores de validación "limpios"
+                    throw ex; 
 
-                // Si es un error de Email o de BBDD, lo envolvemos
+                
                 throw new Exception("Error en la capa de negocio al registrar usuario.", ex);
             }
         }
@@ -93,25 +92,24 @@ namespace Negocio
         {
             try
             {
-                // 1. Buscamos al usuario. La DAL ya nos trae TODO (Usuario, Rol, Perfil)
+               
                 var usuario = usuarioDatos.BuscarPorEmail(email);
 
-                // 2. Validamos (Reglas de Negocio)
+           
                 if (usuario == null)
-                    return null; // Email no existe
+                    return null; 
 
                 if (!usuario.EstaActivo)
-                    return null; // Usuario baneado (Baja Lógica)
+                    return null; 
 
-                // 3. Validamos Password
-                // (Manejo de login social/externo donde el hash puede ser nulo)
+               
                 if (string.IsNullOrEmpty(usuario.PasswordHash))
                     return null;
 
                 if (!BCrypt.Net.BCrypt.Verify(passwordPlano, usuario.PasswordHash))
                     return null; 
 
-                // 4. ¡Login exitoso! Actualizamos FechaUltimoLogin
+                
                 usuario.FechaUltimoLogin = DateTime.Now;
                 usuarioDatos.Actualizar(usuario);        
 
@@ -122,7 +120,64 @@ namespace Negocio
                 throw new Exception("Error fatal en la capa de negocio al validar login.", ex);
             }
         }
-       
+        public void ReenviarTokenActivacion(string email)
+        {
+            try
+            {
+                // 1. Buscamos al usuario por email (la DAL nos trae todo)
+                var usuario = usuarioDatos.BuscarPorEmail(email);
+
+                // 2. REGLA DE NEGOCIO: ¿Existe el usuario?
+                if (usuario == null)
+                {
+                    // ¡OJO! No le decimos "email no existe" por seguridad (para que
+                    // no adivinen emails). Le damos un mensaje genérico.
+                    throw new Exception("Si el email está registrado, te hemos enviado el correo.");
+                }
+
+                // 3. REGLA DE NEGOCIO: ¿Ya está activo?
+                if (usuario.EstadoCuentaID == (int)EstadoCuentaEnum.Activo)
+                {
+                    throw new Exception("Esta cuenta ya se encuentra activa. Podés iniciar sesión directamente.");
+                }
+
+                // 4. ¡OK, es un usuario "trabado" (PendienteActivacion)!
+                // Generamos un NUEVO token (la BLL de Token se encarga de esto)
+                string token = tokenNegocio.GenerarToken(usuario.UsuarioID, TipoTokenEnum.ActivacionCuenta);
+
+                // 5. Armamos el link (reutilizamos la lógica de RegistrarUsuario)
+                string host = HttpContext.Current.Request.Url.Scheme + "://" + HttpContext.Current.Request.Url.Authority;
+                string applicationPath = HttpContext.Current.Request.ApplicationPath;
+                if (!applicationPath.Equals("/"))
+                    applicationPath += "/";
+
+                string linkActivacion = $"{host}{applicationPath}Auth/ActivarCuenta.aspx?token={token}";
+
+                // 6. Armamos los reemplazos
+                var reemplazos = new Dictionary<string, string>();
+                reemplazos.Add("{{NOMBRE_USUARIO}}", usuario.Email);
+                reemplazos.Add("{{LINK_ACTIVACION}}", linkActivacion);
+
+                // 7. Enviar el Email (reutilizamos el servicio y el template)
+                emailServicio.EnviarTemplateEmail(
+                    usuario.Email,
+                    "Reenvío de Activación de Cuenta",
+                    "ActivacionCuenta.html", 
+                    reemplazos
+                );
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message.Contains("activa") ||          
+                    ex.Message.Contains("registrado") ||     
+                    ex.Message.Contains("Por favor, esperá")) 
+                {
+                    throw ex; 
+                }
+                
+                throw new Exception("Error al procesar la solicitud de reenvío.", ex);
+            }
+        }
         public List<Usuario> ListarUsuarios(
             string email = null, string nombre = null, string apellido = null,
             int? rolId = null, int? estadoCuentaId = null, bool? estaActivo = null,
@@ -194,7 +249,19 @@ namespace Negocio
             if (!usuarioDatos.Actualizar(usuario))
                 throw new Exception("No se pudo actualizar el email en la base de datos.");
         }
-
+        public Usuario BuscarPorEmail(string email)
+        {
+            try
+            {
+                // Este es un simple "pass-through".
+                // Llama a la DAL (que ya trae el objeto completo con JOINs)
+                return usuarioDatos.BuscarPorEmail(email);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error en la capa de negocio al buscar por email.", ex);
+            }
+        }
         public void CambiarEstadoCuenta(int usuarioID, int nuevoEstadoCuentaID)
         {
             var usuario = usuarioDatos.BuscarPorID(usuarioID);

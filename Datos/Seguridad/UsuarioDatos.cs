@@ -126,7 +126,7 @@ namespace Datos
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                // CONSULTA CORREGIDA
+                
                 datos.setearConsulta(@"
                     SELECT 
                         U.UsuarioID, U.Email, U.PasswordHash, U.EstaActivo, 
@@ -164,7 +164,7 @@ namespace Datos
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                // CONSULTA CORREGIDA
+                
                 datos.setearConsulta(@"
                     SELECT 
                         U.UsuarioID, U.Email, U.PasswordHash, U.EstaActivo, 

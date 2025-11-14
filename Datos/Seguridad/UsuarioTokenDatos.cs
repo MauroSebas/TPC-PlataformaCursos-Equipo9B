@@ -1,5 +1,5 @@
 ﻿using Dominio;
-using Dominio.Enums; // <-- Necesario
+using Dominio.Enums; 
 using Dominio.Seguridad;
 using System;
 using System.Data.SqlClient;
@@ -8,18 +8,12 @@ namespace Datos
 {
     public class UsuarioTokenDatos
     {
-        /// <summary>
-        /// Inserta el nuevo token.
-        /// (Borrar los viejos ahora es responsabilidad de la BLL,
-        /// porque primero tiene que chequear la fecha).
-        /// </summary>
         public void Insertar(UsuarioToken token)
         {
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                // ¡¡IMPORTANTE!! Sacamos el DELETE de acá.
-                // Ahora solo inserta.
+                
                 datos.setearConsulta(@"
                     INSERT INTO UsuarioTokens (UsuarioID, Token, TipoToken, FechaVencimiento, FechaCreacion) 
                     VALUES (@UsuarioID, @Token, @TipoToken, @FechaVencimiento, @FechaCreacion)");
@@ -41,12 +35,7 @@ namespace Datos
             {
                 datos.cerrarConexion();
             }
-        }
-
-        /// <summary>
-        /// Borra TODOS los tokens de un tipo para un usuario.
-        /// La BLL lo va a llamar ANTES de insertar uno nuevo.
-        /// </summary>
+        }     
         public void EliminarTokensAnteriores(int usuarioID, TipoTokenEnum tipoToken)
         {
             AccesoDatos datos = new AccesoDatos();
@@ -65,11 +54,7 @@ namespace Datos
             {
                 datos.cerrarConexion();
             }
-        }
-
-        /// <summary>
-        /// Busca un token por el string (para validarlo).
-        /// </summary>
+        }       
         public UsuarioToken BuscarPorToken(string token)
         {
             AccesoDatos datos = new AccesoDatos();
@@ -83,7 +68,7 @@ namespace Datos
 
                 if (datos.Lector.Read())
                 {
-                    return MapearToken(datos.Lector); // Usamos un helper
+                    return MapearToken(datos.Lector); 
                 }
                 return null;
             }
@@ -95,18 +80,13 @@ namespace Datos
             {
                 datos.cerrarConexion();
             }
-        }
-
-        /// <summary>
-        /// ¡¡EL MÉTODO NUEVO!!
-        /// Busca el token MÁS RECIENTE de un tipo para un usuario.
-        /// </summary>
+        }      
         public UsuarioToken ObtenerUltimoToken(int usuarioID, TipoTokenEnum tipoToken)
         {
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                // Ordenamos por fecha de creación DESC y tomamos el primero (TOP 1)
+                // Ordena por fecha de creación DESC y toma el primero (TOP 1)
                 datos.setearConsulta(@"
                     SELECT TOP 1 TokenID, UsuarioID, Token, TipoToken, FechaVencimiento, FechaCreacion 
                     FROM UsuarioTokens 
@@ -120,7 +100,7 @@ namespace Datos
 
                 if (datos.Lector.Read())
                 {
-                    return MapearToken(datos.Lector); // Usamos el helper
+                    return MapearToken(datos.Lector); 
                 }
                 return null;
             }
@@ -132,14 +112,10 @@ namespace Datos
             {
                 datos.cerrarConexion();
             }
-        }
-
-        /// <summary>
-        /// Borra un token específico por su ID (para consumirlo).
-        /// </summary>
+        }     
         public void Eliminar(int tokenID)
         {
-            // (Este método queda igual que antes)
+            
             AccesoDatos datos = new AccesoDatos();
             try
             {
@@ -156,9 +132,7 @@ namespace Datos
             {
                 datos.cerrarConexion();
             }
-        }
-
-        // Helper para no repetir código
+        }       
         private UsuarioToken MapearToken(SqlDataReader lector)
         {
             return new UsuarioToken
@@ -168,7 +142,7 @@ namespace Datos
                 Token = (string)lector["Token"],
                 TipoToken = (int)lector["TipoToken"],
                 FechaVencimiento = (DateTime)lector["FechaVencimiento"],
-                FechaCreacion = (DateTime)lector["FechaCreacion"] // <-- ¡NUEVA LÍNEA!
+                FechaCreacion = (DateTime)lector["FechaCreacion"] 
             };
         }
     }

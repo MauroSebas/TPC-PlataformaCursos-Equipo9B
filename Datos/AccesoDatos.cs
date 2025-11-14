@@ -87,8 +87,7 @@ namespace Datos
             }
         }
 
-        // --- NUEVO MÉTODO ---
-        // Método para ejecutar INSERT, UPDATE, DELETE o consultas que devuelven un solo valor
+       
         public int ejecutarAccionScalar()
         {
             comando.Connection = conexion;
@@ -101,7 +100,7 @@ namespace Datos
             {
                 throw ex;
             }
-            //Se ejecutara siempre
+            
             finally
             {
                 if(conexion.State == System.Data.ConnectionState.Open)

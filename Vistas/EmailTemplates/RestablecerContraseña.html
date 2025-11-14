@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restablecer Contraseña</title>
+</head>
+<body style="font-family: 'Arial', sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0;">
+
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+            <td align="center">
+
+                <table width="600" border="0" cellspacing="0" cellpadding="0" style="width: 600px; margin: 20px auto; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+
+                    <tr>
+                        <td align="center" style="padding: 20px 0; background-color: #f9f9f9; border-bottom: 1px solid #ddd;">
+                            <h1 style="margin: 0; color: #dc3545; font-size: 24px;">Restablecer Acceso</h1>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="padding: 30px 40px;">
+
+                            <h2 style="margin-top: 0; color: #222;">Hola!</h2>
+
+                            <p style="font-size: 16px;">
+                                Hemos recibido una solicitud para restablecer la contraseña de tu cuenta.
+                            </p>
+                            <p style="font-size: 16px;">
+                                Si no solicitaste este cambio, puedes ignorar este mensaje de forma segura.
+                            </p>
+
+                            <table border="0" cellspacing="0" cellpadding="0" style="margin: 30px 0;">
+                                <tr>
+                                    <td align="center">
+                                        <a href="{{LINK_RESTABLECER}}" target="_blank" style="display: inline-block; padding: 12px 25px; background-color: #dc3545; color: #ffffff; text-decoration: none; font-size: 16px; font-weight: bold; border-radius: 5px;">
+                                            Establecer Nueva Contraseña
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <p style="font-size: 14px; color: #555;">
+                                Este enlace te llevará a la página **RestablecerContraseña.aspx**.
+                            </p>
+                            <p style="font-size: 12px; color: #888; word-break: break-all;">
+                                {{LINK_RESTABLECER}}
+                            </p>
+
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td align="center" style="padding: 20px 40px; background-color: #f9f9f9; border-top: 1px solid #ddd; font-size: 12px; color: #888;">
+                            <p style="margin: 0;">&copy; <%= DateTime.Now.Year %> Plataforma de Cursos. Todos los derechos reservados.</p>
+                        </td>
+                    </tr>
+
+                </table>
+
+            </td>
+        </tr>
+    </table>
+
+</body>
+</html>

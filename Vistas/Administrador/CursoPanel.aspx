@@ -48,17 +48,17 @@
                 </div>
             </div>
 
-            <asp:GridView ID="dgvCurso" DataKeyNames="Id" OnSelectedIndexChanged="dgvCurso_SelectedIndexChanged" runat="server" CssClass="table table-hover" AutoGenerateColumns="false">
+            <asp:GridView ID="dgvCurso" DataKeyNames="Id" OnSelectedIndexChanged="dgvCurso_SelectedIndexChanged" runat="server" CssClass="table" AutoGenerateColumns="false">
                 <Columns>
-                    <asp:BoundField HeaderText="Nombre" DataField="Nombre" />
+                    <asp:BoundField HeaderText="ID" DataField="Id" />
                     <asp:BoundField HeaderText="Título" DataField="Titulo" />
-                    <asp:BoundField HeaderText="Categoria" DataField="CategoriaNombre" />
+                    <asp:BoundField HeaderText="Categoria" DataField="Categoria.Nombre" />
                     <asp:BoundField HeaderText="Precio" DataField="Precio" />
                     <asp:BoundField HeaderText="Estado" DataField="Publicado" />
                     <asp:CommandField ShowSelectButton="true" SelectText="Seleccionar" HeaderText="Acciones" />
                 </Columns>
             </asp:GridView>
-
+               
 
             <nav aria-label="Navegación de la tabla" class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 p-4">
                 <span class="small text-body-secondary">Mostrando <span class="fw-semibold text-body-emphasis">1-4</span> de <span class="fw-semibold text-body-emphasis">100</span>

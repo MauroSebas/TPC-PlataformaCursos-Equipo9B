@@ -15,7 +15,7 @@ namespace Vistas
         protected void Page_Load(object sender, EventArgs e)
         {
             CategoriaNegocio negocio = new CategoriaNegocio();
-            ListaCategoria = negocio.listarConSP();
+            ListaCategoria = negocio.listarCategoria();
 
         }
     }

@@ -15,15 +15,6 @@ namespace Vistas.Aministrador
     {
 
         /// <summary>
-        /// Control lblNombreCurso.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblNombreCurso;
-
-        /// <summary>
         /// Control txtNombreCurso.
         /// </summary>
         /// <remarks>
@@ -31,15 +22,6 @@ namespace Vistas.Aministrador
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtNombreCurso;
-
-        /// <summary>
-        /// Control lblImagenPortada.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblImagenPortada;
 
         /// <summary>
         /// Control txtImagenPortada.
@@ -51,15 +33,6 @@ namespace Vistas.Aministrador
         protected global::System.Web.UI.WebControls.TextBox txtImagenPortada;
 
         /// <summary>
-        /// Control lblDescripcion.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDescripcion;
-
-        /// <summary>
         /// Control txtDescripcion.
         /// </summary>
         /// <remarks>
@@ -67,15 +40,6 @@ namespace Vistas.Aministrador
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtDescripcion;
-
-        /// <summary>
-        /// Control lblCategoria.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblCategoria;
 
         /// <summary>
         /// Control ddlCategoria.
@@ -87,15 +51,6 @@ namespace Vistas.Aministrador
         protected global::System.Web.UI.WebControls.DropDownList ddlCategoria;
 
         /// <summary>
-        /// Control lblPrecio.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblPrecio;
-
-        /// <summary>
         /// Control txtPrecio.
         /// </summary>
         /// <remarks>
@@ -105,40 +60,22 @@ namespace Vistas.Aministrador
         protected global::System.Web.UI.WebControls.TextBox txtPrecio;
 
         /// <summary>
-        /// Control rbAccesoPermanente.
+        /// Control rdbAccesoPermanente.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton rbAccesoPermanente;
+        protected global::System.Web.UI.WebControls.RadioButton rdbAccesoPermanente;
 
         /// <summary>
-        /// Control lblAccesoPermanente.
+        /// Control rdbTiempoLimitado.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblAccesoPermanente;
-
-        /// <summary>
-        /// Control rbTiempoLimitado.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton rbTiempoLimitado;
-
-        /// <summary>
-        /// Control lblTiempoLimitado.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTiempoLimitado;
+        protected global::System.Web.UI.WebControls.RadioButton rdbTiempoLimitado;
 
         /// <summary>
         /// Control txtDuracionDias.

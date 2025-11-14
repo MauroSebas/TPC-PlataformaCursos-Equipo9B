@@ -20,7 +20,7 @@ namespace Vistas
             {
                 if (!IsPostBack)
                 {
-                    dgvCategorias.DataSource = negocio.listarConSP();
+                    dgvCategorias.DataSource = negocio.listarCategoria();
                     dgvCategorias.DataBind();
                 }
             }
@@ -48,7 +48,7 @@ namespace Vistas
             CategoriaNegocio negocio = new CategoriaNegocio();
             Categoria nueva = new Categoria();
             nueva.Nombre = txtNombre.Text;
-            negocio.agregarConSP(nueva);
+            negocio.agregarCategoria(nueva);
             Response.Redirect("CategoriaGestion.aspx");
 
         }

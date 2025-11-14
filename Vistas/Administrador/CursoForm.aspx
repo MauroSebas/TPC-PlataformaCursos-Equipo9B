@@ -28,18 +28,18 @@
                 <div class="d-flex flex-column gap-4">
 
                     <div class="mb-2">
-                        <asp:Label ID="lblNombreCurso" AssociatedControlID="txtNombreCurso" CssClass="form-label" runat="server" Text="Nombre del Curso"></asp:Label>
+                        <label for="txtNombreCurso" class="form-label">Nombre del Curso</label>
                         <asp:TextBox ID="txtNombreCurso" runat="server" CssClass="form-control" placeholder="Ej: Introduccion a Base de Datos"></asp:TextBox>
                     </div>
 
                     <div class="mb-2">
-                        <asp:Label ID="lblImagenPortada" AssociatedControlID="txtImagenPortada" CssClass="form-label" runat="server" Text="Ingrese la URL de la Imagen que utilizara como Portada"></asp:Label>
-                        <asp:TextBox ID="txtImagenPortada" runat="server" CssClass="form-control"></asp:TextBox>
+                        <label for="txtImagenPortada" class="form-label">Ingrese la URL de la Imagen que utilizara como Portada</label>
+                        <asp:TextBox ID="txtImagenPortada" runat="server"  CssClass="form-control"></asp:TextBox>
                         <%--Usar un updatepanel--%>
                     </div>
 
                     <div class="mb-2">
-                        <asp:Label ID="lblDescripcion" AssociatedControlID="txtDescripcion" CssClass="form-label" runat="server" Text="Descripción Detallada"></asp:Label>
+                        <label for="txtDescripcion" class="form-label">Descripción Detallada</label>
                         <asp:TextBox ID="txtDescripcion" TextMode="MultiLine" runat="server" CssClass="form-control" placeholder="Proporciona una descripción detallada del curso, incluyendo objetivos de aprendizaje, público objetivo y esquema de contenido..."></asp:TextBox>
                     </div>
 
@@ -47,7 +47,7 @@
 
                     <div class="row g-4">
                         <div class="col-md-6">
-                            <asp:Label ID="lblCategoria" AssociatedControlID="ddlCategoria" CssClass="form-label" runat="server" Text="Categoria"></asp:Label>
+                            <label for="ddlCategoria" class="form-label">Categoria</label>
                             <asp:DropDownList ID="ddlCategoria" runat="server" CssClass="form-select" DataTextField="Nombre" DataValueField="Id"></asp:DropDownList>
                         </div>
                     </div>
@@ -59,7 +59,7 @@
                     <h3 class="h5 fw-bold">Precio</h3>
 
                     <div class="mb-3">
-                        <asp:Label ID="lblPrecio" runat="server" Text="Precio del Curso" CssClass="form-label fw-medium" AssociatedControlID="txtPrecio" />
+                        <label for="txtPrecio" class="form-label fw-medium">Precio del curso</label>
                         <div class="input-group mt-2" style="max-width: 200px;">
                             <span class="input-group-text">$</span>
                             <asp:TextBox ID="txtPrecio" runat="server" CssClass="form-control" TextMode="Number" placeholder="99.00" step="0.01" />
@@ -74,14 +74,14 @@
                 <h3 class="h5 fw-bold">Control de Acceso</h3>
 
                 <div class="form-check">
-                    <asp:RadioButton ID="rbAccesoPermanente" runat="server" GroupName="ControlAcceso" CssClass="form-check-input" Checked="true" />
-                    <asp:Label ID="lblAccesoPermanente" runat="server" Text="Acceso Permanente" CssClass="form-check-label fs-6" AssociatedControlID="rbAccesoPermanente" />
+                    <asp:RadioButton ID="rdbAccesoPermanente" runat="server" GroupName="ControlAcceso" CssClass="form-check-input" Checked="true" />
+                    <label for="rdbAccesoPermanente" CssClass="form-check-label fs-6">Acceso Permanente"</label>/>
                 </div>
 
                 <div>
                     <div class="form-check mb-2">
-                        <asp:RadioButton ID="rbTiempoLimitado" runat="server" GroupName="ControlAcceso" CssClass="form-check-input" />
-                        <asp:Label ID="lblTiempoLimitado" runat="server" Text="Tiempo Limitado (en días)" CssClass="form-check-label fs-6" AssociatedControlID="rbTiempoLimitado" />
+                        <asp:RadioButton ID="rdbTiempoLimitado" runat="server" GroupName="ControlAcceso" CssClass="form-check-input" />
+                        <label for="rdbTiempoLimitad" CssClass="form-check-label fs-6">Tiempo Limitado (en días)</label> />
                     </div>
 
                     <div style="max-width: 200px;">

@@ -1,4 +1,5 @@
-﻿using Dominio;
+﻿
+using Dominio;
 using Negocio;
 using System;
 using System.Collections.Generic;
@@ -25,11 +26,11 @@ namespace Vistas
                 {
                     //Utlizo la base de datos para traer la lista de categorias
                     seleccionada = negocio.BuscarPorId(id);
+                    
+                    //Precargar el label
+                    txtModificar.Text = seleccionada.Nombre;
+
                 }
-
-                //Precargar el label
-
-                txtModificar.Text = seleccionada.Nombre;
 
 
             }
@@ -46,7 +47,15 @@ namespace Vistas
             int id = int.Parse(Request.QueryString["Id"].ToString());
             seleccionada.Id = id;
             seleccionada.Nombre = txtModificar.Text;
-            negocio.modificarConSP(seleccionada);
+
+            int numVerificacion = negocio.modificarCategoria(seleccionada);
+
+            if ( numVerificacion < 0)
+            {
+                //Modal error en la modificacion
+                Response.Redirect("CategoriaGestion.aspx");
+            }
+    
             Response.Redirect("CategoriaGestion.aspx");
 
         }

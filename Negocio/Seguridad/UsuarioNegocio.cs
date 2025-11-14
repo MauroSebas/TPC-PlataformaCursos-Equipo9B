@@ -1,6 +1,7 @@
 ﻿using Datos;
 using Dominio;
 using Dominio.Enums;
+using Microsoft.AspNet.Identity;
 using Negocio.Seguridad;
 using Negocio.Servicios;
 using System;
@@ -16,6 +17,7 @@ namespace Negocio
         private readonly UsuarioTokenNegocio tokenNegocio = new UsuarioTokenNegocio();
         private readonly EmailServicio emailServicio = new EmailServicio();
 
+        private readonly PasswordHasher _hasher = new PasswordHasher(); 
         public void RegistrarUsuario(Usuario nuevoUsuario, string passwordPlano)
         {
             try
@@ -33,7 +35,7 @@ namespace Negocio
                 }
 
                 // 3. Hashear la contraseña
-                nuevoUsuario.PasswordHash = BCrypt.Net.BCrypt.HashPassword(passwordPlano);
+                nuevoUsuario.PasswordHash = _hasher.HashPassword(passwordPlano); 
 
                 // 4. Asignar valores por defecto
                 nuevoUsuario.RolID = (int)RolEnum.Participante;
@@ -65,7 +67,7 @@ namespace Negocio
 
                 string linkActivacion = $"{host}{applicationPath}Auth/ActivarCuenta.aspx?token={token}";
 
-                // 9. Armar los reemplazos para el template HTML
+                // 9. Estos son los reemplazos para el template HTML
                 var reemplazos = new Dictionary<string, string>();
                 reemplazos.Add("{{NOMBRE_USUARIO}}", nuevoUsuario.Email); 
                 reemplazos.Add("{{LINK_ACTIVACION}}", linkActivacion);
@@ -106,10 +108,10 @@ namespace Negocio
                 if (string.IsNullOrEmpty(usuario.PasswordHash))
                     return null;
 
-                if (!BCrypt.Net.BCrypt.Verify(passwordPlano, usuario.PasswordHash))
-                    return null; 
+                if (_hasher.VerifyHashedPassword(usuario.PasswordHash, passwordPlano) == PasswordVerificationResult.Failed)
+                    return null;
 
-                
+
                 usuario.FechaUltimoLogin = DateTime.Now;
                 usuarioDatos.Actualizar(usuario);        
 
@@ -124,28 +126,28 @@ namespace Negocio
         {
             try
             {
-                // 1. Buscamos al usuario por email (la DAL nos trae todo)
+                
                 var usuario = usuarioDatos.BuscarPorEmail(email);
 
-                // 2. REGLA DE NEGOCIO: ¿Existe el usuario?
+                
                 if (usuario == null)
                 {
-                    // ¡OJO! No le decimos "email no existe" por seguridad (para que
-                    // no adivinen emails). Le damos un mensaje genérico.
+                   
                     throw new Exception("Si el email está registrado, te hemos enviado el correo.");
                 }
 
-                // 3. REGLA DE NEGOCIO: ¿Ya está activo?
+                
                 if (usuario.EstadoCuentaID == (int)EstadoCuentaEnum.Activo)
                 {
                     throw new Exception("Esta cuenta ya se encuentra activa. Podés iniciar sesión directamente.");
                 }
 
-                // 4. ¡OK, es un usuario "trabado" (PendienteActivacion)!
-                // Generamos un NUEVO token (la BLL de Token se encarga de esto)
+                // Esto es si el usuario esta trabado con el estado (PendienteActivacion)
+                // Genera un NUEVO token 
                 string token = tokenNegocio.GenerarToken(usuario.UsuarioID, TipoTokenEnum.ActivacionCuenta);
 
-                // 5. Armamos el link (reutilizamos la lógica de RegistrarUsuario)
+                //  Todo el proce de mandar el mail es lo mismo que para registrarte.
+                //Tengo que meterlo en una función aparte, pero ahora no tengo tiempo.
                 string host = HttpContext.Current.Request.Url.Scheme + "://" + HttpContext.Current.Request.Url.Authority;
                 string applicationPath = HttpContext.Current.Request.ApplicationPath;
                 if (!applicationPath.Equals("/"))
@@ -153,12 +155,12 @@ namespace Negocio
 
                 string linkActivacion = $"{host}{applicationPath}Auth/ActivarCuenta.aspx?token={token}";
 
-                // 6. Armamos los reemplazos
+                
                 var reemplazos = new Dictionary<string, string>();
                 reemplazos.Add("{{NOMBRE_USUARIO}}", usuario.Email);
                 reemplazos.Add("{{LINK_ACTIVACION}}", linkActivacion);
 
-                // 7. Enviar el Email (reutilizamos el servicio y el template)
+                
                 emailServicio.EnviarTemplateEmail(
                     usuario.Email,
                     "Reenvío de Activación de Cuenta",
@@ -224,13 +226,13 @@ namespace Negocio
             if (usuario == null)
                 throw new Exception("No se encontró el usuario.");
 
-            if (string.IsNullOrEmpty(usuario.PasswordHash) || !BCrypt.Net.BCrypt.Verify(passwordActual, usuario.PasswordHash))
+            if (string.IsNullOrEmpty(usuario.PasswordHash) || _hasher.VerifyHashedPassword(usuario.PasswordHash, passwordActual) == PasswordVerificationResult.Failed)
                 throw new Exception("La contraseña actual ingresada es incorrecta.");
 
             if (string.IsNullOrEmpty(passwordNueva) || passwordNueva.Length < 8)
                 throw new Exception("La nueva contraseña debe tener al menos 8 caracteres.");
 
-            usuario.PasswordHash = BCrypt.Net.BCrypt.HashPassword(passwordNueva);
+            usuario.PasswordHash = _hasher.HashPassword(passwordNueva);
             if (!usuarioDatos.Actualizar(usuario))
                 throw new Exception("No se pudo actualizar la contraseña en la base de datos.");
         }
@@ -252,9 +254,7 @@ namespace Negocio
         public Usuario BuscarPorEmail(string email)
         {
             try
-            {
-                // Este es un simple "pass-through".
-                // Llama a la DAL (que ya trae el objeto completo con JOINs)
+            {              
                 return usuarioDatos.BuscarPorEmail(email);
             }
             catch (Exception ex)
@@ -301,6 +301,28 @@ namespace Negocio
             if (usuarioID <= 0)
                 throw new ArgumentException("ID de usuario inválido.");
             perfilDatos.InsertarPerfilVacio(usuarioID);
+        }
+
+        public void ActualizarPassword(int usuarioID, string nuevaPassword)
+        {
+            try
+            {
+                var usuario = usuarioDatos.BuscarPorID(usuarioID);
+                if (usuario == null)
+                    throw new Exception("No se encontró el usuario para actualizar la contraseña.");
+
+                if (string.IsNullOrEmpty(nuevaPassword) || nuevaPassword.Length < 8)
+                    throw new Exception("La nueva contraseña debe tener al menos 8 caracteres.");
+
+                usuario.PasswordHash = _hasher.HashPassword(nuevaPassword);
+
+                if (!usuarioDatos.Actualizar(usuario))
+                    throw new Exception("No se pudo actualizar la contraseña en la base de datos.");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al actualizar la contraseña.", ex);
+            }
         }
     }
 }

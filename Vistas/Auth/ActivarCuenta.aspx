@@ -8,11 +8,7 @@
             <div class="card shadow-sm border-0">
                 <div class="card-body p-5">
                     
-                    <!-- 
-                        Usamos un Panel de ASP.NET.
-                        El CodeBehind lo va a hacer visible y le va a poner 
-                        clase 'alert-success' (si salió bien) o 'alert-danger' (si falló).
-                    -->
+                    
                     <asp:Panel ID="pnlMensaje" runat="server" CssClass="alert" Visible="false" role="alert">
                         <h4 class="alert-heading">
                             <asp:Literal ID="litTitulo" runat="server" />

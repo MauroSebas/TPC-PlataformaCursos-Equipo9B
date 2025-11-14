@@ -15,6 +15,51 @@ namespace Vistas.Auth
     {
 
         /// <summary>
+        /// Control pnlMensaje.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlMensaje;
+
+        /// <summary>
+        /// Control litTitulo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litTitulo;
+
+        /// <summary>
+        /// Control litMensaje.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litMensaje;
+
+        /// <summary>
+        /// Control hlLogin.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink hlLogin;
+
+        /// <summary>
+        /// Control pnlFormulario.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlFormulario;
+
+        /// <summary>
         /// Control pnlError.
         /// </summary>
         /// <remarks>
@@ -33,15 +78,6 @@ namespace Vistas.Auth
         protected global::System.Web.UI.WebControls.Literal litErrorMessage;
 
         /// <summary>
-        /// Control pnlFormulario.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlFormulario;
-
-        /// <summary>
         /// Control txtNuevaPassword.
         /// </summary>
         /// <remarks>
@@ -51,13 +87,13 @@ namespace Vistas.Auth
         protected global::System.Web.UI.WebControls.TextBox txtNuevaPassword;
 
         /// <summary>
-        /// Control txtConfirmacionPassword.
+        /// Control txtConfirmarPassword.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtConfirmacionPassword;
+        protected global::System.Web.UI.WebControls.TextBox txtConfirmarPassword;
 
         /// <summary>
         /// Control btnCambiarPassword.
@@ -67,14 +103,5 @@ namespace Vistas.Auth
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnCambiarPassword;
-
-        /// <summary>
-        /// Control pnlMensaje.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlMensaje;
     }
 }

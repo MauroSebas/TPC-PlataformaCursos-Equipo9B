@@ -11,7 +11,7 @@ namespace Dominio
         public int UsuarioID { get; set; }
         public string Email { get; set; }
         public string PasswordHash { get; set; } 
-        public bool EstaActivo { get; set; } // Baja lógica
+        public bool EstaActivo { get; set; } 
         public int RolID { get; set; }
         public int EstadoCuentaID { get; set; }
 
@@ -19,8 +19,8 @@ namespace Dominio
         public DateTime? FechaUltimoLogin { get; set; }
         public DateTime? FechaBaja { get; set; }
 
-        public Rol Rol { get; set; } //ADMIN - PARTICIPANTE
-        public EstadoCuenta EstadoCuenta { get; set; } //Pendiente - Activo
+        public Rol Rol { get; set; } 
+        public EstadoCuenta EstadoCuenta { get; set; } 
         public Perfil Perfil { get; set; }
         public bool EsAdmin => Rol?.NombreRol == "ADMIN";
         public Usuario()

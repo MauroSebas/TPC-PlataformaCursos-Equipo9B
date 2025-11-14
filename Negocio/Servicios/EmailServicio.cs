@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration; 
-using System.IO;            
-using System.Web;           
-using MailKit.Net.Smtp;   
-using MailKit.Security;   
-using MimeKit;            
+using System.IO;
+using System.Net; 
+using System.Net.Mail; 
+using System.Web; 
 
 namespace Negocio.Servicios
 {
-    
+
     public class EmailServicio
     {
-        // Propiedades  Web.config
+        // Propiedades de configuración
         private readonly string servidorSMTP;
         private readonly int puertoSMTP;
         private readonly string usuarioSMTP;
@@ -23,7 +22,7 @@ namespace Negocio.Servicios
         {
             try
             {
-                // Lee la configuración 
+                // Lee la configuración del Web.config
                 servidorSMTP = ConfigurationManager.AppSettings["Email_SMTP_Server"];
                 puertoSMTP = int.Parse(ConfigurationManager.AppSettings["Email_SMTP_Port"]);
                 usuarioSMTP = ConfigurationManager.AppSettings["Email_User"];
@@ -37,23 +36,17 @@ namespace Negocio.Servicios
             }
             catch (Exception ex)
             {
-                
+                // Si la excepción es solo por el formato del puerto, es un error de config.
                 throw new Exception("Error fatal al configurar EmailServicio. Revisa el Web.config.", ex);
             }
         }
 
-        
-        /// <param name="emailDestino">El email del destinatario.</param>
-        /// <param name="asunto">El asunto del correo.</param>
-        /// <param name="nombreTemplate">El nombre del archivo (ej. "ActivacionCuenta.html").</param>
-        /// <param name="reemplazos">Un diccionario con los placeholders y sus valores.</param>
         public void EnviarTemplateEmail(string emailDestino, string asunto, string nombreTemplate, Dictionary<string, string> reemplazos)
         {
             string cuerpoHtml;
             try
             {
                 // 1. Obtiene la ruta física del template
-               
                 string templatePath = HttpContext.Current.Server.MapPath($"~/EmailTemplates/{nombreTemplate}");
 
                 // 2. Lee todo el archivo HTML
@@ -74,38 +67,33 @@ namespace Negocio.Servicios
                 throw new Exception("Error al leer o reemplazar los placeholders del template.", ex);
             }
 
-            // 4. Llama al método  para que lo envíe
+            // 4. Llama al método para que lo envíe
             EnviarEmailInterno(emailDestino, asunto, cuerpoHtml);
         }
 
-
-       
         private void EnviarEmailInterno(string emailDestino, string asunto, string cuerpoHtml)
         {
             try
             {
-                // 1. Crear el mensaje 
-                var email = new MimeMessage();
-                email.From.Add(new MailboxAddress(remitenteNombre, usuarioSMTP));
-                email.To.Add(MailboxAddress.Parse(emailDestino));
+                // 1. Configuración del cliente SMTP nativo
+                SmtpClient clienteSmtp = new SmtpClient(servidorSMTP, puertoSMTP);
+                clienteSmtp.Credentials = new NetworkCredential(usuarioSMTP, passwordSMTP);
+                clienteSmtp.EnableSsl = true; // Gmail requiere SSL
+                clienteSmtp.DeliveryMethod = SmtpDeliveryMethod.Network; // Método de envío
+
+                // 2. Crear el mensaje nativo
+                MailMessage email = new MailMessage();
+                email.From = new MailAddress(usuarioSMTP, remitenteNombre);
+                email.To.Add(emailDestino);
                 email.Subject = asunto;
+                email.Body = cuerpoHtml;
+                email.IsBodyHtml = true;
 
-                // 2. Definir el contenido (El cuerpo HTML)
-                var builder = new BodyBuilder { HtmlBody = cuerpoHtml };
-                email.Body = builder.ToMessageBody();
-
-                // 3. Conectar, Autenticar y Enviar 
-                using (var clienteSmtp = new SmtpClient())
-                {
-                    clienteSmtp.Connect(servidorSMTP, puertoSMTP, SecureSocketOptions.StartTls);
-                    clienteSmtp.Authenticate(usuarioSMTP, passwordSMTP);
-                    clienteSmtp.Send(email);
-                    clienteSmtp.Disconnect(true);
-                }
+                // 3. Enviar
+                clienteSmtp.Send(email);
             }
             catch (Exception ex)
             {
-                
                 throw new Exception($"Error al enviar el email: {ex.Message}", ex);
             }
         }

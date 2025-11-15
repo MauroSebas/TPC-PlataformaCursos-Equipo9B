@@ -16,7 +16,7 @@
 
 <body>
     <form id="form1" runat="server">
-        <!-- ¡¡CAMBIO 1: AGREGAMOS EL SCRIPTMANAGER!! (Obligatorio para los OnClick de los LinkButton) -->
+        
         <asp:ScriptManager ID="ScriptManager1" runat="server" />
 
         <nav class="navbar navbar-expand-lg border-bottom shadow-sm bg-body" id="main-navbar">
@@ -34,28 +34,18 @@
                     <div class="dropdown">
                         <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                             
-                            <!-- 
-                                ¡¡CAMBIO 2: AVATAR DINÁMICO!!
-                                Reemplazamos el <img> de HTML por un <asp:Image>
-                                para poder controlarlo desde C#.
-                            -->
+                           
                             <asp:Image ID="imgAvatar" runat="server" alt="Avatar" width="32" height="32" class="rounded-circle me-2" />
                             
-                            <!-- 
-                                ¡¡CAMBIO 3: NOMBRE DINÁMICO!!
-                                Agregamos un Literal para poner "Pepito Rogelio" o "wxyz.25".
-                            -->
+                           
                             <asp:Literal ID="litNombreUsuario" runat="server" Text="Usuario" />
 
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end shadow-sm">
-                            <li><a class="dropdown-item" href="~/Alumno/Perfil.aspx" runat="server">Mi Perfil</a></li>
+                            <li><a class="dropdown-item" href="~/Alumno/PerfilAlumno.aspx" runat="server">Mi Perfil</a></li>
                             <li><hr class="dropdown-divider" /></li>
                             <li>
-                                <!-- 
-                                    ¡¡CAMBIO 4: CONECTAMOS EL LOGOUT!!
-                                    Agregamos el "OnClick" para que llame al C#
-                                -->
+                               
                                 <asp:LinkButton ID="btnLogoutHeader" runat="server" 
                                     CssClass="dropdown-item text-danger"
                                     OnClick="btnLogout_Click">
@@ -94,11 +84,7 @@
                                     <i class="bi bi-award me-2 text-primary"></i>Certificados
                                 </asp:HyperLink>
                             </li>
-                            <li class="nav-item mb-2">
-                                <asp:HyperLink NavigateUrl="~/Alumno/Aula.aspx" CssClass="nav-link text-body-emphasis" runat="server">
-                                    <i class="bi bi-easel me-2 text-primary"></i>Aula
-                                </asp:HyperLink>
-                            </li>
+                            
                             
                             <li class="nav-item mt-4 pt-2 border-top">
                                 <asp:HyperLink NavigateUrl="~/Home.aspx" CssClass="nav-link text-body-emphasis" runat="server">
@@ -107,10 +93,7 @@
                             </li>
                             
                             <li class="nav-item mt-2">
-                                <!-- 
-                                    ¡¡CAMBIO 5: CONECTAMOS EL LOGOUT 2!!
-                                    Agregamos el "OnClick" también al botón del sidebar.
-                                -->
+                              
                                 <asp:LinkButton ID="btnLogoutSidebar" runat="server" 
                                     CssClass="nav-link text-danger"
                                     OnClick="btnLogout_Click">
@@ -133,7 +116,7 @@
     </form>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-    <!-- Tu main.js ya se encarga del DarkMode -->
+    
     <script src="<%= ResolveUrl("~/Assets/js/main.js") %>"></script>
 </body>
 </html>

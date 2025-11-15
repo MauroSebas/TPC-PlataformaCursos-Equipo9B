@@ -11,7 +11,7 @@ namespace Vistas
 {
 
 
-    public partial class Alumno
+    public partial class AlumnoMaster
     {
 
         /// <summary>

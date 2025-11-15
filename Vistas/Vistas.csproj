@@ -48,6 +48,7 @@
     <Content Include="Administrador\LeccionForm.aspx" />
     <Content Include="Administrador\ModuloGestion.aspx" />
     <Content Include="Administrador\PagosPanel.aspx" />
+    <Content Include="Alumno\PerfilAlumno.aspx" />
     <Content Include="Assets\css\admin-style.css" />
     <Content Include="Assets\css\styles.css" />
     <Content Include="Assets\js\admin.js" />
@@ -135,6 +136,13 @@
     </Compile>
     <Compile Include="Administrador\PagosPanel.aspx.designer.cs">
       <DependentUpon>PagosPanel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Alumno\PerfilAlumno.aspx.cs">
+      <DependentUpon>PerfilAlumno.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Alumno\PerfilAlumno.aspx.designer.cs">
+      <DependentUpon>PerfilAlumno.aspx</DependentUpon>
     </Compile>
     <Compile Include="Auth\ActivarCuenta.aspx.cs">
       <DependentUpon>ActivarCuenta.aspx</DependentUpon>
@@ -264,6 +272,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Security" />

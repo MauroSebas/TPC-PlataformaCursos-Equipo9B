@@ -33,9 +33,17 @@
                     </div>
 
                     <div class="mb-2">
-                        <label for="txtImagenPortada" class="form-label">Ingrese la URL de la Imagen que utilizara como Portada</label>
-                        <asp:TextBox ID="txtImagenPortada" runat="server"  CssClass="form-control"></asp:TextBox>
-                        <%--Usar un updatepanel--%>
+                        <asp:UpdatePanel ID="udpImagenPortada" runat="server">
+                            <ContentTemplate>
+                                <label for="txtImagenPortada" class="form-label">Ingrese la URL de la Imagen que utilizara como Portada </label>
+                                <asp:TextBox ID="txtImagenPortada" runat="server" OnTextChanged="txtImagenPortada_TextChanged" AutoPostBack="true" CssClass="form-control"></asp:TextBox>
+
+
+                                <asp:Image ID="imgPrevia" runat="server" CssClass="curso-preview-imagen" ImageUrl="https://craftsnippets.com/articles_images/placeholder/placeholder.jpg" />
+
+
+                            </ContentTemplate>
+                        </asp:UpdatePanel>
                     </div>
 
                     <div class="mb-2">
@@ -75,13 +83,14 @@
 
                 <div class="form-check">
                     <asp:RadioButton ID="rdbAccesoPermanente" runat="server" GroupName="ControlAcceso" CssClass="form-check-input" Checked="true" />
-                    <label for="rdbAccesoPermanente" CssClass="form-check-label fs-6">Acceso Permanente"</label>/>
+                    <label for="rdbAccesoPermanente" class="form-check-label fs-6">Acceso Permanente"</label>/>
                 </div>
 
                 <div>
                     <div class="form-check mb-2">
                         <asp:RadioButton ID="rdbTiempoLimitado" runat="server" GroupName="ControlAcceso" CssClass="form-check-input" />
-                        <label for="rdbTiempoLimitad" CssClass="form-check-label fs-6">Tiempo Limitado (en días)</label> />
+                        <label for="rdbTiempoLimitad" class="form-check-label fs-6">Tiempo Limitado (en días)</label>
+                        />
                     </div>
 
                     <div style="max-width: 200px;">

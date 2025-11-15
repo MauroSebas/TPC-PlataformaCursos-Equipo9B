@@ -111,10 +111,7 @@ namespace Datos
             //Se ejecutara siempre
             finally
             {
-                if(conexion.State == System.Data.ConnectionState.Open)
-                {
-                    conexion.Close();
-                }
+                conexion.Close();
             }
 
         }

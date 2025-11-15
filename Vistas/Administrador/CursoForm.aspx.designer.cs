@@ -24,6 +24,15 @@ namespace Vistas.Aministrador
         protected global::System.Web.UI.WebControls.TextBox txtNombreCurso;
 
         /// <summary>
+        /// Control udpImagenPortada.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel udpImagenPortada;
+
+        /// <summary>
         /// Control txtImagenPortada.
         /// </summary>
         /// <remarks>
@@ -31,6 +40,15 @@ namespace Vistas.Aministrador
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtImagenPortada;
+
+        /// <summary>
+        /// Control imgPrevia.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image imgPrevia;
 
         /// <summary>
         /// Control txtDescripcion.

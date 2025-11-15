@@ -9,7 +9,6 @@ namespace Datos
 {
      public class CursoDatos
     {
-
         public int agregarCursoConSP(Curso nuevo)
         {
             AccesoDatos datos = new AccesoDatos();
@@ -25,7 +24,7 @@ namespace Datos
                 datos.setearParametro("@DuracionAccesoDias", nuevo.DuracionAccesoDias);
                 datos.setearParametro("@Publicado", nuevo.Publicado);
                 datos.setearParametro("@EstaActivo", nuevo.EstaActivo);
-     
+
                 int idNuevo = datos.ejecutarAccionScalar();
 
                 return idNuevo;
@@ -36,10 +35,7 @@ namespace Datos
                 return -1;
                 throw new Exception("Error al ejecutar agregaConSP()", ex);
             }
-            finally
-            {
-                datos.cerrarConexion();
-            }
+
         }
 
 

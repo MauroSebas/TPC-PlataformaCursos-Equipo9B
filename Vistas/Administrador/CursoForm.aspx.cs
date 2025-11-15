@@ -57,18 +57,13 @@ namespace Vistas.Aministrador
 
                 int IdGenerado = negocio.agregarCurso(nuevo);
 
-                if (  IdGenerado > 0)
+                if (  IdGenerado <= 0)
                 {
-                    //Modal informando ingreso exitoso
-                    
-                    Response.Redirect("ModuloGestion.aspx?ID=" + IdGenerado, false);
-                }
-                else
-                {
-                    //Modal informando ingreso defectuoso
+                    //Modal informando error en el ingreso
+                       
                 }
 
-
+                Response.Redirect("ModuloGestion.aspx?ID=" + IdGenerado, false);
 
             }
             catch(Exception ex)
@@ -82,6 +77,12 @@ namespace Vistas.Aministrador
         protected void btnCancelar_Click(object sender, EventArgs e)
         {
             Response.Redirect("CursoPanel.aspx");
+        }
+
+        protected void txtImagenPortada_TextChanged(object sender, EventArgs e)
+        {
+            imgPrevia.ImageUrl = txtImagenPortada.Text;
+            
         }
     }
 }

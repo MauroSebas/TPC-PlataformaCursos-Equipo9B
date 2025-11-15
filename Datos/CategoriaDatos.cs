@@ -97,10 +97,7 @@ namespace Datos
             {
                 throw ex;
             }
-            finally
-            {
-                datos.cerrarConexion();
-            }
+
         }
         public Categoria BuscarPorId(int id)
         {

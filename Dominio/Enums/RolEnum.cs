@@ -4,9 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Negocio
+namespace Dominio.Enums
 {
-    public class Class1
+
+    public enum RolEnum
     {
+        Administrador = 1,
+        Participante = 2
     }
+
 }

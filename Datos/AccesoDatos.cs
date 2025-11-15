@@ -1,0 +1,124 @@
+﻿using System;
+using System.Data.SqlClient;
+using System.Configuration;
+
+namespace Datos
+{
+    public class AccesoDatos
+    {
+        private SqlConnection conexion;
+        private SqlCommand comando;
+        private SqlDataReader lector;
+
+        public SqlCommand Comando
+        {
+            get { return comando; }
+        }
+       
+
+        public SqlDataReader Lector
+        {
+            get { return lector; }
+        }
+
+        public AccesoDatos()
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["ConexionDB"].ConnectionString;
+            conexion = new SqlConnection(connectionString);
+            comando = new SqlCommand();
+        }
+
+        public void setearConsulta(string consulta)
+        {
+            comando.CommandType = System.Data.CommandType.Text;
+            comando.CommandText = consulta;
+        }
+
+        public void setearConSP( string sp)
+        {
+            comando.CommandType = System.Data.CommandType.StoredProcedure;
+            comando.CommandText = sp;
+        }
+
+        public void setearParametro(string nombre, object valor)
+        {
+            comando.Parameters.AddWithValue(nombre, valor);
+        }
+
+        public void ejecutarAccion()
+        {
+            comando.Connection = conexion;
+            try
+            {
+                conexion.Open();
+                comando.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+        public int ejecutarAccion(bool devolverFilas)
+        {
+            comando.Connection = conexion;
+            try
+            {
+                conexion.Open();
+                return comando.ExecuteNonQuery(); 
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void ejecutarLectura()
+        {
+            comando.Connection = conexion; 
+            try
+            {
+                conexion.Open();
+                lector = comando.ExecuteReader();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+       
+        public int ejecutarAccionScalar()
+        {
+            comando.Connection = conexion;
+            try
+            {
+                conexion.Open();
+                return Convert.ToInt32(comando.ExecuteScalar());
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            
+            finally
+            {
+                if(conexion.State == System.Data.ConnectionState.Open)
+                {
+                    conexion.Close();
+                }
+            }
+
+        }
+
+
+
+        public void cerrarConexion()
+        {
+            if (lector != null && !lector.IsClosed) 
+                lector.Close();
+            if (conexion != null && conexion.State == System.Data.ConnectionState.Open) 
+                conexion.Close();
+        }
+    }
+}

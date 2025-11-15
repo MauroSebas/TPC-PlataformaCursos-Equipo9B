@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activación de Cuenta</title>
+</head>
+<body style="font-family: 'Arial', sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0;">
+
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+            <td align="center">
+
+                <table width="600" border="0" cellspacing="0" cellpadding="0" style="width: 600px; margin: 20px auto; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+
+                    <!-- Encabezado con Logo (Opcional) -->
+                    <tr>
+                        <td align="center" style="padding: 20px 0; background-color: #f9f9f9; border-bottom: 1px solid #ddd;">
+                            <h1 style="margin: 0; color: #0d6efd; font-size: 24px;">Plataforma de Cursos</h1>
+                        </td>
+                    </tr>
+
+                    <!-- Contenido Principal -->
+                    <tr>
+                        <td style="padding: 30px 40px;">
+
+                            <!-- ¡Acá van los placeholders! -->
+                            <h2 style="margin-top: 0; color: #222;">¡Hola {{NOMBRE_USUARIO}}!</h2>
+
+                            <p style="font-size: 16px;">
+                                ¡Gracias por registrarte en nuestra plataforma! Ya estás a un solo paso de empezar a aprender.
+                            </p>
+                            <p style="font-size: 16px;">
+                                Para activar tu cuenta y confirmar tu email, solo tenés que hacer clic en el siguiente botón:
+                            </p>
+
+                            <!-- El Botón (El Link de Activación) -->
+                            <table border="0" cellspacing="0" cellpadding="0" style="margin: 30px 0;">
+                                <tr>
+                                    <td align="center">
+                                        <a href="{{LINK_ACTIVACION}}" target="_blank" style="display: inline-block; padding: 12px 25px; background-color: #0d6efd; color: #ffffff; text-decoration: none; font-size: 16px; font-weight: bold; border-radius: 5px;">
+                                            Activar mi Cuenta
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <p style="font-size: 14px; color: #555;">
+                                Si el botón no funciona, podés copiar y pegar el siguiente enlace en tu navegador:
+                            </p>
+
+                            <!-- El Link (por si el botón falla) -->
+                            <p style="font-size: 12px; color: #888; word-break: break-all;">
+                                {{LINK_ACTIVACION}}
+                            </p>
+
+                        </td>
+                    </tr>
+
+                    <!-- Footer -->
+                    <tr>
+                        <td align="center" style="padding: 20px 40px; background-color: #f9f9f9; border-top: 1px solid #ddd; font-size: 12px; color: #888;">
+                            <p style="margin: 0;">Si vos no creaste esta cuenta, por favor ignorá este email.</p>
+                            <p style="margin: 5px 0 0 0;">&copy; <%= DateTime.Now.Year %> Plataforma de Cursos. Todos los derechos reservados.</p>
+                        </td>
+                    </tr>
+
+                </table>
+
+            </td>
+        </tr>
+    </table>
+
+</body>
+</html>

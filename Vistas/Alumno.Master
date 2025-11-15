@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Alumno.master.cs" Inherits="Vistas.Alumno" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Alumno.master.cs" Inherits="Vistas.AlumnoMaster" %>
 
 <!DOCTYPE html>
 <html lang="es" data-bs-theme="light">
@@ -80,7 +80,7 @@
                                 </asp:HyperLink>
                             </li>
                             <li class="nav-item mb-2">
-                                <asp:HyperLink NavigateUrl="~/Alumno/Perfil.aspx" CssClass="nav-link text-body-emphasis" runat="server">
+                                <asp:HyperLink NavigateUrl="~/Alumno/PerfilAlumno.aspx" CssClass="nav-link text-body-emphasis" runat="server">
                                     <i class="bi bi-person me-2 text-primary"></i>Perfil
                                 </asp:HyperLink>
                             </li>

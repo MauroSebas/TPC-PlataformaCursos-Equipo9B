@@ -4,7 +4,7 @@ using System.Web.UI;
 
 namespace Vistas
 {
-    public partial class Alumno : System.Web.UI.MasterPage
+    public partial class AlumnoMaster : System.Web.UI.MasterPage
     {
         protected void Page_Load(object sender, EventArgs e)
         {

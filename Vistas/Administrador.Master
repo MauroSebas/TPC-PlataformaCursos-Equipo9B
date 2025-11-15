@@ -27,7 +27,8 @@
 <body class="text-body-emphasis">
 
     <form id="form1" runat="server">
-
+    <%--Habilitar el motor AJAX mediante scriptManager--%>
+    <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
         <div class="d-flex">
 
             <aside class="sidebar flex-shrink-0 bg-body border-end p-4 d-flex flex-column justify-content-between">

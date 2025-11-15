@@ -18,10 +18,11 @@ namespace Vistas.Aministrador
             {
                 if (!IsPostBack)
                 {
-                    ddlCategoria.DataSource = negocioCat.listarConSP();
+                    ddlCategoria.DataSource = negocioCat.listarCategoria();
                     ddlCategoria.DataBind();
 
                 }
+
             }
             catch (Exception ex)
             {
@@ -33,31 +34,55 @@ namespace Vistas.Aministrador
         {
             CursoNegocio negocio = new CursoNegocio();
             Curso nuevo = new Curso();
-            nuevo.Titulo = txtNombreCurso.Text;
-            nuevo.Descripcion = txtDescripcion.Text;
-            nuevo.Precio = decimal.Parse(txtPrecio.Text);
-
-            nuevo.Categoria = new Categoria();
-            nuevo.Categoria.Id = int.Parse(ddlCategoria.SelectedValue);
-            nuevo.UrlImagenPortada = txtImagenPortada.Text;
-            nuevo.ModalidadPago = "Transferencia";
-
-            if (rbAccesoPermanente.Checked)
+            
+            try
             {
-                nuevo.DuracionAccesoDias = 0;
-            }
-            else if (rbTiempoLimitado.Checked)
-            {
-                nuevo.DuracionAccesoDias = int.Parse(txtDuracionDias.Text);
-            }
+                nuevo.Titulo = txtNombreCurso.Text;
+                nuevo.Descripcion = txtDescripcion.Text;
+                nuevo.Precio = decimal.Parse(txtPrecio.Text);
 
-            negocio.agregarConSP(nuevo);
-            Response.Redirect("ModuloGestion.aspx");
+                nuevo.Categoria = new Categoria();
+                nuevo.Categoria.Id = int.Parse(ddlCategoria.SelectedValue);
+                nuevo.UrlImagenPortada = txtImagenPortada.Text;
+                nuevo.ModalidadPago = "Transferencia";
+
+                if (rdbAccesoPermanente.Checked)
+                {
+                    nuevo.DuracionAccesoDias = 0;
+                }
+                else if (rdbTiempoLimitado.Checked)
+                {
+                    nuevo.DuracionAccesoDias = int.Parse(txtDuracionDias.Text);
+                }
+
+                int IdGenerado = negocio.agregarCurso(nuevo);
+
+                if (  IdGenerado <= 0)
+                {
+                    //Modal informando error en el ingreso
+                       
+                }
+
+                Response.Redirect("ModuloGestion.aspx?ID=" + IdGenerado, false);
+
+            }
+            catch(Exception ex)
+            {
+                throw new Exception("No se pudo generar ek nuevo curso", ex);
+            }
+                                                                                                                    
+
         }
 
         protected void btnCancelar_Click(object sender, EventArgs e)
         {
             Response.Redirect("CursoPanel.aspx");
+        }
+
+        protected void txtImagenPortada_TextChanged(object sender, EventArgs e)
+        {
+            imgPrevia.ImageUrl = txtImagenPortada.Text;
+            
         }
     }
 }

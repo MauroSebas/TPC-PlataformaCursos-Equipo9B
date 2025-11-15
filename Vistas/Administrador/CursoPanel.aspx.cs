@@ -12,15 +12,16 @@ namespace Vistas.Aministrador
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            CursoNegocio negocio = new CursoNegocio();
             try
             {
                 if (!IsPostBack)
                 {
-                    dgvCurso.DataSource = negocio.listarConSP();
+                    CursoNegocio negocio = new CursoNegocio();
+                    dgvCurso.DataSource = negocio.listarCursos();
                     dgvCurso.DataBind();
 
                 }
+
             }
             catch (Exception ex)
             {

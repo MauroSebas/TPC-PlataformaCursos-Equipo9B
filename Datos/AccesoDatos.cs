@@ -58,6 +58,13 @@ namespace Datos
 
                 throw ex;
             }
+            finally
+            {
+                if (conexion.State == System.Data.ConnectionState.Open)
+                {
+                    conexion.Close();
+                }
+            }
         }
         public int ejecutarAccion(bool devolverFilas)
         {
@@ -103,10 +110,7 @@ namespace Datos
             
             finally
             {
-                if(conexion.State == System.Data.ConnectionState.Open)
-                {
-                    conexion.Close();
-                }
+                conexion.Close();
             }
 
         }

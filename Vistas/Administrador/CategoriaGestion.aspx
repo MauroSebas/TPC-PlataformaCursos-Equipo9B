@@ -5,11 +5,6 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-    <%--                {
-        public int CategoriaID { get; set; }
-        public string Nombre { get; set; }
-        public List<Curso>ListaCurso { get; set; }
-        public bool EstaActivo { get; set; }--%>
 
     <h1>Gestión de Categorias </h1>
     <h5>Crea,edita y gestiona todas las categorias de cursos.</h5>
@@ -23,7 +18,6 @@
     <asp:GridView ID="dgvCategorias" DataKeyNames="Id" OnSelectedIndexChanged="dgvCategorias_SelectedIndexChanged" runat="server" CssClass="table table-hover" AutoGenerateColumns="false">
         <Columns>
             <asp:BoundField HeaderText="Nombre" DataField="Nombre" />
-            <asp:BoundField HeaderText="Cantidad de Cursos" DataField="" />
             <asp:CommandField ShowSelectButton="true" SelectText="Seleccionar" HeaderText="Accion" />
         </Columns>
     </asp:GridView>

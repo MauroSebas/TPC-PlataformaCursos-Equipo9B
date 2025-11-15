@@ -6,12 +6,12 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.IO;
 
 namespace Vistas.Alumno
 {
     public partial class PerfilAlumno1 : System.Web.UI.Page
     {
-
         private Usuario UsuarioLogueado { get; set; }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -22,6 +22,10 @@ namespace Vistas.Alumno
                 return;
             }
             UsuarioLogueado = (Usuario)Session["Usuario"];
+
+            // Ocultamos el panel de mensajes GLOBAL en cada carga
+            pnlMensajeGlobal.Visible = false;
+
             if (!IsPostBack)
             {
                 CargarDatosDelUsuario();
@@ -32,20 +36,17 @@ namespace Vistas.Alumno
         {
             try
             {
-                // Poblamos los campos principales
                 txtNombre.Text = UsuarioLogueado.Perfil.Nombre;
                 txtApellido.Text = UsuarioLogueado.Perfil.Apellido;
                 txtLocalidad.Text = UsuarioLogueado.Perfil.Localidad;
                 txtEmail.Text = UsuarioLogueado.Email;
 
-                // Poblamos los datos "decorativos"
                 litNombreUsuario.Text = string.IsNullOrWhiteSpace(UsuarioLogueado.Perfil.NombreCompleto)
                                         ? UsuarioLogueado.Email.Split('@')[0]
                                         : UsuarioLogueado.Perfil.NombreCompleto;
 
                 if (string.IsNullOrEmpty(UsuarioLogueado.Perfil.UrlFotoPerfil))
                 {
-                    // (Asegurate que esta imagen default exista)
                     imgAvatar.ImageUrl = ResolveUrl("~/Assets/img/avatar_default.png");
                 }
                 else
@@ -55,14 +56,15 @@ namespace Vistas.Alumno
             }
             catch (Exception ex)
             {
-                MostrarMensaje($"Error al cargar tus datos: {ex.Message}", true);
+                MostrarMensajeGlobal($"Error al cargar tus datos: {ex.Message}", true);
             }
         }
 
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
-            // Validamos solo el GRUPO 1
             Page.Validate("DatosPersonales");
+            // Si la validación (largo, etc.) falla, los validadores se mostrarán solos
+            // gracias al UpdatePanel. No necesitamos hacer nada más.
             if (!Page.IsValid) return;
 
             try
@@ -74,38 +76,69 @@ namespace Vistas.Alumno
                 perfilActualizado.Apellido = txtApellido.Text.Trim();
                 perfilActualizado.Localidad = txtLocalidad.Text.Trim();
 
-                // (Lógica del Avatar iría acá)
+                if (fileUploadAvatar.HasFile)
+                {
+                    // ... (lógica de la foto) ...
+                    string extension = Path.GetExtension(fileUploadAvatar.FileName).ToLower();
+                    if (extension != ".jpg" && extension != ".png" && extension != ".jpeg")
+                    {
+                        // ¡¡CAMBIO!! Usamos el panel de mensajes global
+                        MostrarMensajeGlobal("Solo podés subir fotos .jpg o .png", true);
+                        return;
+                    }
+                    string nombreArchivo = $"{UsuarioLogueado.UsuarioID}{extension}";
+                    string rutaVirtual = $"~/Assets/Avatares/{nombreArchivo}";
+                    string rutaFisica = Server.MapPath(rutaVirtual);
+                    fileUploadAvatar.SaveAs(rutaFisica);
+                    perfilActualizado.UrlFotoPerfil = rutaVirtual;
+                }
 
                 negocio.ActualizarPerfil(perfilActualizado);
 
                 UsuarioLogueado.Perfil = perfilActualizado;
                 Session["Usuario"] = UsuarioLogueado;
 
-                CargarDatosDelUsuario(); // Recargamos para ver el nombre nuevo
-                MostrarMensaje("¡Tus datos personales se actualizaron con éxito!");
+                CargarDatosDelUsuario();
+                MostrarMensajeGlobal("¡Tus datos personales se actualizaron con éxito!");
             }
             catch (Exception ex)
             {
-                MostrarMensaje($"Error al guardar tus datos: {ex.Message}", true);
+                MostrarMensajeGlobal($"Error al guardar tus datos: {ex.Message}", true);
             }
         }
 
         // --- Eventos del Panel de Contraseña ---
+
+        // ¡¡ARREGLO DE BUG 2!! (Paneles simultáneos)
         protected void btnMostrarPanelPassword_Click(object sender, EventArgs e)
         {
+            // Mostramos este panel
             pnlCambiarPassword.Visible = true;
+            pnlErrorPassword.Visible = false; // Ocultamos errores viejos
+
+            // Ocultamos el OTRO panel
             pnlCambiarEmail.Visible = false;
+
+            // Forzamos la actualización de AMBOS corralitos
+            updPassword.Update();
+            updEmail.Update();
         }
 
         protected void btnConfirmarPassword_Click(object sender, EventArgs e)
         {
-            // Validamos solo el GRUPO 3
             Page.Validate("CambiarPassword");
-            if (!Page.IsValid) return;
+            // Si la validación (largo, mayúscula, etc.) falla,
+            // el UpdatePanel se refresca solo y muestra los errores.
+            // ¡¡PERO TENEMOS QUE ARREGLAR EL BUG DE QUE SE BORRA LA PASS ACTUAL!!
+            if (!Page.IsValid)
+            {
+                // ¡¡ARREGLO DE BUG 2!! (No limpiar pass)
+                txtPassActual.Attributes.Add("value", txtPassActual.Text);
+                return;
+            }
 
             try
             {
-                // (El CompareValidator ya chequeó que las nuevas coincidan)
                 UsuarioNegocio negocio = new UsuarioNegocio();
                 negocio.ActualizarPassword(
                     UsuarioLogueado.UsuarioID,
@@ -114,11 +147,16 @@ namespace Vistas.Alumno
                 );
 
                 pnlCambiarPassword.Visible = false;
-                MostrarMensaje("¡Tu contraseña se cambió con éxito!");
+                updPassword.Update(); // Forzamos el cierre del panel
+                MostrarMensajeGlobal("¡Tu contraseña se cambió con éxito!");
             }
-            catch (Exception ex)
+            catch (Exception ex) // Esto agarra el "La contraseña actual es incorrecta"
             {
-                MostrarMensaje($"Error al cambiar la contraseña: {ex.Message}", true);
+                // ¡¡ARREGLO DE BUG 1!! (Error local)
+                MostrarErrorEnPanel(pnlErrorPassword, litErrorPassword, ex.Message);
+
+                // ¡¡ARREGLO DE BUG 2!! (No limpiar pass)
+                txtPassActual.Attributes.Add("value", txtPassActual.Text);
             }
         }
 
@@ -128,19 +166,33 @@ namespace Vistas.Alumno
         }
 
         // --- Eventos del Panel de Email ---
+
+        // ¡¡ARREGLO DE BUG 2!! (Paneles simultáneos)
         protected void btnMostrarPanelEmail_Click(object sender, EventArgs e)
         {
+            // Mostramos este panel
             pnlCambiarEmail.Visible = true;
-            pnlCambiarPassword.Visible = false;
+            pnlErrorEmail.Visible = false; // Ocultamos errores viejos
             txtNuevoEmail.Text = "";
             txtPassConfirmarEmail.Text = "";
+
+            // Ocultamos el OTRO panel
+            pnlCambiarPassword.Visible = false;
+
+            // Forzamos la actualización de AMBOS corralitos
+            updEmail.Update();
+            updPassword.Update();
         }
 
         protected void btnConfirmarEmail_Click(object sender, EventArgs e)
         {
-            // Validamos solo el GRUPO 2
             Page.Validate("CambiarEmail");
-            if (!Page.IsValid) return;
+            if (!Page.IsValid)
+            {
+                // ¡¡ARREGLO DE BUG 2!! (No limpiar pass)
+                txtPassConfirmarEmail.Attributes.Add("value", txtPassConfirmarEmail.Text);
+                return;
+            }
 
             string nuevoEmail = txtNuevoEmail.Text.Trim();
             string passwordActual = txtPassConfirmarEmail.Text;
@@ -149,7 +201,6 @@ namespace Vistas.Alumno
             {
                 UsuarioNegocio negocio = new UsuarioNegocio();
 
-                // 1. RE-AUTENTICACIÓN
                 var usuarioValidado = negocio.ValidarLogin(
                     UsuarioLogueado.Email,
                     passwordActual
@@ -157,24 +208,30 @@ namespace Vistas.Alumno
 
                 if (usuarioValidado == null)
                 {
-                    MostrarMensaje("Tu contraseña actual es incorrecta.", true);
+                    // ¡¡ARREGLO DE BUG 1!! (Error local)
+                    MostrarErrorEnPanel(pnlErrorEmail, litErrorEmail, "Tu contraseña actual es incorrecta.");
+
+                    // ¡¡ARREGLO DE BUG 2!! (No limpiar pass)
+                    txtPassConfirmarEmail.Attributes.Add("value", txtPassConfirmarEmail.Text);
                     return;
                 }
 
-                // 2. CAMBIO DE EMAIL
                 negocio.CambiarEmail(UsuarioLogueado.UsuarioID, nuevoEmail);
 
-                // 3. ÉXITO
                 UsuarioLogueado.Email = nuevoEmail;
                 Session["Usuario"] = UsuarioLogueado;
 
                 pnlCambiarEmail.Visible = false;
-                CargarDatosDelUsuario(); // Recargamos para ver el email nuevo
-                MostrarMensaje("¡Email actualizado con éxito!");
+                CargarDatosDelUsuario();
+                MostrarMensajeGlobal("¡Email actualizado con éxito!");
             }
-            catch (Exception ex)
+            catch (Exception ex) // Esto agarra "El email ya existe"
             {
-                MostrarMensaje($"Error al cambiar el email: {ex.Message}", true);
+                // ¡¡ARREGLO DE BUG 1!! (Error local)
+                MostrarErrorEnPanel(pnlErrorEmail, litErrorEmail, ex.Message);
+
+                // ¡¡ARREGLO DE BUG 2!! (No limpiar pass)
+                txtPassConfirmarEmail.Attributes.Add("value", txtPassConfirmarEmail.Text);
             }
         }
 
@@ -184,12 +241,29 @@ namespace Vistas.Alumno
         }
 
         // --- HELPER DE MENSAJES ---
-        private void MostrarMensaje(string mensaje, bool esError = false)
+
+        // ¡¡NUEVO!! Helper para errores DENTRO de los paneles
+        private void MostrarErrorEnPanel(Panel pnlError, Literal litError, string mensaje)
         {
-            // (Acá podés mejorarlo para que use un Panel de Bootstrap)
-            string script = $"alert('{mensaje.Replace("'", "\\'")}');";
-            ScriptManager.RegisterStartupScript(this, GetType(), "mostrarMensaje", script, true);
+            pnlError.Visible = true;
+            litError.Text = mensaje;
+            // Ocultamos el panel de éxito global, por las dudas
+            pnlMensajeGlobal.Visible = false;
+            updMensajeGlobal.Update();
         }
 
+        // Helper para mensajes GLOBALES (Arriba de todo)
+        private void MostrarMensajeGlobal(string mensaje, bool esError = false)
+        {
+            pnlMensajeGlobal.Visible = true;
+            litMensajeGlobal.Text = mensaje;
+            pnlMensajeGlobal.CssClass = esError ? "alert alert-danger" : "alert alert-success";
+
+            // Forzamos la actualización del panel global
+            updMensajeGlobal.Update();
+        }
     }
 }
+
+
+

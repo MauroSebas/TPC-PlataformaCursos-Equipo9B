@@ -53,6 +53,7 @@
     <Content Include="Assets\css\styles.css" />
     <Content Include="Assets\js\admin.js" />
     <Content Include="Assets\js\main.js" />
+    <Content Include="Assets\js\perfilAlumno.js" />
     <Content Include="Assets\js\togglePassword.js" />
     <Content Include="Alumno\Aula.aspx" />
     <Content Include="Auth\ActivarCuenta.aspx" />
@@ -64,6 +65,7 @@
     <Content Include="CursoDetalle.aspx" />
     <Content Include="EmailTemplates\ActivacionCuenta.html" />
     <Content Include="EmailTemplates\RestablecerContraseña.html" />
+    <Content Include="EmailTemplates\VerificarNuevoEmail.html" />
     <Content Include="Global.asax" />
     <Content Include="Home.aspx" />
     <Content Include="Auth\Loguin.aspx" />

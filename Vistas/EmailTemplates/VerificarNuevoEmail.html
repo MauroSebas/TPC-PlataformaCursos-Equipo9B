@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificación de Email</title>
+</head>
+<body style="font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f4f4f4;">
+
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+            <td align="center">
+
+                <table width="600" border="0" cellspacing="0" cellpadding="0" style="background-color: #ffffff; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); overflow: hidden;">
+
+                    <tr>
+                        <td style="padding: 40px; text-align: center; background-color: #0d6efd; color: #ffffff;">
+                            <h1 style="margin: 0; font-size: 28px;">¡Casi listo, {{NOMBRE_USUARIO}}!</h1>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="padding: 40px; color: #333333; font-size: 16px; line-height: 1.6;">
+
+                            <p>Estás a un solo paso de confirmar tu nuevo email para tu cuenta en nuestra plataforma.</p>
+
+                            <p>Para verificar que este es tu correo, **copiá el siguiente código (token)** y pégalo en la página de tu perfil:</p>
+
+                            <div style="background-color: #f0f0f0; border: 1px dashed #cccccc; border-radius: 8px; padding: 20px; text-align: center; margin-top: 30px; margin-bottom: 30px;">
+                                <code style="font-family: 'Courier New', Courier, monospace; font-size: 18px; font-weight: bold; color: #000000;">
+                                    {{TOKEN_VERIFICACION}}
+                                </code>
+                            </div>
+
+                            <p>Una vez que pegues este código, tu email se actualizará al instante.</p>
+
+                            <p style="margin-top: 30px;">Si no solicitaste este cambio, simplemente ignora este email. Tu cuenta sigue segura.</p>
+
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="padding: 20px; text-align: center; background-color: #f9f9f9; border-top: 1px solid #eeeeee;">
+                            <p style="margin: 0; font-size: 14px; color: #888888;">
+                                &copy; <%= DateTime.Now.Year %> Plataforma LMS. Todos los derechos reservados.
+                            </p>
+                        </td>
+                    </tr>
+
+                </table>
+
+            </td>
+        </tr>
+    </table>
+
+</body>
+</html>

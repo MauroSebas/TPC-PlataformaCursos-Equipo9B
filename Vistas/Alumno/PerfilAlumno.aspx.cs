@@ -1,12 +1,15 @@
 ﻿using Dominio;
+using Dominio.Enums;
 using Negocio;
+using Negocio.Seguridad;
+using Negocio.Servicios;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.IO;
 
 namespace Vistas.Alumno
 {
@@ -29,6 +32,14 @@ namespace Vistas.Alumno
             if (!IsPostBack)
             {
                 CargarDatosDelUsuario();
+            }
+            // Chequeamos si venimos de un guardado exitoso
+            if (Session["PerfilMensaje"] != null)
+            {
+                // Mostramos el mensaje que guardamos
+                MostrarMensajeGlobal(Session["PerfilMensaje"].ToString());
+                // Limpiamos la sesión para que no aparezca de nuevo
+                Session["PerfilMensaje"] = null;
             }
         }
 
@@ -76,37 +87,70 @@ namespace Vistas.Alumno
                 perfilActualizado.Apellido = txtApellido.Text.Trim();
                 perfilActualizado.Localidad = txtLocalidad.Text.Trim();
 
-                if (fileUploadAvatar.HasFile)
-                {
-                    // ... (lógica de la foto) ...
-                    string extension = Path.GetExtension(fileUploadAvatar.FileName).ToLower();
-                    if (extension != ".jpg" && extension != ".png" && extension != ".jpeg")
-                    {
-                        // ¡¡CAMBIO!! Usamos el panel de mensajes global
-                        MostrarMensajeGlobal("Solo podés subir fotos .jpg o .png", true);
-                        return;
-                    }
-                    string nombreArchivo = $"{UsuarioLogueado.UsuarioID}{extension}";
-                    string rutaVirtual = $"~/Assets/Avatares/{nombreArchivo}";
-                    string rutaFisica = Server.MapPath(rutaVirtual);
-                    fileUploadAvatar.SaveAs(rutaFisica);
-                    perfilActualizado.UrlFotoPerfil = rutaVirtual;
-                }
+
 
                 negocio.ActualizarPerfil(perfilActualizado);
 
                 UsuarioLogueado.Perfil = perfilActualizado;
                 Session["Usuario"] = UsuarioLogueado;
 
-                CargarDatosDelUsuario();
-                MostrarMensajeGlobal("¡Tus datos personales se actualizaron con éxito!");
+                //CargarDatosDelUsuario();
+                //MostrarMensajeGlobal("¡Tus datos personales se actualizaron con éxito!");
+
+                // 1. Guardamos el mensaje de éxito en la sesión
+                Session["PerfilMensaje"] = "¡Tus datos personales se actualizaron con éxito!";
+                // 2. Forzamos la recarga COMPLETA de la página
+                Response.Redirect(Request.RawUrl, false);
             }
             catch (Exception ex)
             {
                 MostrarMensajeGlobal($"Error al guardar tus datos: {ex.Message}", true);
             }
         }
+        protected void btnConfirmarAvatar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // ¡¡CAMBIO DE NOMBRE!! Ahora lee el control del modal
+                if (fileUploadModal.HasFile)
+                {
+                    PerfilNegocio negocio = new PerfilNegocio();
+                    Perfil perfilActualizado = UsuarioLogueado.Perfil;
 
+                    // --- ESTE ES EL CÓDIGO QUE PEGASTE ---
+                    string extension = Path.GetExtension(fileUploadModal.FileName).ToLower();
+                    if (extension != ".jpg" && extension != ".png" && extension != ".jpeg")
+                    {
+                        // Usamos el panel de error global para el modal
+                        MostrarMensajeGlobal("Epa, solo podés subir fotos .jpg o .png", true);
+                        return;
+                    }
+                    string nombreArchivo = $"{UsuarioLogueado.UsuarioID}{extension}";
+                    string rutaVirtual = $"~/Assets/Avatares/{nombreArchivo}";
+                    string rutaFisica = Server.MapPath(rutaVirtual);
+                    fileUploadModal.SaveAs(rutaFisica);
+                    perfilActualizado.UrlFotoPerfil = rutaVirtual;
+                    // --- FIN DEL CÓDIGO PEGADO ---
+
+                    negocio.ActualizarPerfil(perfilActualizado);
+
+                    UsuarioLogueado.Perfil = perfilActualizado;
+                    Session["Usuario"] = UsuarioLogueado;
+
+                    // ¡No mostramos mensaje! El Postback completo va a recargar
+                    // la página y CargarDatosDelUsuario() va a mostrar la foto nueva.
+                    // Y el MasterPage se va a actualizar solo.
+                }
+                else
+                {
+                    MostrarMensajeGlobal("No seleccionaste ninguna foto.", true);
+                }
+            }
+            catch (Exception ex)
+            {
+                MostrarMensajeGlobal($"Error al subir la foto: {ex.Message}", true);
+            }
+        }
         // --- Eventos del Panel de Contraseña ---
 
         // ¡¡ARREGLO DE BUG 2!! (Paneles simultáneos)
@@ -240,6 +284,8 @@ namespace Vistas.Alumno
             pnlCambiarEmail.Visible = false;
         }
 
+
+
         // --- HELPER DE MENSAJES ---
 
         // ¡¡NUEVO!! Helper para errores DENTRO de los paneles
@@ -262,6 +308,14 @@ namespace Vistas.Alumno
             // Forzamos la actualización del panel global
             updMensajeGlobal.Update();
         }
+
+
+
+       
+
+     
+
+      
     }
 }
 

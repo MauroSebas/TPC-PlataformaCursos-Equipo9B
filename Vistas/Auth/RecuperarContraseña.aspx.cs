@@ -14,11 +14,7 @@ namespace Vistas.Auth
     public partial class RecuperarContraseña : System.Web.UI.Page
     {
         // Controles declarados en el ASPX (deben ser accesibles)
-        protected System.Web.UI.WebControls.Panel pnlEmailSolicitud;
-        protected System.Web.UI.WebControls.Panel pnlError;
-        protected System.Web.UI.WebControls.Literal litErrorMessage;
-        protected System.Web.UI.WebControls.TextBox txtEmailRecuperacion;
-        protected System.Web.UI.WebControls.Button btnRestablecer;
+        
 
         // Capas de Negocio
         private readonly UsuarioNegocio usuarioNegocio = new UsuarioNegocio();

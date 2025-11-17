@@ -22,5 +22,38 @@ namespace Vistas.Auth
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal litSuccessMessage;
+
+        // --- ¡¡ESTO ES LO QUE AGREGAMOS A MANO!! ---
+
+        /// <summary>
+        /// Control pnlEmailSolicitud.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Panel pnlEmailSolicitud;
+
+        /// <summary>
+        /// Control pnlError.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Panel pnlError;
+
+        /// <summary>
+        /// Control litErrorMessage.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Literal litErrorMessage;
+
+        /// <summary>
+        /// Control txtEmailRecuperacion.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.TextBox txtEmailRecuperacion;
+
+        /// <summary>
+        /// Control btnRestablecer.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Button btnRestablecer;
+
+        /// <summary>
+        /// Control exitoRecuperacionModal. (¡OJO! Este falta)
+        /// </summary>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl exitoRecuperacionModal;
+
     }
 }

@@ -50,10 +50,10 @@ namespace Vistas
                 }
 
                 Session["Usuario"] = usuarioLogueado;
-                // Armar el nombre del rol EXACTO tal como está en DB
+                
                 string rolNombre = usuarioLogueado.RolID == (int)RolEnum.Administrador ? "Administrador" : "Participante";
 
-                // Crear ticket + cookie
+                
                 var ticket = new FormsAuthenticationTicket(
                     1,
                     usuarioLogueado.Email,

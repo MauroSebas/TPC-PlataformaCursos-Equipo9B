@@ -13,13 +13,13 @@
                         <h3 class="card-title fw-bold mt-2">Recuperar Contraseña</h3>
                     </div>
 
-                    <%-- Panel Principal: Solicitud de Email (Paso 1) --%>
+                    <%-- Panel Principal: Solicitud de Email  --%>
                     <asp:Panel ID="pnlEmailSolicitud" runat="server">
                         <p class="text-muted text-center mb-4">
                             Ingresa el email asociado a tu cuenta. Te enviaremos un enlace para que puedas crear una nueva contraseña.
                         </p>
 
-                        <%-- Mensaje de Error (de Negocio/BD) --%>
+                        <%-- Mensaje de Error  --%>
                         <asp:Panel runat="server" ID="pnlError" Visible="false" CssClass="alert alert-danger" EnableViewState="false">
                             <asp:Literal runat="server" ID="litErrorMessage" />
                         </asp:Panel>
@@ -28,9 +28,9 @@
                             <label for="<%= txtEmailRecuperacion.ClientID %>" class="form-label">Email</label>
                             <asp:TextBox runat="server" ID="txtEmailRecuperacion" type="text" CssClass="form-control form-control-lg" placeholder="tu.email@ejemplo.com" />
                             
-                            <%-- 1. VALIDACIÓN: Campo Requerido --%>
+                          
                             <asp:RequiredFieldValidator runat="server" ErrorMessage="El email es requerido." ControlToValidate="txtEmailRecuperacion" Display="Dynamic" CssClass="text-danger small" ValidationGroup="RecuperarGroup" />
-                            <%-- 2. VALIDACIÓN: Formato de Email --%>
+                          
                             <asp:RegularExpressionValidator runat="server" ErrorMessage="Ingresa un email válido (user@dominio.com)." ControlToValidate="txtEmailRecuperacion" ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" Display="Dynamic" CssClass="text-danger small" ValidationGroup="RecuperarGroup" />
                         </div>
 
@@ -39,7 +39,7 @@
                         </div>
                     </asp:Panel>
                     
-                    <%-- Literal que usa C# para Inyectar mensajes de éxito --%>
+                    <%-- Literal  para Inyectar mensajes de éxito --%>
                     <asp:Literal runat="server" ID="litSuccessMessage" EnableViewState="false" />
 
                     <div class="text-center mt-4">

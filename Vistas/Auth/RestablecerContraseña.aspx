@@ -15,12 +15,12 @@
                     </div>
 
                     <%-- Panel de Mensaje (Éxito/Error de Token) --%>
-                    <%-- Se usa al inicio para mostrar el resultado de la validación del Token --%>
+                   
                     <asp:Panel ID="pnlMensaje" runat="server" Visible="false" CssClass="alert" EnableViewState="false">
                         <h4 class="alert-heading fw-bold"><asp:Literal ID="litTitulo" runat="server" /></h4>
                         <p><asp:Literal ID="litMensaje" runat="server" /></p>
                         <hr />
-                        <%-- Link de vuelta al login, visible al final --%>
+                       
                         <asp:HyperLink ID="hlLogin" NavigateUrl="~/Auth/Loguin.aspx" Text="Ir al Inicio de Sesión" CssClass="btn btn-sm btn-outline-secondary" runat="server" Visible="false"/>
                     </asp:Panel>
 

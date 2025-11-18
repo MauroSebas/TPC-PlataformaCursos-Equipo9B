@@ -48,6 +48,7 @@
     <Content Include="Administrador\LeccionForm.aspx" />
     <Content Include="Administrador\ModuloGestion.aspx" />
     <Content Include="Administrador\PagosPanel.aspx" />
+    <Content Include="Administrador\PerfilAdministrador.aspx" />
     <Content Include="Alumno\PerfilAlumno.aspx" />
     <Content Include="Assets\css\admin-style.css" />
     <Content Include="Assets\css\styles.css" />
@@ -82,6 +83,13 @@
     </Compile>
     <Compile Include="Administrador.Master.designer.cs">
       <DependentUpon>Administrador.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Administrador\PerfilAdministrador.aspx.cs">
+      <DependentUpon>PerfilAdministrador.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administrador\PerfilAdministrador.aspx.designer.cs">
+      <DependentUpon>PerfilAdministrador.aspx</DependentUpon>
     </Compile>
     <Compile Include="Alumno.Master.cs">
       <DependentUpon>Alumno.Master</DependentUpon>

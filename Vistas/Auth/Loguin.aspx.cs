@@ -50,10 +50,10 @@ namespace Vistas
                 }
 
                 Session["Usuario"] = usuarioLogueado;
-                // Armar el nombre del rol EXACTO tal como está en DB
+                
                 string rolNombre = usuarioLogueado.RolID == (int)RolEnum.Administrador ? "Administrador" : "Participante";
 
-                // Crear ticket + cookie
+                
                 var ticket = new FormsAuthenticationTicket(
                     1,
                     usuarioLogueado.Email,
@@ -74,7 +74,7 @@ namespace Vistas
 
               
                 if (usuarioLogueado.RolID == (int)RolEnum.Administrador)
-                    Response.Redirect("~/Administrador/Default.aspx", true);
+                    Response.Redirect("~/Administrador/AdminPanel.aspx", true);
                 else
                     Response.Redirect("~/Alumno/MisCursos.aspx", true);
             }

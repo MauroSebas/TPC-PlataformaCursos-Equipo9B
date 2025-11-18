@@ -8,79 +8,37 @@ using System.Threading.Tasks;
 namespace Datos
 {
     public class CategoriaDatos
-    {
-        public List<Categoria> listar()
-        {
-            List<Categoria> lista = new List<Categoria>();
-            AccesoDatos datos = new AccesoDatos();
-
-            try
-            {
-
-                datos.setearConsulta("SELECT CategoriaID,NombreCategoria, EstaActivo FROM Categoria;");
-                datos.ejecutarLectura();
-
-                while (datos.Lector.Read())
-                {
-
-                    Categoria aux = new Categoria();
-
-                    aux.Id = (int)datos.Lector["CategoriaID"];
-                    aux.Nombre = (string)datos.Lector["NombreCategoria"];
-                    aux.EstaActivo = (bool)datos.Lector["EstaActivo"];
-
-                    lista.Add(aux);
-                }
-
-                return lista;
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-            finally
-            {
-                datos.cerrarConexion();
-            }
-
-        }
-
+    {       
         public List<Categoria> listarCategoriaConSP()
         {
             List<Categoria> lista = new List<Categoria>();
             AccesoDatos datos = new AccesoDatos();
-
             try
             {
                 datos.setearConSP("sp_Categoria_ListarActivas");
-                datos.ejecutarLectura();
+                datos.ejecutarLectura(); 
+
                 while (datos.Lector.Read())
                 {
-
                     Categoria aux = new Categoria();
-
                     aux.Id = (int)datos.Lector["CategoriaID"];
                     aux.Nombre = (string)datos.Lector["NombreCategoria"];
                     aux.EstaActivo = (bool)datos.Lector["EstaActivo"];
-
                     lista.Add(aux);
                 }
-
                 return lista;
             }
             catch (Exception ex)
             {
-
+                
                 throw ex;
             }
             finally
             {
+               
                 datos.cerrarConexion();
             }
-
-        }
-
+        }       
         public int agregarCategoriaConSP(Categoria nueva)
         {
             AccesoDatos datos = new AccesoDatos();
@@ -89,57 +47,32 @@ namespace Datos
                 datos.setearConSP("sp_AltaCategoria");
                 datos.setearParametro("@nombre", nueva.Nombre);
                 int idNuevo = datos.ejecutarAccionScalar();
-
                 return idNuevo;
-
             }
             catch (Exception ex)
             {
                 throw ex;
             }
-
-        }
+            
+        }      
         public Categoria BuscarPorId(int id)
         {
-            List<Categoria> lista = new List<Categoria>();
             AccesoDatos datos = new AccesoDatos();
-            Categoria seleccionada = new Categoria();
-
             try
             {
-                lista = listarCategoriaConSP();
+                datos.setearConSP("sp_Categoria_BuscarPorID"); 
+                datos.setearParametro("@ID", id);
+                datos.ejecutarLectura();
 
-                foreach (Categoria cat in lista)
+                if (datos.Lector.Read())
                 {
-                    if (cat.Id == id)
-                    {
-                        seleccionada = cat;
-                    }
+                    Categoria aux = new Categoria();
+                    aux.Id = (int)datos.Lector["CategoriaID"];
+                    aux.Nombre = (string)datos.Lector["NombreCategoria"];
+                    aux.EstaActivo = (bool)datos.Lector["EstaActivo"];
+                    return aux;
                 }
-
-                return seleccionada;
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-
-        }
-
-        public int modificarConSP(Categoria nueva)
-        {
-            AccesoDatos datos = new AccesoDatos();
-
-            try
-            {
-                datos.setearConSP("sp_ModificarCategoria");
-                datos.setearParametro("@ID", nueva.Id);
-                datos.setearParametro("@nombre", nueva.Nombre);
-          
-                int idNueva = datos.ejecutarAccionScalar();
-                
-                return idNueva;
+                return null; 
             }
             catch (Exception ex)
             {
@@ -147,10 +80,28 @@ namespace Datos
             }
             finally
             {
+                
                 datos.cerrarConexion();
             }
-        }
+        }      
+        public void modificarConSP(Categoria nueva) 
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConSP("sp_ModificarCategoria");
+                datos.setearParametro("@ID", nueva.Id);
+                datos.setearParametro("@nombre", nueva.Nombre);
 
+               
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            
+        }  
         public void eliminarLogicoConSP(int id)
         {
             try
@@ -164,9 +115,8 @@ namespace Datos
             {
                 throw ex;
             }
-        }
-
-
-
+            
+        }     
     }
 }
+

@@ -1,7 +1,11 @@
 ﻿using Dominio;
+using Dominio.Enums;
 using Negocio;
+using Negocio.Seguridad;
+using Negocio.Servicios;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -11,7 +15,6 @@ namespace Vistas.Alumno
 {
     public partial class PerfilAlumno1 : System.Web.UI.Page
     {
-
         private Usuario UsuarioLogueado { get; set; }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -22,9 +25,17 @@ namespace Vistas.Alumno
                 return;
             }
             UsuarioLogueado = (Usuario)Session["Usuario"];
+
+            pnlMensajeGlobal.Visible = false;
+
             if (!IsPostBack)
             {
                 CargarDatosDelUsuario();
+            }
+            if (Session["PerfilMensaje"] != null)
+            {
+                MostrarMensajeGlobal(Session["PerfilMensaje"].ToString());
+                Session["PerfilMensaje"] = null;
             }
         }
 
@@ -32,20 +43,16 @@ namespace Vistas.Alumno
         {
             try
             {
-                // Poblamos los campos principales
                 txtNombre.Text = UsuarioLogueado.Perfil.Nombre;
                 txtApellido.Text = UsuarioLogueado.Perfil.Apellido;
                 txtLocalidad.Text = UsuarioLogueado.Perfil.Localidad;
                 txtEmail.Text = UsuarioLogueado.Email;
-
-                // Poblamos los datos "decorativos"
                 litNombreUsuario.Text = string.IsNullOrWhiteSpace(UsuarioLogueado.Perfil.NombreCompleto)
-                                        ? UsuarioLogueado.Email.Split('@')[0]
-                                        : UsuarioLogueado.Perfil.NombreCompleto;
+                                            ? UsuarioLogueado.Email.Split('@')[0]
+                                            : UsuarioLogueado.Perfil.NombreCompleto;
 
                 if (string.IsNullOrEmpty(UsuarioLogueado.Perfil.UrlFotoPerfil))
                 {
-                    // (Asegurate que esta imagen default exista)
                     imgAvatar.ImageUrl = ResolveUrl("~/Assets/img/avatar_default.png");
                 }
                 else
@@ -55,13 +62,12 @@ namespace Vistas.Alumno
             }
             catch (Exception ex)
             {
-                MostrarMensaje($"Error al cargar tus datos: {ex.Message}", true);
+                MostrarMensajeGlobal($"Error al cargar tus datos: {ex.Message}", true);
             }
         }
 
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
-            // Validamos solo el GRUPO 1
             Page.Validate("DatosPersonales");
             if (!Page.IsValid) return;
 
@@ -69,24 +75,52 @@ namespace Vistas.Alumno
             {
                 PerfilNegocio negocio = new PerfilNegocio();
                 Perfil perfilActualizado = UsuarioLogueado.Perfil;
-
                 perfilActualizado.Nombre = txtNombre.Text.Trim();
                 perfilActualizado.Apellido = txtApellido.Text.Trim();
                 perfilActualizado.Localidad = txtLocalidad.Text.Trim();
-
-                // (Lógica del Avatar iría acá)
-
                 negocio.ActualizarPerfil(perfilActualizado);
-
                 UsuarioLogueado.Perfil = perfilActualizado;
                 Session["Usuario"] = UsuarioLogueado;
-
-                CargarDatosDelUsuario(); // Recargamos para ver el nombre nuevo
-                MostrarMensaje("¡Tus datos personales se actualizaron con éxito!");
+                Session["PerfilMensaje"] = "¡Tus datos personales se actualizaron con éxito!";
+                Response.Redirect(Request.RawUrl, false);
             }
             catch (Exception ex)
             {
-                MostrarMensaje($"Error al guardar tus datos: {ex.Message}", true);
+                MostrarMensajeGlobal($"Error al guardar tus datos: {ex.Message}", true);
+            }
+        }
+
+        protected void btnConfirmarAvatar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (fileUploadModal.HasFile)
+                {
+                    PerfilNegocio negocio = new PerfilNegocio();
+                    Perfil perfilActualizado = UsuarioLogueado.Perfil;
+                    string extension = Path.GetExtension(fileUploadModal.FileName).ToLower();
+                    if (extension != ".jpg" && extension != ".png" && extension != ".jpeg")
+                    {
+                        MostrarMensajeGlobal("Epa, solo podés subir fotos .jpg o .png", true);
+                        return;
+                    }
+                    string nombreArchivo = $"{UsuarioLogueado.UsuarioID}{extension}";
+                    string rutaVirtual = $"~/Assets/Avatares/{nombreArchivo}";
+                    string rutaFisica = Server.MapPath(rutaVirtual);
+                    fileUploadModal.SaveAs(rutaFisica);
+                    perfilActualizado.UrlFotoPerfil = rutaVirtual;
+                    negocio.ActualizarPerfil(perfilActualizado);
+                    UsuarioLogueado.Perfil = perfilActualizado;
+                    Session["Usuario"] = UsuarioLogueado;
+                }
+                else
+                {
+                    MostrarMensajeGlobal("No seleccionaste ninguna foto.", true);
+                }
+            }
+            catch (Exception ex)
+            {
+                MostrarMensajeGlobal($"Error al subir la foto: {ex.Message}", true);
             }
         }
 
@@ -94,31 +128,38 @@ namespace Vistas.Alumno
         protected void btnMostrarPanelPassword_Click(object sender, EventArgs e)
         {
             pnlCambiarPassword.Visible = true;
+            pnlErrorPassword.Visible = false;
             pnlCambiarEmail.Visible = false;
+            pnlVerificarToken.Visible = false; 
+            updPassword.Update();
+            updEmail.Update();
         }
 
         protected void btnConfirmarPassword_Click(object sender, EventArgs e)
         {
-            // Validamos solo el GRUPO 3
             Page.Validate("CambiarPassword");
-            if (!Page.IsValid) return;
+            if (!Page.IsValid)
+            {
+                txtPassActual.Attributes.Add("value", txtPassActual.Text);
+                return;
+            }
 
             try
             {
-                // (El CompareValidator ya chequeó que las nuevas coincidan)
                 UsuarioNegocio negocio = new UsuarioNegocio();
                 negocio.ActualizarPassword(
                     UsuarioLogueado.UsuarioID,
                     txtPassActual.Text,
                     txtPassNueva.Text
                 );
-
                 pnlCambiarPassword.Visible = false;
-                MostrarMensaje("¡Tu contraseña se cambió con éxito!");
+                updPassword.Update();
+                MostrarMensajeGlobal("¡Tu contraseña se cambió con éxito!");
             }
             catch (Exception ex)
             {
-                MostrarMensaje($"Error al cambiar la contraseña: {ex.Message}", true);
+                MostrarErrorEnPanel(pnlErrorPassword, litErrorPassword, ex.Message);
+                txtPassActual.Attributes.Add("value", txtPassActual.Text);
             }
         }
 
@@ -127,20 +168,33 @@ namespace Vistas.Alumno
             pnlCambiarPassword.Visible = false;
         }
 
+        
         // --- Eventos del Panel de Email ---
         protected void btnMostrarPanelEmail_Click(object sender, EventArgs e)
         {
+            // PASO 1: Mostramos el panel de pedir datos
             pnlCambiarEmail.Visible = true;
-            pnlCambiarPassword.Visible = false;
+            pnlErrorEmail.Visible = false;
             txtNuevoEmail.Text = "";
             txtPassConfirmarEmail.Text = "";
-        }
 
-        protected void btnConfirmarEmail_Click(object sender, EventArgs e)
+            // Ocultamos los otros paneles
+            pnlCambiarPassword.Visible = false;
+            pnlVerificarToken.Visible = false;
+
+            // Actualizamos los corralitos
+            updEmail.Update();
+            updPassword.Update();
+        }
+       
+        protected void btnEnviarToken_Click(object sender, EventArgs e)
         {
-            // Validamos solo el GRUPO 2
             Page.Validate("CambiarEmail");
-            if (!Page.IsValid) return;
+            if (!Page.IsValid)
+            {
+                txtPassConfirmarEmail.Attributes.Add("value", txtPassConfirmarEmail.Text);
+                return;
+            }
 
             string nuevoEmail = txtNuevoEmail.Text.Trim();
             string passwordActual = txtPassConfirmarEmail.Text;
@@ -149,32 +203,50 @@ namespace Vistas.Alumno
             {
                 UsuarioNegocio negocio = new UsuarioNegocio();
 
-                // 1. RE-AUTENTICACIÓN
-                var usuarioValidado = negocio.ValidarLogin(
-                    UsuarioLogueado.Email,
-                    passwordActual
-                );
-
-                if (usuarioValidado == null)
+                if (negocio.ValidarLogin(UsuarioLogueado.Email, passwordActual) == null)
                 {
-                    MostrarMensaje("Tu contraseña actual es incorrecta.", true);
+                    MostrarErrorEnPanel(pnlErrorEmail, litErrorEmail, "Tu contraseña actual es incorrecta.");
+                    txtPassConfirmarEmail.Attributes.Add("value", txtPassConfirmarEmail.Text);
                     return;
                 }
 
-                // 2. CAMBIO DE EMAIL
-                negocio.CambiarEmail(UsuarioLogueado.UsuarioID, nuevoEmail);
+                if (negocio.BuscarPorEmail(nuevoEmail) != null)
+                {
+                    MostrarErrorEnPanel(pnlErrorEmail, litErrorEmail, "Ese email ya está en uso por otra cuenta.");
+                    txtPassConfirmarEmail.Attributes.Add("value", txtPassConfirmarEmail.Text);
+                    return;
+                }
 
-                // 3. ÉXITO
-                UsuarioLogueado.Email = nuevoEmail;
-                Session["Usuario"] = UsuarioLogueado;
+                UsuarioTokenNegocio tokenNegocio = new UsuarioTokenNegocio();
+                string token = tokenNegocio.GenerarToken(
+                    UsuarioLogueado.UsuarioID,
+                    TipoTokenEnum.CambioEmail
+                );
+
+                Session["EmailPendiente"] = nuevoEmail;
+
+                EmailServicio emailServicio = new EmailServicio();
+                var reemplazos = new Dictionary<string, string>
+                {
+                    { "{{NOMBRE_USUARIO}}", UsuarioLogueado.Perfil.Nombre ?? UsuarioLogueado.Email },
+                    { "{{TOKEN_VERIFICACION}}", token }
+                };
+
+                emailServicio.EnviarTemplateEmail(
+                    nuevoEmail,
+                    "Verifica tu nuevo email",
+                    "VerificarNuevoEmail.html",
+                    reemplazos
+                );
 
                 pnlCambiarEmail.Visible = false;
-                CargarDatosDelUsuario(); // Recargamos para ver el email nuevo
-                MostrarMensaje("¡Email actualizado con éxito!");
+                pnlVerificarToken.Visible = true;
+                litEmailPendiente.Text = nuevoEmail;
             }
             catch (Exception ex)
             {
-                MostrarMensaje($"Error al cambiar el email: {ex.Message}", true);
+                MostrarErrorEnPanel(pnlErrorEmail, litErrorEmail, ex.Message);
+                txtPassConfirmarEmail.Attributes.Add("value", txtPassConfirmarEmail.Text);
             }
         }
 
@@ -183,13 +255,80 @@ namespace Vistas.Alumno
             pnlCambiarEmail.Visible = false;
         }
 
-        // --- HELPER DE MENSAJES ---
-        private void MostrarMensaje(string mensaje, bool esError = false)
+     
+        protected void btnConfirmarToken_Click(object sender, EventArgs e)
         {
-            // (Acá podés mejorarlo para que use un Panel de Bootstrap)
-            string script = $"alert('{mensaje.Replace("'", "\\'")}');";
-            ScriptManager.RegisterStartupScript(this, GetType(), "mostrarMensaje", script, true);
+            Page.Validate("VerificarToken");
+            if (!Page.IsValid) return;
+
+            string tokenIngresado = txtToken.Text.Trim();
+            string emailGuardado = Session["EmailPendiente"]?.ToString();
+
+            try
+            {
+                if (string.IsNullOrEmpty(emailGuardado))
+                {
+                    MostrarErrorEnPanel(pnlErrorToken, litErrorToken, "Tu sesión expiró. Volvé a empezar.");
+                    btnMostrarPanelEmail_Click(null, null);
+                    return;
+                }
+
+                UsuarioTokenNegocio tokenNegocio = new UsuarioTokenNegocio();
+                int usuarioIDValidado = tokenNegocio.ValidarToken(
+                    tokenIngresado,
+                    TipoTokenEnum.CambioEmail
+                );
+
+                if (usuarioIDValidado != UsuarioLogueado.UsuarioID)
+                {
+                    throw new Exception("El token no corresponde a este usuario.");
+                }
+
+                UsuarioNegocio negocio = new UsuarioNegocio();
+                negocio.CambiarEmail(UsuarioLogueado.UsuarioID, emailGuardado);
+                
+                UsuarioLogueado.Email = emailGuardado;
+                Session["Usuario"] = UsuarioLogueado;
+                Session["EmailPendiente"] = null; 
+
+                
+                Session["PerfilMensaje"] = "¡Tu email se actualizó con éxito!";
+
+               
+                Response.Redirect(Request.RawUrl, false);
+            }
+            catch (Exception ex)
+            {
+                MostrarErrorEnPanel(pnlErrorToken, litErrorToken, ex.Message);
+            }
+        }
+
+        protected void btnCancelarVerificacion_Click(object sender, EventArgs e)
+        {
+            pnlVerificarToken.Visible = false;
+            Session["EmailPendiente"] = null;
+        }
+
+
+        // --- HELPER DE MENSAJES ---
+        private void MostrarErrorEnPanel(Panel pnlError, Literal litError, string mensaje)
+        {
+            pnlError.Visible = true;
+            litError.Text = mensaje;
+            pnlMensajeGlobal.Visible = false;
+            updMensajeGlobal.Update();
+        }
+
+        private void MostrarMensajeGlobal(string mensaje, bool esError = false)
+        {
+            pnlMensajeGlobal.Visible = true;
+            litMensajeGlobal.Text = mensaje;
+            pnlMensajeGlobal.CssClass = esError ? "alert alert-danger" : "alert alert-success";
+            updMensajeGlobal.Update();
         }
 
     }
 }
+
+
+

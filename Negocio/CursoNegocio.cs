@@ -11,67 +11,128 @@ namespace Negocio
     public class CursoNegocio
     {
 
-        public int agregarCurso(Curso nuevo)
+        private readonly CursoDatos datos = new CursoDatos();
+        public List<Curso> listarCursos()
         {
-            CursoDatos datos = new CursoDatos();
+            try
+            {
 
-            int idGenerado = datos.agregarCursoConSP(nuevo);
+                return datos.listarCursoConSP();
+            }
+            catch (Exception ex)
+            {
 
-            //VAlidaciones
-            return idGenerado;
-
+                throw new Exception("Error al listar los cursos desde la capa de negocio.", ex);
+            }
         }
-
-
-        public List<Curso>  listarCursos()
-        {
-            List<Curso> listaCursos = new List<Curso>();
-            CursoDatos datos = new CursoDatos();
-
-            listaCursos = datos.listarCursoConSP();
-
-            //Hacer algun tipo de validacion
-
-            return listaCursos;
-        }
-
         public Curso BuscarCurso(int id)
         {
-            List<Curso> lista = new List<Curso>();
-            CursoDatos datos = new CursoDatos();
-            Curso seleccionado = new Curso();
+            try
+            {
 
-            seleccionado = datos.BuscarCursoPorId(id);
-
-            //Validaciones 
-            return seleccionado;
-
+                return datos.BuscarCursoPorId(id);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al buscar el curso.", ex);
+            }
         }
-
-        public int modificarCurso(Curso curso)
+        public int GuardarCurso(Curso curso)
         {
-            CursoDatos datos = new CursoDatos();
-            int id = datos.modificarCursoConSP(curso);
+            try
+            {
 
-            //VAlidaciones
-            if (id == curso.Id)
-            {
-                return id;
+                if (curso == null)
+                    throw new Exception("El objeto 'curso' es nulo.");
+
+                // Título
+                if (string.IsNullOrWhiteSpace(curso.Titulo))
+                    throw new Exception("El título del curso es obligatorio.");
+                if (curso.Titulo.Length > 255)
+                    throw new Exception("El título no puede superar los 255 caracteres.");
+
+                // Descripción (Opcional, pero con límite si existe)
+                if (!string.IsNullOrEmpty(curso.Descripcion) && curso.Descripcion.Length > 4000)
+                    // Usamos 4000 como un límite lógico para nvarchar(max)
+                    throw new Exception("La descripción es demasiado larga (máx 4000 caracteres).");
+
+                // Categoría
+                if (curso.Categoria == null || curso.Categoria.Id <= 0)
+                    throw new Exception("Debe seleccionar una categoría válida.");
+
+                // Precio
+                if (curso.Precio < 0)
+                    throw new Exception("El precio no puede ser negativo.");
+
+                // URL (Opcional, pero con límite si existe)
+                if (!string.IsNullOrEmpty(curso.UrlImagenPortada) && curso.UrlImagenPortada.Length > 2000)
+                    // Límite generoso para URLs
+                    throw new Exception("La URL de la imagen es demasiado larga (máx 2000 caracteres).");
+
+                // Modalidad de Pago (¡NUEVO!)
+                if (string.IsNullOrWhiteSpace(curso.ModalidadPago))
+                    throw new Exception("La modalidad de pago es obligatoria.");
+                if (curso.ModalidadPago.Length > 50)
+                    throw new Exception("La modalidad de pago no puede superar los 50 caracteres.");
+
+                // Duración (¡NUEVO!)
+                if (curso.DuracionAccesoDias <= 0)
+                    throw new Exception("La duración de acceso debe ser de al menos 1 día.");
+
+
+
+                if (curso.Id > 0)
+                {
+
+                    datos.modificarCursoConSP(curso);
+                    return curso.Id;
+                }
+                else
+                {
+
+                    return datos.agregarCursoConSP(curso);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return -1;
+
+                throw new Exception("Error al guardar el curso: " + ex.Message, ex);
             }
         }
-
         public void eliminarCursoLogico(int id)
         {
-            CursoDatos datos = new CursoDatos();
-            datos.eliminarCursoSP(id);   
-            //Validaciones 
+            try
+            {
+                // --- 4. ¡¡LA REGLA DE NEGOCIO MÁS IMPORTANTE!! ---
+                // (Por ahora la dejamos comentada, porque falta InscripcionNegocio)
 
+                // InscripcionNegocio inscripcionNegocio = new InscripcionNegocio();
+                // if (inscripcionNegocio.CursoTieneInscripciones(id))
+                // {
+                //    throw new Exception("No se puede eliminar un curso que ya tiene alumnos inscriptos. Desactívelo en su lugar.");
+                // }
+
+                // Si pasa la validación, le da la orden al mecánico
+                datos.eliminarCursoSP(id);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al eliminar el curso.", ex);
+            }
         }
-
-
+        public int ContarCursosPorCategoria(int categoriaId)
+        {
+            try
+            {
+                return datos.ContarCursosPorCategoria(categoriaId);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al contar cursos en negocio.", ex);
+            }
+        }
     }
+
+
 }
+

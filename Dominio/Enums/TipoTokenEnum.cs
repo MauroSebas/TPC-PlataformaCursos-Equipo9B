@@ -9,6 +9,7 @@ namespace Dominio.Enums
     public enum TipoTokenEnum
     {
         ActivacionCuenta = 1,
-        ResetPassword = 2
+        ResetPassword = 2,
+        CambioEmail = 3
     }
 }

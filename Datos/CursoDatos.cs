@@ -26,24 +26,23 @@ namespace Datos
                 datos.setearParametro("@EstaActivo", nuevo.EstaActivo);
 
                 int idNuevo = datos.ejecutarAccionScalar();
-
                 return idNuevo;
-
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return -1;
-                throw new Exception("Error al ejecutar agregaConSP()", ex);
+                
+                throw;
             }
-
+            finally
+            {
+                
+                datos.cerrarConexion();
+            }
         }
-
-
         public List<Curso> listarCursoConSP()
         {
             List<Curso> lista = new List<Curso>();
             AccesoDatos datos = new AccesoDatos();
-
             try
             {
                 datos.setearConSP("sp_Curso_ListarActivos");
@@ -51,10 +50,8 @@ namespace Datos
 
                 while (datos.Lector.Read())
                 {
-
                     Curso aux = new Curso();
-                    Categoria auxCat = new Categoria();
-
+                    // ... (Tu mapeo está perfecto)
                     aux.Id = (int)datos.Lector["CursoID"];
                     aux.Titulo = (string)datos.Lector["Titulo"];
                     aux.Descripcion = (string)datos.Lector["Descripcion"];
@@ -65,64 +62,71 @@ namespace Datos
                     aux.DuracionAccesoDias = (int)datos.Lector["DuracionAccesoDias"];
                     aux.Publicado = (bool)datos.Lector["Publicado"];
                     aux.EstaActivo = (bool)datos.Lector["EstaActivo"];
-
                     aux.Categoria = new Categoria();
                     aux.Categoria.Id = (int)datos.Lector["CategoriaID"];
                     aux.Categoria.Nombre = (string)datos.Lector["NombreCategoria"];
 
-
                     lista.Add(aux);
                 }
-
                 return lista;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-
-                throw new Exception("Error al mapear los cursos en listarConSP()", ex);
+                throw;
             }
             finally
             {
                 datos.cerrarConexion();
             }
-
-        }
-
+        }      
         public Curso BuscarCursoPorId(int id)
         {
-            List<Curso> lista = new List<Curso>();
             AccesoDatos datos = new AccesoDatos();
-            Curso seleccionado = new Curso();
-
             try
             {
-                lista = listarCursoConSP();
+                
+                datos.setearConSP("sp_Curso_BuscarPorID");
+                datos.setearParametro("@ID", id);
+                datos.ejecutarLectura();
 
-                foreach (Curso curso in lista)
+                if (datos.Lector.Read()) 
                 {
-                    if (curso.Id == id)
-                    {
-                        seleccionado = curso;
-                    }
+                    Curso aux = new Curso();
+                    aux.Id = (int)datos.Lector["CursoID"];
+                    aux.Titulo = (string)datos.Lector["Titulo"];
+                    aux.Descripcion = (string)datos.Lector["Descripcion"];
+                    if (!(datos.Lector["UrlImagenPortada"] is DBNull))
+                        aux.UrlImagenPortada = (string)datos.Lector["UrlImagenPortada"];
+                    aux.Precio = (decimal)datos.Lector["Precio"];
+                    aux.ModalidadPago = (string)datos.Lector["ModalidadPago"];
+                    aux.DuracionAccesoDias = (int)datos.Lector["DuracionAccesoDias"];
+                    aux.Publicado = (bool)datos.Lector["Publicado"];
+                    aux.EstaActivo = (bool)datos.Lector["EstaActivo"];
+                    aux.Categoria = new Categoria();
+                    aux.Categoria.Id = (int)datos.Lector["CategoriaID"];
+                    aux.Categoria.Nombre = (string)datos.Lector["NombreCategoria"];
+
+                    return aux;
                 }
-
-                return seleccionado;
+                return null; 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-
-                throw ex;
+                throw;
             }
-
-        }
-
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }      
         public int modificarCursoConSP(Curso nuevo)
         {
             AccesoDatos datos = new AccesoDatos();
-
             try
             {
-                datos.setearConSP("sp_ModificarCategoria");
+               
+                datos.setearConSP("sp_ModificarCurso");
+
                 datos.setearParametro("@CursoID", nuevo.Id);
                 datos.setearParametro("@CategoriaID", nuevo.Categoria.Id);
                 datos.setearParametro("@Titulo", nuevo.Titulo);
@@ -133,21 +137,22 @@ namespace Datos
                 datos.setearParametro("@DuracionAccesoDias", nuevo.DuracionAccesoDias);
                 datos.setearParametro("@Publicado", nuevo.Publicado);
                 datos.setearParametro("@EstaActivo", nuevo.EstaActivo);
+
+               
                 datos.ejecutarAccion();
 
-                int nuevoID = datos.ejecutarAccionScalar();
-                return nuevoID;
+                
+                return nuevo.Id;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                throw;
             }
             finally
             {
                 datos.cerrarConexion();
             }
         }
-
         public void eliminarCursoSP(int id)
         {
             AccesoDatos datos = new AccesoDatos();
@@ -157,10 +162,30 @@ namespace Datos
                 datos.setearParametro("@id", id);
                 datos.ejecutarAccion();
             }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                
+                datos.cerrarConexion();
+            }
+        }
+        public int ContarCursosPorCategoria(int categoriaId)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConSP("sp_Curso_ContarPorCategoria");
+                datos.setearParametro("@CategoriaID", categoriaId);
+                return datos.ejecutarAccionScalar();
+            }
             catch (Exception ex)
             {
-                throw ex;
+                throw new Exception("Error al contar cursos por categoría", ex);
             }
         }
     }
 }
+

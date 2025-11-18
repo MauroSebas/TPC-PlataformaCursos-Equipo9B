@@ -11,7 +11,7 @@ namespace Vistas
 {
 
 
-    public partial class Administrador
+    public partial class AdministradorMaster
     {
 
         /// <summary>

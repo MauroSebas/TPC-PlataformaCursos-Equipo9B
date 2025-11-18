@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Administrador.master.cs" Inherits="Vistas.Administrador" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Administrador.master.cs" Inherits="Vistas.AdministradorMaster" %>
 
 
 <!DOCTYPE html>
@@ -20,41 +20,43 @@
         <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
 
         <nav class="navbar navbar-expand-lg border-bottom shadow-sm bg-body" id="main-navbar">
-            <div class="container-fluid px-4 d-flex justify-content-between align-items-center">
+     <div class="container-fluid px-4 d-flex justify-content-between align-items-center">
 
+         
 
+         <div class="flex-grow-1"></div>
 
-                <div class="flex-grow-1"></div>
+         <div class="d-flex align-items-center">
+             <a href="#" class="nav-link fs-5 me-3" id="theme-toggler">
+                 <i class="bi bi-sun" id="theme-icon"></i>
+             </a>
 
-                <div class="d-flex align-items-center">
-                    <a href="#" class="nav-link fs-5 me-3" id="theme-toggler">
-                        <i class="bi bi-sun" id="theme-icon"></i>
-                    </a>
+             <div class="dropdown">
+                 <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                     
+                    
+                     <asp:Image ID="imgAvatar" runat="server" alt="Avatar" width="32" height="32" class="rounded-circle me-2" />
+                     
+                    
+                     <asp:Literal ID="litNombreUsuario" runat="server" Text="Usuario" />
 
-                    <div class="dropdown">
-                        <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            <asp:Image ID="imgAvatar" runat="server" alt="Avatar" Width="32" Height="32" class="rounded-circle me-2"
-                                ImageUrl="https://placehold.co/32x32/6c757d/FFFFFF?text=A" />
-                      
-                            <asp:Literal ID="litNombreUsuario" runat="server" Text="Administrador" />
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end shadow-sm">
-                            <li><a class="dropdown-item" href="#">Mi Perfil</a></li>
-                           
-                            <li>
-                                <hr class="dropdown-divider" />
-                            </li>
-                            <li>
-                                <asp:LinkButton ID="btnLogoutHeader" runat="server"
-                                    CssClass="dropdown-item text-danger"> 
-                                    Cerrar sesión
-                                </asp:LinkButton>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </nav>
+                 </a>
+                 <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+                     <li><a class="dropdown-item" href="~/Administrador/PerfilAdministrador.aspx" runat="server">Mi Perfil</a></li>
+                     <li><hr class="dropdown-divider" /></li>
+                     <li>
+                        
+                         <asp:LinkButton ID="btnLogoutHeader" runat="server" 
+                             CssClass="dropdown-item text-danger"
+                             OnClick="btnLogout_Click">
+                             Cerrar sesión
+                         </asp:LinkButton>
+                     </li>
+                 </ul>
+             </div>
+         </div>
+     </div>
+ </nav>
 
         <div class="container-fluid">
             <div class="row">
@@ -76,13 +78,21 @@
                                 <span class="small fw-medium">Categorias</span>
                             </a>
                             <a class="nav-link text-body-secondary d-flex align-items-center gap-3" href="/Administrador/PagosPanel.aspx">
-                                <i class="bi bi-credit-card fs-5"></i>
+                                <i class="bi bi-credit-card fs-5 "></i>
                                 <span class="small fw-medium">Panel de Pagos</span>
+                            </a>
+                            <a class="nav-link text-body-secondary d-flex align-items-center gap-3" href="/Administrador/PerfilAdministrador.aspx">
+                                <i class="bi bi-person fs-5 "></i>
+                                <span class="small fw-medium">Perfil</span>
                             </a>
                             <a class="nav-link text-body-secondary d-flex align-items-center gap-3" href="#">
                                 <i class="bi bi-gear fs-5"></i>
                                 <span class="small fw-medium">Configuración</span>
                             </a>
+
+
+
+
                         </nav>
                     </div>
 

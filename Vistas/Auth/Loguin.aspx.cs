@@ -74,7 +74,7 @@ namespace Vistas
 
               
                 if (usuarioLogueado.RolID == (int)RolEnum.Administrador)
-                    Response.Redirect("~/Administrador/Default.aspx", true);
+                    Response.Redirect("~/Administrador/AdminPanel.aspx", true);
                 else
                     Response.Redirect("~/Alumno/MisCursos.aspx", true);
             }

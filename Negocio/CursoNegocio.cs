@@ -131,6 +131,32 @@ namespace Negocio
                 throw new Exception("Error al contar cursos en negocio.", ex);
             }
         }
+        public List<Curso> filtrarCursos(string titulo, int categoriaId)
+        {
+            try
+            {                
+                return datos.filtrarCursosConSP(titulo, categoriaId);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al filtrar los cursos.", ex);
+            }
+        }
+
+        public void CambiarEstadoPublicado(int cursoId, bool publico)
+        {
+            try
+            {                
+                if (cursoId <= 0)
+                    throw new Exception("ID de curso no válido");
+
+                datos.CambiarPublicadoSP(cursoId, publico);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al cambiar estado de publicación en Negocio.", ex);
+            }
+        }
     }
 
 

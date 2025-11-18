@@ -186,6 +186,70 @@ namespace Datos
                 throw new Exception("Error al contar cursos por categoría", ex);
             }
         }
+
+        public List<Curso> filtrarCursosConSP(string titulo, int categoriaId)
+        {
+            List<Curso> lista = new List<Curso>();
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConSP("sp_Curso_Filtrar"); 
+
+               
+                datos.setearParametro("@Titulo", string.IsNullOrEmpty(titulo) ? (object)DBNull.Value : titulo);
+                datos.setearParametro("@CategoriaID", categoriaId);
+                //datos.setearParametro("@Estado", estado);
+
+                datos.ejecutarLectura(); 
+
+                while (datos.Lector.Read())
+                {
+                    
+                    Curso aux = new Curso();
+                    aux.Id = (int)datos.Lector["CursoID"];
+                    aux.Titulo = (string)datos.Lector["Titulo"];
+                    aux.Descripcion = (string)datos.Lector["Descripcion"];
+                    if (!(datos.Lector["UrlImagenPortada"] is DBNull))
+                        aux.UrlImagenPortada = (string)datos.Lector["UrlImagenPortada"];
+                    aux.Precio = (decimal)datos.Lector["Precio"];
+                    aux.ModalidadPago = (string)datos.Lector["ModalidadPago"];
+                    aux.DuracionAccesoDias = (int)datos.Lector["DuracionAccesoDias"];
+                    aux.Publicado = (bool)datos.Lector["Publicado"];
+                    aux.EstaActivo = (bool)datos.Lector["EstaActivo"];
+                    aux.Categoria = new Categoria();
+                    aux.Categoria.Id = (int)datos.Lector["CategoriaID"];
+                    aux.Categoria.Nombre = (string)datos.Lector["NombreCategoria"];
+                    lista.Add(aux);
+                }
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al filtrar cursos en Datos", ex);
+            }
+            finally
+            {
+                
+                datos.cerrarConexion();
+            }
+        }
+
+        public void CambiarPublicadoSP(int cursoId, bool publico)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConSP("sp_Curso_CambiarPublicado"); 
+                datos.setearParametro("@CursoID", cursoId);
+                datos.setearParametro("@Publicado", publico);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al cambiar estado de publicación en Datos", ex);
+            }
+        }
+
     }
 }
 

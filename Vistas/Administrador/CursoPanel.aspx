@@ -1,13 +1,19 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Administrador.Master" AutoEventWireup="true" CodeBehind="CursoPanel.aspx.cs" Inherits="Vistas.Aministrador.CursoPanel" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <style>
-        
+    <style>        
+        .table-hover > tbody > tr:hover > * {
+            --bs-table-hover-bg: var(--bs-tertiary-bg);
+        }
+        .card:hover {
+            transform: none;     
+            box-shadow: none;    
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-   <!-- 1. Encabezado de la Página -->
+  <!-- 1. Encabezado de la Página -->
     <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4 border-bottom pb-3">
         <div class="d-flex flex-column gap-1">
             <h1 class="h3 fw-bolder text-body-emphasis mb-0">Gestión de Cursos</h1>
@@ -16,14 +22,14 @@
         <div>
             <asp:HyperLink ID="btnCrearCurso" runat="server" 
                 NavigateUrl="~/Administrador/CursoForm.aspx" 
-                CssClass="btn btn-primary d-flex align-items-center gap-2 fw-bold small"> <%-- ¡ARREGLO 1! (sin shadow-sm) --%>
+                CssClass="btn btn-primary d-flex align-items-center gap-2 fw-bold small">
                 <i class="bi bi-plus-circle fs-6"></i>
                 <span>Crear Nuevo Curso</span>
             </asp:HyperLink>
         </div>
     </div>
 
-    <!-- Panel de Mensajes (Queda igual) -->
+    <!-- Panel de Mensajes  -->
     <asp:UpdatePanel ID="updMensajeGlobal" runat="server" UpdateMode="Conditional">
         <ContentTemplate>
             <asp:Panel ID="pnlMensajeGlobal" runat="server" Visible="false" EnableViewState="false" CssClass="alert">
@@ -32,12 +38,11 @@
         </ContentTemplate>
     </asp:UpdatePanel>
 
-    <!-- 2. Filtros (¡ARREGLO 1! Sacamos la sombra) -->
+    <!-- 2. Filtros -->
     <asp:UpdatePanel ID="updFiltros" runat="server" UpdateMode="Conditional">
         <ContentTemplate>
-            <div class="card p-4 mb-4 rounded-3 bg-body"> <%-- ¡¡SIN shadow-sm!! --%>
+            <div class="card p-4 mb-4 rounded-3 bg-body">
                 <div class="row g-3 align-items-center">
-                    <%-- ... (Tu código de filtros queda igual) ... --%>
                     <div class="col-md-5">
                         <asp:Label ID="lblBuscar" runat="server" Text="Buscar por título" CssClass="form-label small fw-medium" AssociatedControlID="txtBuscar"/>
                         <div class="input-group">
@@ -66,30 +71,28 @@
     <!-- 3. Grilla de Cursos -->
     <asp:UpdatePanel ID="updGrillaCursos" runat="server" UpdateMode="Conditional">
         <ContentTemplate>
-            <!-- ¡¡ARREGLO 1!! Sacamos la sombra -->
             <div class="card border-0 rounded-lg">
                 <div class="card-header bg-body-tertiary border-bottom-0">
                     <h5 class="mb-0">Cursos Registrados</h5>
                 </div>
                 <div class="card-body p-0">
                     <asp:GridView ID="gvCursos" runat="server"
-                        CssClass="table table-striped align-middle mb-0" <%-- ¡¡ARREGLO 1: SIN table-hover!! --%>
+                        CssClass="table table-striped align-middle mb-0"
                         AutoGenerateColumns="false"
                         DataKeyNames="Id"
                         AllowPaging="true" PageSize="10"
                         OnPageIndexChanging="gvCursos_PageIndexChanging"
-                        OnRowCommand="gvCursos_RowCommand">
+                        OnRowCommand="gvCursos_RowCommand"
+                        OnRowCreated="gvCursos_RowCreated">
                         
                         <Columns>
                             <asp:BoundField DataField="Titulo" HeaderText="Título" HeaderStyle-CssClass="px-4" ItemStyle-CssClass="px-4 fw-medium" />
                             <asp:BoundField DataField="Categoria.Nombre" HeaderText="Categoría" />
                             <asp:BoundField DataField="Precio" HeaderText="Precio" DataFormatString="{0:C}" />
-                            
-                            <!-- ¡¡ARREGLO 2: El Switch!! -->
                             <asp:TemplateField HeaderText="Publicado" HeaderStyle-CssClass="text-center" ItemStyle-CssClass="text-center">
                                 <ItemTemplate>
                                     <div class="form-check form-switch d-flex justify-content-center align-items-center m-0 p-0">
-                                        <%-- ¡¡Le sacamos el CssClass="form-check-input"!! --%>
+                                        
                                         <asp:CheckBox ID="chkPublicado" runat="server" 
                                             Checked='<%# Bind("Publicado") %>'
                                             AutoPostBack="true" 
@@ -97,10 +100,8 @@
                                     </div>
                                 </ItemTemplate>
                             </asp:TemplateField>
-
                             <asp:TemplateField HeaderText="Acciones" HeaderStyle-CssClass="text-end" ItemStyle-CssClass="text-end px-4">
                                 <ItemTemplate>
-                                    <%-- ... (Tus botones de acciones quedan igual) ... --%>
                                     <div class="d-flex justify-content-end gap-2">
                                         <asp:HyperLink ID="hlEditar" runat="server"
                                             NavigateUrl='<%# Eval("Id", "~/Administrador/CursoForm.aspx?id={0}") %>'
@@ -122,9 +123,7 @@
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>
-
                         <EmptyDataTemplate>
-                            <%-- ... (Tu EmptyDataTemplate queda igual) ... --%>
                             <div class="text-center py-5">
                                 <i class="bi bi-book-half fs-1 text-body-tertiary"></i>
                                 <h4 class="mt-3 fw-bold">No se encontraron cursos</h4>
@@ -136,8 +135,6 @@
                                 </asp:HyperLink>
                             </div>
                         </EmptyDataTemplate>
-                        
-                       <!-- ¡¡ARREGLO DE PAGINACIÓN!! -->
                         <PagerStyle CssClass="p-3" />
                         <PagerSettings 
                             Mode="NumericFirstLast"

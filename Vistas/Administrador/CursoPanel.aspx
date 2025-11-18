@@ -1,77 +1,161 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Administrador.Master" AutoEventWireup="true" CodeBehind="CursoPanel.aspx.cs" Inherits="Vistas.Aministrador.CursoPanel" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style>
+        
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-    <main class="flex-grow-1 p-4 p-lg-5">
+   <!-- 1. Encabezado de la Página -->
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4 border-bottom pb-3">
+        <div class="d-flex flex-column gap-1">
+            <h1 class="h3 fw-bolder text-body-emphasis mb-0">Gestión de Cursos</h1>
+            <p class="text-body-secondary fs-6 mb-0">Administra todos los cursos de tu plataforma.</p>
+        </div>
+        <div>
+            <asp:HyperLink ID="btnCrearCurso" runat="server" 
+                NavigateUrl="~/Administrador/CursoForm.aspx" 
+                CssClass="btn btn-primary d-flex align-items-center gap-2 fw-bold small"> <%-- ¡ARREGLO 1! (sin shadow-sm) --%>
+                <i class="bi bi-plus-circle fs-6"></i>
+                <span>Crear Nuevo Curso</span>
+            </asp:HyperLink>
+        </div>
+    </div>
 
-        <div class="container-xl">
+    <!-- Panel de Mensajes (Queda igual) -->
+    <asp:UpdatePanel ID="updMensajeGlobal" runat="server" UpdateMode="Conditional">
+        <ContentTemplate>
+            <asp:Panel ID="pnlMensajeGlobal" runat="server" Visible="false" EnableViewState="false" CssClass="alert">
+                <asp:Literal ID="litMensajeGlobal" runat="server" />
+            </asp:Panel>
+        </ContentTemplate>
+    </asp:UpdatePanel>
 
-            <header class="d-flex flex-column flex-sm-row flex-wrap justify-content-between align-items-start gap-4 mb-5">
-                <div class="d-flex flex-column gap-1">
-                    <h1 class="h2 fw-bolder text-body-emphasis mb-0">Gestión de Cursos</h1>
-                    <p class="text-body-secondary fs-6">Visualiza, filtra y gestiona todos los cursos de forma eficiente.</p>
-                </div>
-
-                <%-- Utilizo LinkButton para rediccionar a la pagina de CursoForm >--%>
-                <asp:LinkButton runat="server" ID="btnAgregarCurso"
-                    CssClass="btn btn-primary btn-lg d-flex align-items-center gap-2 shadow-sm fw-bold small"
-                    OnClick="btnAgregarCurso_Click1">
-                    <span class="material-symbols-outlined fs-6">add_circle</span>
-                    <span>Agregar Nuevo Curso</span>
-                </asp:LinkButton>
-
-            </header>
-
-            <div class="card p-4 mb-4 rounded-3">
-                <div class="row g-4">
-                    <div class="col-md-4">
+    <!-- 2. Filtros (¡ARREGLO 1! Sacamos la sombra) -->
+    <asp:UpdatePanel ID="updFiltros" runat="server" UpdateMode="Conditional">
+        <ContentTemplate>
+            <div class="card p-4 mb-4 rounded-3 bg-body"> <%-- ¡¡SIN shadow-sm!! --%>
+                <div class="row g-3 align-items-center">
+                    <%-- ... (Tu código de filtros queda igual) ... --%>
+                    <div class="col-md-5">
+                        <asp:Label ID="lblBuscar" runat="server" Text="Buscar por título" CssClass="form-label small fw-medium" AssociatedControlID="txtBuscar"/>
                         <div class="input-group">
-                            <span class="input-group-text bg-body-tertiary">
-                                <span class="material-symbols-outlined fs-6">search</span>
-                            </span>
-                            <input type="text" class="form-control bg-body-tertiary" placeholder="Buscar por título de curso...">
+                            <span class="input-group-text"><i class="bi bi-search"></i></span>
+                            <asp:TextBox ID="txtBuscar" runat="server" CssClass="form-control" placeholder="Buscar curso..." />
                         </div>
                     </div>
-
-                    <div class="col-md-8 d-flex align-items-center gap-3">
-                        <button class="btn btn-light border d-flex align-items-center gap-2 small">
-                            <span>Categoría</span>
-                            <span class="material-symbols-outlined fs-6 text-body-secondary">expand_more</span>
-                        </button>
-                        <button class="btn btn-light border d-flex align-items-center gap-2 small">
-                            <span>Estado</span>
-                            <span class="material-symbols-outlined fs-6 text-body-secondary">expand_more</span>
-                        </button>
+                    <div class="col-md-4">
+                        <asp:Label ID="lblCategoria" runat="server" Text="Filtrar por Categoría" CssClass="form-label small fw-medium" AssociatedControlID="ddlCategoriaFiltro"/>
+                        <asp:DropDownList ID="ddlCategoriaFiltro" runat="server" CssClass="form-select"
+                            AppendDataBoundItems="true" DataTextField="Nombre" DataValueField="Id">
+                            <asp:ListItem Text="-- Todas las Categorías --" Value="0" />
+                        </asp:DropDownList>
+                    </div>
+                    <div class="col-md-3 d-flex align-self-end">
+                        <div class="d-grid gap-2 d-md-flex w-100">
+                            <asp:Button ID="btnFiltrar" runat="server" Text="Filtrar" CssClass="btn btn-primary w-100" OnClick="btnFiltrar_Click" />
+                            <asp:Button ID="btnLimpiar" runat="server" Text="Limpiar" CssClass="btn btn-outline-secondary w-100" OnClick="btnLimpiar_Click" CausesValidation="false" />
+                        </div>
                     </div>
                 </div>
             </div>
+        </ContentTemplate>
+    </asp:UpdatePanel>
 
-            <asp:GridView ID="dgvCurso" DataKeyNames="Id" OnSelectedIndexChanged="dgvCurso_SelectedIndexChanged" runat="server" CssClass="table" AutoGenerateColumns="false">
-                <Columns>
-                    <asp:BoundField HeaderText="ID" DataField="Id" />
-                    <asp:BoundField HeaderText="Título" DataField="Titulo" />
-                    <asp:BoundField HeaderText="Categoria" DataField="Categoria.Nombre" />
-                    <asp:BoundField HeaderText="Precio" DataField="Precio" />
-                    <asp:BoundField HeaderText="Estado" DataField="Publicado" />
-                    <asp:CommandField ShowSelectButton="true" SelectText="Seleccionar" HeaderText="Acciones" />
-                </Columns>
-            </asp:GridView>
-               
+    <!-- 3. Grilla de Cursos -->
+    <asp:UpdatePanel ID="updGrillaCursos" runat="server" UpdateMode="Conditional">
+        <ContentTemplate>
+            <!-- ¡¡ARREGLO 1!! Sacamos la sombra -->
+            <div class="card border-0 rounded-lg">
+                <div class="card-header bg-body-tertiary border-bottom-0">
+                    <h5 class="mb-0">Cursos Registrados</h5>
+                </div>
+                <div class="card-body p-0">
+                    <asp:GridView ID="gvCursos" runat="server"
+                        CssClass="table table-striped align-middle mb-0" <%-- ¡¡ARREGLO 1: SIN table-hover!! --%>
+                        AutoGenerateColumns="false"
+                        DataKeyNames="Id"
+                        AllowPaging="true" PageSize="10"
+                        OnPageIndexChanging="gvCursos_PageIndexChanging"
+                        OnRowCommand="gvCursos_RowCommand">
+                        
+                        <Columns>
+                            <asp:BoundField DataField="Titulo" HeaderText="Título" HeaderStyle-CssClass="px-4" ItemStyle-CssClass="px-4 fw-medium" />
+                            <asp:BoundField DataField="Categoria.Nombre" HeaderText="Categoría" />
+                            <asp:BoundField DataField="Precio" HeaderText="Precio" DataFormatString="{0:C}" />
+                            
+                            <!-- ¡¡ARREGLO 2: El Switch!! -->
+                            <asp:TemplateField HeaderText="Publicado" HeaderStyle-CssClass="text-center" ItemStyle-CssClass="text-center">
+                                <ItemTemplate>
+                                    <div class="form-check form-switch d-flex justify-content-center align-items-center m-0 p-0">
+                                        <%-- ¡¡Le sacamos el CssClass="form-check-input"!! --%>
+                                        <asp:CheckBox ID="chkPublicado" runat="server" 
+                                            Checked='<%# Bind("Publicado") %>'
+                                            AutoPostBack="true" 
+                                            OnCheckedChanged="chkPublicado_CheckedChanged" />
+                                    </div>
+                                </ItemTemplate>
+                            </asp:TemplateField>
 
-            <nav aria-label="Navegación de la tabla" class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 p-4">
-                <span class="small text-body-secondary">Mostrando <span class="fw-semibold text-body-emphasis">1-4</span> de <span class="fw-semibold text-body-emphasis">100</span>
-                </span>
-                <ul class="pagination pagination-sm mb-0">
-                    <li class="page-item"><a class="page-link" href="#">Anterior</a></li>
-                    <li class="page-item active" aria-current="page"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">...</a></li>
-                    <li class="page-item"><a class="page-link" href="#">Siguiente</a></li>
-                </ul>
-            </nav>
-        </div>
-    </main>
+                            <asp:TemplateField HeaderText="Acciones" HeaderStyle-CssClass="text-end" ItemStyle-CssClass="text-end px-4">
+                                <ItemTemplate>
+                                    <%-- ... (Tus botones de acciones quedan igual) ... --%>
+                                    <div class="d-flex justify-content-end gap-2">
+                                        <asp:HyperLink ID="hlEditar" runat="server"
+                                            NavigateUrl='<%# Eval("Id", "~/Administrador/CursoForm.aspx?id={0}") %>'
+                                            CssClass="btn btn-sm btn-outline-secondary" ToolTip="Editar Curso">
+                                            <i class="bi bi-pencil"></i>
+                                        </asp:HyperLink>
+                                        <asp:HyperLink ID="hlModulos" runat="server"
+                                            NavigateUrl='<%# Eval("Id", "~/Administrador/ModuloPanel.aspx?id={0}") %>'
+                                            CssClass="btn btn-sm btn-outline-info" ToolTip="Gestionar Módulos/Lecciones">
+                                            <i class="bi bi-list-task"></i>
+                                        </asp:HyperLink>
+                                        <asp:LinkButton ID="btnArchivar" runat="server"
+                                            CssClass="btn btn-sm btn-outline-danger" ToolTip="Archivar Curso"
+                                            CommandName="Archivar" CommandArgument='<%# Bind("Id") %>'
+                                            OnClientClick="return confirm('¿Estás seguro de que querés archivar este curso?');">
+                                            <i class="bi bi-archive"></i>
+                                        </asp:LinkButton>
+                                    </div>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                        </Columns>
+
+                        <EmptyDataTemplate>
+                            <%-- ... (Tu EmptyDataTemplate queda igual) ... --%>
+                            <div class="text-center py-5">
+                                <i class="bi bi-book-half fs-1 text-body-tertiary"></i>
+                                <h4 class="mt-3 fw-bold">No se encontraron cursos</h4>
+                                <p class="text-body-secondary">Aún no se han creado cursos. ¡Empezá creando el primero!</p>
+                                <asp:HyperLink ID="btnCrearVacio" runat="server" 
+                                    NavigateUrl="~/Administrador/CursoForm.aspx" 
+                                    CssClass="btn btn-primary mt-3">
+                                    <i class="bi bi-plus-circle me-2"></i>Crear Nuevo Curso
+                                </asp:HyperLink>
+                            </div>
+                        </EmptyDataTemplate>
+                        
+                       <!-- ¡¡ARREGLO DE PAGINACIÓN!! -->
+                        <PagerStyle CssClass="p-3" />
+                        <PagerSettings 
+                            Mode="NumericFirstLast"
+                            Position="Bottom"
+                            PageButtonCount="5"
+                            FirstPageText="&laquo;"
+                            LastPageText="&raquo;"
+                            NextPageText="&rsaquo;"
+                            PreviousPageText="&lsaquo;" 
+                            />
+                    </asp:GridView>
+                </div>
+            </div>
+        </ContentTemplate>
+        <Triggers>
+            <asp:AsyncPostBackTrigger ControlID="btnFiltrar" EventName="Click" />
+            <asp:AsyncPostBackTrigger ControlID="btnLimpiar" EventName="Click" />
+        </Triggers>
+    </asp:UpdatePanel>
 
 </asp:Content>

@@ -48,13 +48,13 @@ namespace Vistas
             seleccionada.Id = id;
             seleccionada.Nombre = txtModificar.Text;
 
-            int numVerificacion = negocio.modificarCategoria(seleccionada);
+            //int numVerificacion = negocio.modificarCategoria(seleccionada);
 
-            if ( numVerificacion < 0)
-            {
-                //Modal error en la modificacion
-                Response.Redirect("CategoriaGestion.aspx");
-            }
+            //if ( numVerificacion < 0)
+            //{
+            //    //Modal error en la modificacion
+            //    Response.Redirect("CategoriaGestion.aspx");
+            //}
     
             Response.Redirect("CategoriaGestion.aspx");
 

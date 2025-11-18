@@ -35,18 +35,18 @@
                         <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                             <asp:Image ID="imgAvatar" runat="server" alt="Avatar" Width="32" Height="32" class="rounded-circle me-2"
                                 ImageUrl="https://placehold.co/32x32/6c757d/FFFFFF?text=A" />
-                            <%-- Placeholder de Admin --%>
+                      
                             <asp:Literal ID="litNombreUsuario" runat="server" Text="Administrador" />
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end shadow-sm">
                             <li><a class="dropdown-item" href="#">Mi Perfil</a></li>
-                            <%-- (Acá iría PerfilAdmin.aspx) --%>
+                           
                             <li>
                                 <hr class="dropdown-divider" />
                             </li>
                             <li>
                                 <asp:LinkButton ID="btnLogoutHeader" runat="server"
-                                    CssClass="dropdown-item text-danger"> <%-- (Asegurate de tener este OnClick en el .cs) --%>
+                                    CssClass="dropdown-item text-danger"> 
                                     Cerrar sesión
                                 </asp:LinkButton>
                             </li>

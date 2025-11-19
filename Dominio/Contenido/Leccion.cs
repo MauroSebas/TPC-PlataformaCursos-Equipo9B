@@ -9,11 +9,13 @@ namespace Dominio
     public class Leccion
     {
         public int Id { get; set; }
+        public int ModuloId { get; set; }
         public Modulo Modulo { get; set; }
         public string Titulo { get; set; }
-        public string TipoMaterial { get; set; }
+        public int Orden { get; set; } 
+        public string TipoMaterial { get; set; } 
         public string UrlRecurso { get; set; }
-        public List <ArchivoLeccion> Archivos { get; set; }
+        public int DuracionMinutos { get; set; } 
         public bool EstaActivo { get; set; }
 
     }

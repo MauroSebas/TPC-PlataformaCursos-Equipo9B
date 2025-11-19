@@ -10,10 +10,12 @@ namespace Dominio
     public class Examen
     {
         public int Id { get; set; }
-        public Leccion Leccion { get; set; }
-        public int LimiteIntentos { get; set; }
-        public int LimiteTiempoMinutos { get; set; }
-        public bool HabilitacionCondicional { get; set; }
+        
+        public int CursoId { get; set; }
+
+        
+        public Curso Curso { get; set; }
+        public string UrlConsigna { get; set; } // Link al PDF/Doc
         public bool EstaActivo { get; set; }
 
     }

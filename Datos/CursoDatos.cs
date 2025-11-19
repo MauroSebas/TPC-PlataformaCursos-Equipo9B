@@ -19,7 +19,7 @@ namespace Datos
                 datos.setearParametro("@Titulo", nuevo.Titulo);
                 datos.setearParametro("@Descripcion", nuevo.Descripcion);
                 datos.setearParametro("@Precio", nuevo.Precio);
-                datos.setearParametro("@UrlImagenPortada", nuevo.UrlImagenPortada);
+                datos.setearParametro("@UrlImagenPortada", string.IsNullOrEmpty(nuevo.UrlImagenPortada) ? (object)DBNull.Value : nuevo.UrlImagenPortada);
                 datos.setearParametro("@ModalidadPago", nuevo.ModalidadPago);
                 datos.setearParametro("@DuracionAccesoDias", nuevo.DuracionAccesoDias);
                 datos.setearParametro("@Publicado", nuevo.Publicado);
@@ -132,7 +132,7 @@ namespace Datos
                 datos.setearParametro("@Titulo", nuevo.Titulo);
                 datos.setearParametro("@Descripcion", nuevo.Descripcion);
                 datos.setearParametro("@Precio", nuevo.Precio);
-                datos.setearParametro("@UrlImagenPortada", nuevo.UrlImagenPortada);
+                datos.setearParametro("@UrlImagenPortada", string.IsNullOrEmpty(nuevo.UrlImagenPortada) ? (object)DBNull.Value : nuevo.UrlImagenPortada);
                 datos.setearParametro("@ModalidadPago", nuevo.ModalidadPago);
                 datos.setearParametro("@DuracionAccesoDias", nuevo.DuracionAccesoDias);
                 datos.setearParametro("@Publicado", nuevo.Publicado);
@@ -186,7 +186,6 @@ namespace Datos
                 throw new Exception("Error al contar cursos por categoría", ex);
             }
         }
-
         public List<Curso> filtrarCursosConSP(string titulo, int categoriaId)
         {
             List<Curso> lista = new List<Curso>();
@@ -233,7 +232,6 @@ namespace Datos
                 datos.cerrarConexion();
             }
         }
-
         public void CambiarPublicadoSP(int cursoId, bool publico)
         {
             AccesoDatos datos = new AccesoDatos();

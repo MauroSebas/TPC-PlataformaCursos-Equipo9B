@@ -11,7 +11,7 @@ namespace Dominio
         public int Id { get; set; }
         public Inscripcion Inscripcion { get; set; }
         public DateTime FechaEmision { get; set; }
-        public string CodigoValidacion { get; set; }
+        public string UrlArchivoCertificado { get; set; }
 
     }
 }

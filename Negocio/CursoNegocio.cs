@@ -142,7 +142,6 @@ namespace Negocio
                 throw new Exception("Error al filtrar los cursos.", ex);
             }
         }
-
         public void CambiarEstadoPublicado(int cursoId, bool publico)
         {
             try

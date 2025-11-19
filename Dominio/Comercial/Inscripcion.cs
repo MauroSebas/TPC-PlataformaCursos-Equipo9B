@@ -10,10 +10,13 @@ namespace Dominio
     {
         public int InscripcionID { get; set; }
         public int UsuarioID { get; set; }
+        public Usuario Usuario { get; set; }
         public int CursoID { get; set; }
+        public Curso Curso { get; set; }
         public DateTime FechaInscripcion { get; set; }
-        public DateTime FechaExpiracion { get; set; }
-        
+        public DateTime? FechaExpiracion { get; set; } 
+        public string Estado { get; set; } // "Activo", "Pendiente"
+
 
     }
 }

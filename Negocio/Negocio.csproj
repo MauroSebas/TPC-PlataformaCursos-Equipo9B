@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CertificadoNegocio.cs" />
     <Compile Include="InscripcionNegocio.cs" />
     <Compile Include="PagoNegocio.cs" />
     <Compile Include="Seguridad\EstadoCuentaNegocio.cs" />

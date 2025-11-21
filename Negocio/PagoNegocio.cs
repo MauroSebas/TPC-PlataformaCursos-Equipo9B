@@ -10,7 +10,7 @@ namespace Negocio
 {   
     public class PagoNegocio
     {
-        public int RegistrarPagoAlumno ( Pago nuevoPago)
+        public int RegistrarPagoAlumno (Pago nuevoPago)
         {
             PagoDatos datos = new PagoDatos();
             //Para obtener el Monto congelado en el codebehind tomar el monto 

@@ -9,11 +9,9 @@ namespace Datos
 {
     public class InscripcionDatos
     {
-        public AccesoDatos datos { get; set; }
-
         public int AltaInscripcion(Inscripcion nueva)
         {
-
+            AccesoDatos datos = new AccesoDatos();
             try
             {
                 datos.setearConSP("sp_Inscripcion_Alta");
@@ -39,7 +37,7 @@ namespace Datos
         public Inscripcion BuscarInscripcion(int idUsuario, int idCurso)
         {
             Inscripcion aux = new Inscripcion();
-
+            AccesoDatos datos = new AccesoDatos();
             try
             {
                 datos.setearConSP("sp_Inscripcion_Obtener");
@@ -78,6 +76,7 @@ namespace Datos
         public List<Inscripcion> ListarUsuariosInscripcion(int idUsuario)
         {
             List<Inscripcion> lista = new List<Inscripcion>();
+            AccesoDatos datos = new AccesoDatos();
 
             try
             {
@@ -90,14 +89,14 @@ namespace Datos
                         Inscripcion aux = new Inscripcion();
                         aux.Id = (int)datos.Lector["InscripcionID"];
                         aux.UsuarioID = (int)datos.Lector["UsuarioID"];
-                        aux.CursoID = (int)datos.Lector["CursoID"];
-                        aux.FechaInscripcion = (DateTime)datos.Lector["FechaInscripcion"];
-                        aux.FechaExpiracion = (DateTime)datos.Lector["FechaExpiracion"];
-                        aux.Estado = (string)datos.Lector["Estado"];
                         aux.Curso = new Curso();
                         aux.Curso.Id = (int)datos.Lector["CursoID"];
                         aux.Curso.Titulo = (string)datos.Lector["Titulo"];
                         aux.Curso.UrlImagenPortada = (string)datos.Lector["UrlImagenPortada"];
+                        aux.FechaInscripcion = (DateTime)datos.Lector["FechaInscripcion"];
+                        aux.FechaExpiracion = (DateTime)datos.Lector["FechaExpiracion"];
+                        aux.Estado = (string)datos.Lector["Estado"];
+
 
                         lista.Add(aux);
 

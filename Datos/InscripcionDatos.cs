@@ -24,9 +24,9 @@ namespace Datos
                 int idNuevo = datos.ejecutarAccionScalar();
                 return idNuevo;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                throw new Exception("Error al establecer conexion.");
             }
             finally
             {
@@ -71,7 +71,6 @@ namespace Datos
             }
 
         }
-
 
         public List<Inscripcion> ListarUsuariosInscripcion(int idUsuario)
         {

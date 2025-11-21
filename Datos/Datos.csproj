@@ -45,6 +45,8 @@
     <Compile Include="AccesoDatos.cs" />
     <Compile Include="CategoriaDatos.cs" />
     <Compile Include="CursoDatos.cs" />
+    <Compile Include="InscripcionDatos.cs" />
+    <Compile Include="PagoDatos.cs" />
     <Compile Include="Seguridad\EstadoCuentaDatos.cs" />
     <Compile Include="Seguridad\PerfilDatos.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

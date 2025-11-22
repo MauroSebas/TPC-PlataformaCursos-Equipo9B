@@ -45,27 +45,28 @@ namespace Vistas
         }
         private void CargarCursos()
         {
+            CursoNegocio negocio = new CursoNegocio();
             try
             {
+                
+                List<Curso> listaCompleta = negocio.listarCursos();
 
-                List<Curso> cursos = _cursoNegocio.filtrarCursos("", this.CategoriaSeleccionadaId);
+               
+                List<Curso> listaFiltrada = listaCompleta.FindAll(x => x.Publicado == true);
 
-                if (cursos.Count > 0)
+                // 3. AHORA LA CORRECCIÓN:
+                // Si hay una categoría seleccionada (ID > 0), aplicamos ese filtro extra
+                if (this.CategoriaSeleccionadaId > 0)
                 {
-                    repCursos.DataSource = cursos;
-                    repCursos.DataBind();
+                    listaFiltrada = listaFiltrada.FindAll(x => x.Categoria.Id == this.CategoriaSeleccionadaId);
+                }
 
-                    repCursos.Visible = true;
-                    pnlSinCursos.Visible = false;
-                }
-                else
-                {
-                    repCursos.Visible = false;
-                    pnlSinCursos.Visible = true;
-                }
+                // 4. Asignamos la lista final
+                repCursos.DataSource = listaFiltrada;
+                repCursos.DataBind();
             }
             catch (Exception) { }
-        }      
+        }
         protected void btnFiltroCategoria_Click(object sender, EventArgs e)
         {
             LinkButton btn = (LinkButton)sender;
@@ -94,7 +95,7 @@ namespace Vistas
             if (string.IsNullOrEmpty(url))
             {
                 
-                return ResolveUrl("~/Assets/img/placeholder-curso.jpg");
+                return ResolveUrl("~/Assets/Cursos/placeholder-curso.jpg");
             }
             
             return ResolveUrl(url);

@@ -141,22 +141,22 @@ namespace Vistas.Aministrador
         protected global::System.Web.UI.WebControls.RegularExpressionValidator revDescripcion;
 
         /// <summary>
-        /// Control lblImagen.
+        /// Control rbImagenArchivo.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblImagen;
+        protected global::System.Web.UI.WebControls.RadioButton rbImagenArchivo;
 
         /// <summary>
-        /// Control txtUrlImagen.
+        /// Control rbImagenUrl.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtUrlImagen;
+        protected global::System.Web.UI.WebControls.RadioButton rbImagenUrl;
 
         /// <summary>
         /// Control fileUploadPortada.
@@ -166,6 +166,15 @@ namespace Vistas.Aministrador
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.FileUpload fileUploadPortada;
+
+        /// <summary>
+        /// Control txtUrlImagen.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtUrlImagen;
 
         /// <summary>
         /// Control revUrlImagen.
@@ -213,6 +222,24 @@ namespace Vistas.Aministrador
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvCategoria;
 
         /// <summary>
+        /// Control lblModalidad.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblModalidad;
+
+        /// <summary>
+        /// Control ddlModalidadPago.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlModalidadPago;
+
+        /// <summary>
         /// Control lblPrecio.
         /// </summary>
         /// <remarks>
@@ -238,15 +265,6 @@ namespace Vistas.Aministrador
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvPrecio;
-
-        /// <summary>
-        /// Control rvPrecio.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RangeValidator rvPrecio;
 
         /// <summary>
         /// Control lblDuracion.
@@ -276,22 +294,49 @@ namespace Vistas.Aministrador
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvDuracionDias;
 
         /// <summary>
-        /// Control lblModalidad.
+        /// Control lblNivel.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblModalidad;
+        protected global::System.Web.UI.WebControls.Label lblNivel;
 
         /// <summary>
-        /// Control ddlModalidadPago.
+        /// Control ddlNivel.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlModalidadPago;
+        protected global::System.Web.UI.WebControls.DropDownList ddlNivel;
+
+        /// <summary>
+        /// Control lblIdioma.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblIdioma;
+
+        /// <summary>
+        /// Control ddlIdioma.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlIdioma;
+
+        /// <summary>
+        /// Control chkCertificadoHTML.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox chkCertificadoHTML;
 
         /// <summary>
         /// Control btnGuardar.
@@ -301,5 +346,59 @@ namespace Vistas.Aministrador
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnGuardar;
+
+        /// <summary>
+        /// Control updObjetivos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel updObjetivos;
+
+        /// <summary>
+        /// Control pnlObjetivos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlObjetivos;
+
+        /// <summary>
+        /// Control txtNuevoObjetivo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtNuevoObjetivo;
+
+        /// <summary>
+        /// Control btnAgregarObjetivo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAgregarObjetivo;
+
+        /// <summary>
+        /// Control rfvObjetivo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvObjetivo;
+
+        /// <summary>
+        /// Control dgvObjetivos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView dgvObjetivos;
     }
 }

@@ -1,7 +1,6 @@
 ﻿using Dominio;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,7 +23,9 @@ namespace Datos
                 datos.setearParametro("@DuracionAccesoDias", nuevo.DuracionAccesoDias);
                 datos.setearParametro("@Publicado", nuevo.Publicado);
                 datos.setearParametro("@EstaActivo", nuevo.EstaActivo);
-
+                datos.setearParametro("@NivelDificultad", nuevo.NivelDificultad);
+                datos.setearParametro("@Idioma", nuevo.Idioma);
+                datos.setearParametro("@ConCertificado", nuevo.ConCertificado);
                 int idNuevo = datos.ejecutarAccionScalar();
                 return idNuevo;
             }
@@ -50,8 +51,7 @@ namespace Datos
 
                 while (datos.Lector.Read())
                 {
-                    Curso aux = new Curso();
-                    // ... (Tu mapeo está perfecto)
+                    Curso aux = new Curso();                    
                     aux.Id = (int)datos.Lector["CursoID"];
                     aux.Titulo = (string)datos.Lector["Titulo"];
                     aux.Descripcion = (string)datos.Lector["Descripcion"];
@@ -62,6 +62,9 @@ namespace Datos
                     aux.DuracionAccesoDias = (int)datos.Lector["DuracionAccesoDias"];
                     aux.Publicado = (bool)datos.Lector["Publicado"];
                     aux.EstaActivo = (bool)datos.Lector["EstaActivo"];
+                    aux.NivelDificultad = (string)datos.Lector["NivelDificultad"];
+                    aux.Idioma = (string)datos.Lector["Idioma"];
+                    aux.ConCertificado = (bool)datos.Lector["ConCertificado"];
                     aux.Categoria = new Categoria();
                     aux.Categoria.Id = (int)datos.Lector["CategoriaID"];
                     aux.Categoria.Nombre = (string)datos.Lector["NombreCategoria"];
@@ -102,6 +105,9 @@ namespace Datos
                     aux.DuracionAccesoDias = (int)datos.Lector["DuracionAccesoDias"];
                     aux.Publicado = (bool)datos.Lector["Publicado"];
                     aux.EstaActivo = (bool)datos.Lector["EstaActivo"];
+                    aux.NivelDificultad = (string)datos.Lector["NivelDificultad"];
+                    aux.Idioma = (string)datos.Lector["Idioma"];
+                    aux.ConCertificado = (bool)datos.Lector["ConCertificado"];
                     aux.Categoria = new Categoria();
                     aux.Categoria.Id = (int)datos.Lector["CategoriaID"];
                     aux.Categoria.Nombre = (string)datos.Lector["NombreCategoria"];
@@ -137,8 +143,10 @@ namespace Datos
                 datos.setearParametro("@DuracionAccesoDias", nuevo.DuracionAccesoDias);
                 datos.setearParametro("@Publicado", nuevo.Publicado);
                 datos.setearParametro("@EstaActivo", nuevo.EstaActivo);
+                datos.setearParametro("@NivelDificultad", nuevo.NivelDificultad);
+                datos.setearParametro("@Idioma", nuevo.Idioma);
+                datos.setearParametro("@ConCertificado", nuevo.ConCertificado);
 
-               
                 datos.ejecutarAccion();
 
                 
@@ -159,7 +167,7 @@ namespace Datos
             try
             {
                 datos.setearConSP("sp_EliminacionLogicaCurso");
-                datos.setearParametro("@id", id);
+                datos.setearParametro("@CursoID", id);
                 datos.ejecutarAccion();
             }
             catch (Exception)
@@ -215,6 +223,9 @@ namespace Datos
                     aux.DuracionAccesoDias = (int)datos.Lector["DuracionAccesoDias"];
                     aux.Publicado = (bool)datos.Lector["Publicado"];
                     aux.EstaActivo = (bool)datos.Lector["EstaActivo"];
+                    aux.NivelDificultad = (string)datos.Lector["NivelDificultad"];
+                    aux.Idioma = (string)datos.Lector["Idioma"];
+                    aux.ConCertificado = (bool)datos.Lector["ConCertificado"];
                     aux.Categoria = new Categoria();
                     aux.Categoria.Id = (int)datos.Lector["CategoriaID"];
                     aux.Categoria.Nombre = (string)datos.Lector["NombreCategoria"];
@@ -247,7 +258,25 @@ namespace Datos
                 throw new Exception("Error al cambiar estado de publicación en Datos", ex);
             }
         }
-
+        public void ActualizarImagen(int idCurso, string nuevaUrl)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConSP("sp_Curso_ActualizarImagen");
+                datos.setearParametro("@CursoID", idCurso);
+                datos.setearParametro("@UrlImagenPortada", nuevaUrl);
+                datos.ejecutarAccion();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
 }
 

@@ -1,8 +1,8 @@
 ﻿using Datos;
 using Dominio;
+using Negocio.Contenido;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -29,12 +29,24 @@ namespace Negocio
         {
             try
             {
+                // 1. Buscamos la info básica del curso (Título, Precio, etc.)
+                Curso curso = datos.BuscarCursoPorId(id);
 
-                return datos.BuscarCursoPorId(id);
+                // 2. Si el curso existe, llenamos la lista de Objetivos
+                if (curso != null)
+                {
+                    // Instanciamos el negocio de objetivos para pedirle la lista
+                    CursoObjetivoNegocio objetivosNegocio = new CursoObjetivoNegocio();
+
+                    // Le asignamos la lista al objeto curso
+                    curso.Objetivos = objetivosNegocio.Listar(curso.Id);
+                }
+
+                return curso;
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al buscar el curso.", ex);
+                throw new Exception("Error al buscar el curso completo.", ex);
             }
         }
         public int GuardarCurso(Curso curso)
@@ -76,10 +88,16 @@ namespace Negocio
                     throw new Exception("La modalidad de pago no puede superar los 50 caracteres.");
 
                 // Duración (¡NUEVO!)
-                if (curso.DuracionAccesoDias <= 0)
+                if (curso.DuracionAccesoDias < 0)
                     throw new Exception("La duración de acceso debe ser de al menos 1 día.");
 
+                //Validar Nivel de Dificultad (No puede estar vacío)
+                if (string.IsNullOrWhiteSpace(curso.NivelDificultad))
+                    throw new Exception("Debe indicar el Nivel de Dificultad (Principiante, Intermedio, etc).");
 
+                // Validar Idioma (No puede estar vacío)
+                if (string.IsNullOrWhiteSpace(curso.Idioma))
+                    throw new Exception("Debe indicar el Idioma del curso.");
 
                 if (curso.Id > 0)
                 {
@@ -154,6 +172,17 @@ namespace Negocio
             catch (Exception ex)
             {
                 throw new Exception("Error al cambiar estado de publicación en Negocio.", ex);
+            }
+        }
+        public void ActualizarImagen(int idCurso, string nuevaUrl)
+        {
+            try
+            {
+                datos.ActualizarImagen(idCurso, nuevaUrl);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al actualizar la imagen del curso.", ex);
             }
         }
     }

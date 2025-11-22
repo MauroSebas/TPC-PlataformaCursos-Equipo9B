@@ -16,7 +16,6 @@ namespace Negocio
         private readonly PerfilDatos perfilDatos = new PerfilDatos();
         private readonly UsuarioTokenNegocio tokenNegocio = new UsuarioTokenNegocio();
         private readonly EmailServicio emailServicio = new EmailServicio();
-
         private readonly PasswordHasher _hasher = new PasswordHasher(); 
         public void RegistrarUsuario(Usuario nuevoUsuario, string passwordPlano)
         {
@@ -218,8 +217,7 @@ namespace Negocio
             {
                 throw new Exception("Error al obtener usuario por ID.", ex);
             }
-        }
-       
+        }      
         public void ActualizarPassword(int usuarioID, string passwordActual, string passwordNueva)
         {
             var usuario = usuarioDatos.BuscarPorID(usuarioID);
@@ -271,8 +269,7 @@ namespace Negocio
             usuario.EstadoCuentaID = nuevoEstadoCuentaID;
             if (!usuarioDatos.Actualizar(usuario))
                 throw new Exception("No se pudo actualizar el estado de la cuenta.");
-        }
-        
+        }        
         public void DarDeBajaUsuario(int usuarioID)
         {
             var usuario = usuarioDatos.BuscarPorID(usuarioID);
@@ -295,14 +292,12 @@ namespace Negocio
             if (!usuarioDatos.Actualizar(usuario))
                 throw new Exception("No se pudo reactivar al usuario.");
         }
-
         private void CrearPerfilVacio(int usuarioID)
         {
             if (usuarioID <= 0)
                 throw new ArgumentException("ID de usuario inválido.");
             perfilDatos.InsertarPerfilVacio(usuarioID);
         }
-
         public void ActualizarPassword(int usuarioID, string nuevaPassword)
         {
             try

@@ -19,7 +19,7 @@ namespace Vistas.Aministrador
         {
             try
             {
-                                pnlMensajeGlobal.Visible = false;
+                pnlMensajeGlobal.Visible = false;
                
                 if (Session["CursoPanelMensaje"] != null)
                 {
@@ -38,14 +38,12 @@ namespace Vistas.Aministrador
                 MostrarMensajeGlobal($"Error al cargar la página: {ex.Message}", true);
             }
         }
-
         private void CargarGrilla()
         {           
             List<Curso> lista = _cursoNegocio.listarCursos();
             gvCursos.DataSource = lista;
             gvCursos.DataBind();
         }
-
         private void CargarFiltros()
         {
             try
@@ -59,8 +57,7 @@ namespace Vistas.Aministrador
             {
                 MostrarMensajeGlobal($"Error al cargar categorías: {ex.Message}", true);
             }
-        }
-     
+        }    
         protected void btnFiltrar_Click(object sender, EventArgs e)
         {
             try
@@ -85,13 +82,11 @@ namespace Vistas.Aministrador
             ddlCategoriaFiltro.SelectedValue = "0";
             CargarGrilla(); 
         }       
-
         protected void gvCursos_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             gvCursos.PageIndex = e.NewPageIndex;
             CargarGrilla(); 
-        }
-    
+        }    
         protected void chkPublicado_CheckedChanged(object sender, EventArgs e)
         {
             try
@@ -110,28 +105,7 @@ namespace Vistas.Aministrador
                 MostrarMensajeGlobal($"Error al cambiar estado: {ex.Message}", true);
             }
         }
-
-        protected void gvCursos_RowCommand(object sender, GridViewCommandEventArgs e)
-        {
-            if (e.CommandName == "Archivar")
-            {
-                try
-                {
-                    int cursoId = Convert.ToInt32(e.CommandArgument);
-                    
-                    _cursoNegocio.eliminarCursoLogico(cursoId);
-
-                    CargarGrilla(); 
-                    MostrarMensajeGlobal("Curso archivado con éxito.", false);
-                }
-                catch (Exception ex)
-                {
-                    
-                    MostrarMensajeGlobal($"Error al archivar: {ex.Message}", true);
-                }
-            }
-        }
-     
+       
         protected void gvCursos_RowCreated(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.Pager)
@@ -162,15 +136,29 @@ namespace Vistas.Aministrador
                 }
             }
         }
-    
-        private void MostrarErrorEnPanel(Panel pnlError, Literal litError, string mensaje)
+        protected void btnConfirmarEliminar_Click(object sender, EventArgs e)
         {
-            pnlError.Visible = true;
-            litError.Text = mensaje;
-            pnlMensajeGlobal.Visible = false;
-            updMensajeGlobal.Update();
-        }
+            try
+            {
+                // 1. Recuperamos el ID del HiddenField
+                int idCurso = int.Parse(hfIdCursoEliminar.Value);
 
+                // 2. Llamamos a Negocio para eliminar (que ahora llama al SP corregido)
+                _cursoNegocio.eliminarCursoLogico(idCurso);
+
+                // 3. Actualizamos la grilla
+                CargarGrilla();
+
+                // 4. Feedback visual (Opcional: Cerrar modal por si quedó abierto y mostrar mensaje)
+                // Como estamos dentro de un UpdatePanel, el modal se cierra solo al renderizar de nuevo, 
+                // pero mostramos el mensaje de éxito.
+                MostrarMensajeGlobal("El curso se archivó correctamente.", false);
+            }
+            catch (Exception ex)
+            {
+                MostrarMensajeGlobal($"Error al eliminar: {ex.Message}", true);
+            }
+        }
         private void MostrarMensajeGlobal(string mensaje, bool esError = false)
         {
             pnlMensajeGlobal.Visible = true;

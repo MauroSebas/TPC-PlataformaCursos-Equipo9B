@@ -46,7 +46,7 @@
     <Content Include="Administrador\Curso\CursoForm.aspx" />
     <Content Include="Administrador\Curso\CursoPanel.aspx" />
     <Content Include="Administrador\LeccionForm.aspx" />
-    <Content Include="Administrador\ModuloGestion.aspx" />
+    <Content Include="Administrador\Curso\ModuloGestion.aspx" />
     <Content Include="Administrador\PagosPanel.aspx" />
     <Content Include="Administrador\PerfilAdministrador.aspx" />
     <Content Include="Alumno\PerfilAlumno.aspx" />
@@ -135,11 +135,11 @@
     <Compile Include="Administrador\LeccionForm.aspx.designer.cs">
       <DependentUpon>LeccionForm.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Administrador\ModuloGestion.aspx.cs">
+    <Compile Include="Administrador\Curso\ModuloGestion.aspx.cs">
       <DependentUpon>ModuloGestion.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Administrador\ModuloGestion.aspx.designer.cs">
+    <Compile Include="Administrador\Curso\ModuloGestion.aspx.designer.cs">
       <DependentUpon>ModuloGestion.aspx</DependentUpon>
     </Compile>
     <Compile Include="Administrador\PagosPanel.aspx.cs">

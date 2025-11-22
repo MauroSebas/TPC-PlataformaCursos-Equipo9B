@@ -43,15 +43,17 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="Administrador\AdminPanel.aspx" />
-    <Content Include="Administrador\CursoForm.aspx" />
-    <Content Include="Administrador\CursoPanel.aspx" />
+    <Content Include="Administrador\Curso\CursoForm.aspx" />
+    <Content Include="Administrador\Curso\CursoPanel.aspx" />
     <Content Include="Administrador\LeccionForm.aspx" />
     <Content Include="Administrador\ModuloGestion.aspx" />
     <Content Include="Administrador\PagosPanel.aspx" />
     <Content Include="Administrador\PerfilAdministrador.aspx" />
     <Content Include="Alumno\PerfilAlumno.aspx" />
     <Content Include="Assets\css\admin-style.css" />
+    <Content Include="Assets\css\Home.css" />
     <Content Include="Assets\css\styles.css" />
+    <Content Include="Assets\Cursos\placeholder-curso.jpg" />
     <Content Include="Assets\js\admin.js" />
     <Content Include="Assets\js\main.js" />
     <Content Include="Assets\js\perfilAlumno.js" />
@@ -112,18 +114,18 @@
     <Compile Include="Administrador\AdminPanel.aspx.designer.cs">
       <DependentUpon>AdminPanel.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Administrador\CursoForm.aspx.cs">
+    <Compile Include="Administrador\Curso\CursoForm.aspx.cs">
       <DependentUpon>CursoForm.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Administrador\CursoForm.aspx.designer.cs">
+    <Compile Include="Administrador\Curso\CursoForm.aspx.designer.cs">
       <DependentUpon>CursoForm.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Administrador\CursoPanel.aspx.cs">
+    <Compile Include="Administrador\Curso\CursoPanel.aspx.cs">
       <DependentUpon>CursoPanel.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Administrador\CursoPanel.aspx.designer.cs">
+    <Compile Include="Administrador\Curso\CursoPanel.aspx.designer.cs">
       <DependentUpon>CursoPanel.aspx</DependentUpon>
     </Compile>
     <Compile Include="Administrador\LeccionForm.aspx.cs">
@@ -275,6 +277,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Assets\Avatares\" />
+    <Folder Include="Assets\Comprobantes\" />
     <Folder Include="Assets\img\" />
     <Folder Include="Models\" />
   </ItemGroup>

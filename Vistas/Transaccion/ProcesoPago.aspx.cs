@@ -13,5 +13,15 @@ namespace Vistas
         {
 
         }
+
+        protected void btnEnviarComprobante_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnRealizarPagoTop_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -10,7 +10,7 @@ namespace Negocio
 {
     public class InscripcionNegocio
     {
-        public void CrearInscripcion(int idUsuario, int idCurso, DateTime fechaExpiracion)
+        public void CrearInscripcion(int idUsuario, int idCurso)
         {   
  
             Inscripcion nuevaInscripcion = new Inscripcion();
@@ -23,8 +23,9 @@ namespace Negocio
             nuevaInscripcion.UsuarioID = idUsuario;
                 
             nuevaInscripcion.FechaInscripcion = DateTime.Today;
-            nuevaInscripcion.FechaExpiracion = fechaExpiracion;
-                
+            //Buscar fecha de expiracion del curso calcular
+            //nuevaInscripcion.FechaExpiracion = fechaExpiracion;
+
             //Los argumentos los obtengo previemente en el evento aceptar:
             //idUsuario = int.Parse( ddlCurso.SelectedValue )
             //idCurso = int.Parse( ddlCurso.SelectedValue )

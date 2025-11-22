@@ -7,9 +7,9 @@ namespace Dominio
 {
     public class Inscripcion
     {
-        public int InscripcionID { get; set; }
-        public int UsuarioID { get; set; }
-        public Usuario Usuario { get; set; }
+        public int Id { get; set; }
+        public int UsuarioID { get; set; }// Mas facil para guardar
+        public Usuario Usuario { get; set; }//Mas facil para la lectura de atributos
         public int CursoID { get; set; }
         public Curso Curso { get; set; }
         public DateTime FechaInscripcion { get; set; }

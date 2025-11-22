@@ -50,9 +50,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-
     <Compile Include="Contenido\CursoObjetivoNegocio.cs" />
-
+    <Compile Include="Contenido\ModuloNegocio.cs" />
     <Compile Include="Seguridad\EstadoCuentaNegocio.cs" />
     <Compile Include="Contenido\CategoriaNegocio.cs" />
     <Compile Include="Seguridad\PerfilNegocio.cs" />
@@ -76,6 +75,10 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Comercial\" />
+    <Folder Include="Cursada\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

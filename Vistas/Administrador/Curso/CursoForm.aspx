@@ -12,7 +12,7 @@
             <p class="text-body-secondary fs-6 mb-0">Completa los datos principales del curso.</p>
         </div>
         <div>
-            <asp:HyperLink ID="btnVolver" runat="server" NavigateUrl="~/Administrador/CursoPanel.aspx"
+            <asp:HyperLink ID="btnVolver" runat="server" NavigateUrl="~/Administrador/Curso/CursoPanel.aspx"
                 CssClass="btn btn-outline-secondary d-flex align-items-center gap-2 fw-bold small">
                 <i class="bi bi-arrow-left"></i>
                 <span>Volver a Cursos</span>

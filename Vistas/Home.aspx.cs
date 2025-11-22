@@ -10,13 +10,94 @@ using Negocio;
 namespace Vistas
 {
     public partial class Home : System.Web.UI.Page
-    {   
-        public List<Categoria>ListaCategoria { get; set;}
+    {
+        private readonly CategoriaNegocio _catNegocio = new CategoriaNegocio();
+        private readonly CursoNegocio _cursoNegocio = new CursoNegocio();      
+        protected int CategoriaSeleccionadaId
+        {
+            get
+            {
+                if (ViewState["CatFiltro"] != null)
+                    return (int)ViewState["CatFiltro"];
+                return 0; 
+            }
+            set { ViewState["CatFiltro"] = value; }
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
-            CategoriaNegocio negocio = new CategoriaNegocio();
-            ListaCategoria = negocio.listarCategoria();
+            if (!IsPostBack)
+            {
+                CargarCategorias();
+                CargarCursos();
 
+                btnTodos.CssClass = "cat-pill text-decoration-none active";
+            }
+        }
+        private void CargarCategorias()
+        {
+            try
+            {
+                List<Categoria> lista = _catNegocio.listarCategoria();
+                repCategorias.DataSource = lista;
+                repCategorias.DataBind();                
+            }
+            catch (Exception) { }
+        }
+        private void CargarCursos()
+        {
+            try
+            {
+
+                List<Curso> cursos = _cursoNegocio.filtrarCursos("", this.CategoriaSeleccionadaId);
+
+                if (cursos.Count > 0)
+                {
+                    repCursos.DataSource = cursos;
+                    repCursos.DataBind();
+
+                    repCursos.Visible = true;
+                    pnlSinCursos.Visible = false;
+                }
+                else
+                {
+                    repCursos.Visible = false;
+                    pnlSinCursos.Visible = true;
+                }
+            }
+            catch (Exception) { }
+        }      
+        protected void btnFiltroCategoria_Click(object sender, EventArgs e)
+        {
+            LinkButton btn = (LinkButton)sender;
+            int idCategoriaNueva = int.Parse(btn.CommandArgument);
+
+            
+            if (this.CategoriaSeleccionadaId == idCategoriaNueva && idCategoriaNueva != 0)
+            {
+                this.CategoriaSeleccionadaId = 0;
+            }
+            else
+            {
+                this.CategoriaSeleccionadaId = idCategoriaNueva;
+            }
+
+            
+            CargarCursos();
+            CargarCategorias(); 
+
+           
+            btnTodos.CssClass = "cat-pill text-decoration-none " + (CategoriaSeleccionadaId == 0 ? "active" : "");
+        }     
+        public string ObtenerImagen(object urlObj)
+        {
+            string url = urlObj as string;
+            if (string.IsNullOrEmpty(url))
+            {
+                
+                return ResolveUrl("~/Assets/img/placeholder-curso.jpg");
+            }
+            
+            return ResolveUrl(url);
         }
     }
 }

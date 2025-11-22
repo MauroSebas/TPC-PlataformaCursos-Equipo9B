@@ -43,8 +43,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccesoDatos.cs" />
-    <Compile Include="CategoriaDatos.cs" />
-    <Compile Include="CursoDatos.cs" />
+    <Compile Include="Contenido\CategoriaDatos.cs" />
+    <Compile Include="Contenido\CursoObjetivoDatos.cs" />
+    <Compile Include="Contenido\CursoDatos.cs" />
     <Compile Include="Seguridad\EstadoCuentaDatos.cs" />
     <Compile Include="Seguridad\PerfilDatos.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

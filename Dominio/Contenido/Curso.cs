@@ -19,7 +19,11 @@ namespace Dominio
         public bool Publicado { get; set; }
         public Categoria Categoria { get; set; }
         public decimal Precio { get; set; }
-        public bool EstaActivo { get; set; }
+        public bool EstaActivo { get; set; }       
+        public string NivelDificultad { get; set; }
+        public string Idioma { get; set; }
+        public bool ConCertificado { get; set; }
+        public List<CursoObjetivo> Objetivos { get; set; }
         public string PrecioFormateado
         {
             get

@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contenido\CursoObjetivoNegocio.cs" />
+    <Compile Include="Contenido\LeccionNegocio.cs" />
     <Compile Include="Contenido\ModuloNegocio.cs" />
     <Compile Include="Seguridad\EstadoCuentaNegocio.cs" />
     <Compile Include="Contenido\CategoriaNegocio.cs" />

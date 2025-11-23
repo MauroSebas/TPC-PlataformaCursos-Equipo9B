@@ -47,6 +47,7 @@
     <Compile Include="Contenido\CursoObjetivoDatos.cs" />
     <Compile Include="Contenido\CursoDatos.cs" />
     <Compile Include="CertificadoDatos.cs" />
+    <Compile Include="Contenido\LeccionDatos.cs" />
     <Compile Include="Contenido\ModuloDatos.cs" />
     <Compile Include="InscripcionDatos.cs" />
     <Compile Include="PagoDatos.cs" />

@@ -45,6 +45,7 @@
     <Content Include="Administrador\AdminPanel.aspx" />
     <Content Include="Administrador\Curso\CursoForm.aspx" />
     <Content Include="Administrador\Curso\CursoPanel.aspx" />
+    <Content Include="Administrador\Curso\LeccionPanel.aspx" />
     <Content Include="Administrador\LeccionForm.aspx" />
     <Content Include="Administrador\Curso\ModuloGestion.aspx" />
     <Content Include="Administrador\PagosPanel.aspx" />
@@ -64,7 +65,6 @@
     <Content Include="Auth\RestablecerContraseña.aspx" />
     <Content Include="Administrador\CategoriaEliminarEditar.aspx" />
     <Content Include="Administrador\CategoriaGestion.aspx" />
-    <Content Include="Contacto.aspx" />
     <Content Include="CursoDetalle.aspx" />
     <Content Include="EmailTemplates\ActivacionCuenta.html" />
     <Content Include="EmailTemplates\RestablecerContraseña.html" />
@@ -85,6 +85,13 @@
     </Compile>
     <Compile Include="Administrador.Master.designer.cs">
       <DependentUpon>Administrador.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Administrador\Curso\LeccionPanel.aspx.cs">
+      <DependentUpon>LeccionPanel.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administrador\Curso\LeccionPanel.aspx.designer.cs">
+      <DependentUpon>LeccionPanel.aspx</DependentUpon>
     </Compile>
     <Compile Include="Administrador\PerfilAdministrador.aspx.cs">
       <DependentUpon>PerfilAdministrador.aspx</DependentUpon>
@@ -191,13 +198,6 @@
     <Compile Include="Administrador\CategoriaGestion.aspx.designer.cs">
       <DependentUpon>CategoriaGestion.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Contacto.aspx.cs">
-      <DependentUpon>Contacto.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Contacto.aspx.designer.cs">
-      <DependentUpon>Contacto.aspx</DependentUpon>
-    </Compile>
     <Compile Include="CursoDetalle.aspx.cs">
       <DependentUpon>CursoDetalle.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -279,6 +279,7 @@
     <Folder Include="Assets\Avatares\" />
     <Folder Include="Assets\Comprobantes\" />
     <Folder Include="Assets\img\" />
+    <Folder Include="Assets\Material\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

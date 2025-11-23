@@ -6,8 +6,6 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Dominio;
-using Negocio;
 
 namespace Vistas
 {
@@ -99,6 +97,50 @@ namespace Vistas
             Response.Redirect("Carrito.aspx");
         }
 
+        protected void btnComprar_Click(object sender, EventArgs e)
+        {
+            //Tengo q llevar a ProcesoPago el Id del Usuario y el Id del curso seleccionado
 
+
+            // 1. Validación de Seguridad: ¿Está logueado?
+            if (Session["Usuario"] == null)
+            {
+                // Si no está logueado, lo mandamos al login y guardamos a dónde quería ir
+                Response.Redirect("~/Auth/Loguin.aspx?returnUrl=" + Request.Url.PathAndQuery);
+                return;
+            }
+
+            // 2. Obtener el ID del curso actual (desde la URL de esta misma página)
+            string idCursoStr = Request.QueryString["id"];
+
+
+            // 3. Validación de Integridad: ¿Tenemos un ID válido?
+            if (string.IsNullOrEmpty(idCursoStr) || !int.TryParse(idCursoStr, out int idCurso))//convierte la cadena en int y devuelve verdadero
+            {
+                Response.Redirect("Home.aspx"); // Algo raro pasó, volver al home
+                return;
+            }
+            
+            //Validacion si ya compro el curso
+            InscripcionNegocio negocio = new InscripcionNegocio();
+            Usuario User = (Usuario)Session["Usuario"];
+
+            if ( negocio.ObtenerInscripcion(User.UsuarioID,idCurso) != null)
+            {
+                pnlAlertaYaComprado.Visible = true;
+            }
+
+            Response.Redirect("~/Transaccion/ProcesoPago.aspx?idCurso=" + idCurso,false);
+        }
+
+        protected void btnVolverAHome_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Home.aspx");
+        }
+
+        protected void btnVolverAMisCursos_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Home.aspx");
+        }
     }
 }

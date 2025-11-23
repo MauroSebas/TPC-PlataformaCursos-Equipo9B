@@ -10,28 +10,45 @@ namespace Negocio
 {
     public class InscripcionNegocio
     {
-        public void CrearInscripcion(int idUsuario, int idCurso)
+        public int CrearInscripcion(int idUsuario, int idCurso)
         {   
  
             Inscripcion nuevaInscripcion = new Inscripcion();
             InscripcionDatos datos = new InscripcionDatos();
+            CursoNegocio negocio = new CursoNegocio();
+            Curso seleccionado = new Curso();
+            
+            seleccionado = negocio.BuscarCurso(idCurso);
 
             //Validar si el curso esta publicado
             nuevaInscripcion.CursoID = idCurso;
-                
+
             //Validar si el Usuario esta ok
             nuevaInscripcion.UsuarioID = idUsuario;
-                
-            nuevaInscripcion.FechaInscripcion = DateTime.Today;
-            //Buscar fecha de expiracion del curso calcular
-            //nuevaInscripcion.FechaExpiracion = fechaExpiracion;
 
-            //Los argumentos los obtengo previemente en el evento aceptar:
-            //idUsuario = int.Parse( ddlCurso.SelectedValue )
-            //idCurso = int.Parse( ddlCurso.SelectedValue )
-            //fechaExpiracion=> calendario = nuevaInscripcion.CursoID;
+            //Validar FechaInscripcion y FechaExpiracion
+            DateTime fechaInscripcion = DateTime.Today;
+            nuevaInscripcion.FechaInscripcion = fechaInscripcion;
 
-            datos.AltaInscripcion(nuevaInscripcion);
+            int cantDiasAccesoCurso = seleccionado.DuracionAccesoDias;
+
+            if (cantDiasAccesoCurso > 0)
+            {
+                DateTime fechaExpiracionInscripcion = fechaInscripcion.AddDays(cantDiasAccesoCurso);
+
+                nuevaInscripcion.FechaExpiracion = fechaExpiracionInscripcion;
+
+            }
+            else
+            {
+                nuevaInscripcion.FechaExpiracion = null;
+            }
+
+            //Validar Estado
+            nuevaInscripcion.Estado = "Pendiente";
+
+
+            return datos.AltaInscripcion(nuevaInscripcion);
 
         }
 
@@ -41,13 +58,9 @@ namespace Negocio
             Inscripcion seleccionada = new Inscripcion();
 
             //Validaciones a idUsuario e idCurso
+            if (idUsuario <= 0 || idCurso <= 0) throw new Exception("IDs inválidos");
 
             seleccionada = datos.BuscarInscripcion(idUsuario, idCurso);
-
-            if ( seleccionada is null)
-            {
-                throw new Exception("No se encontró ninguna inscripcion para Usuario y Curso solicitados.");
-            }
 
             return seleccionada; 
         

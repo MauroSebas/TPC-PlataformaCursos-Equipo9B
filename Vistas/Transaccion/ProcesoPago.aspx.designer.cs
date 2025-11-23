@@ -69,13 +69,22 @@ namespace Vistas
         protected global::System.Web.UI.WebControls.Label lblTotal;
 
         /// <summary>
-        /// Control btnRealizarPagoTop.
+        /// Control lblNombreCursoModal.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnRealizarPagoTop;
+        protected global::System.Web.UI.WebControls.Label lblNombreCursoModal;
+
+        /// <summary>
+        /// Control lblMontoModal.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMontoModal;
 
         /// <summary>
         /// Control upModalPago.

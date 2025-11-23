@@ -59,10 +59,8 @@
                             <span class="fw-bold fs-5 text-body-emphasis">Total a pagar</span>
                             <asp:Label runat="server" ID="lblTotal" CssClass="fw-bolder fs-3 text-primary" Text="$99.99" />
                         </div>
-
- 
                         <div class="d-grid gap-2">
-                            <asp:Button runat="server" ID="btnRealizarPagoTop" CssClass="btn btn-primary btn-lg fw-bold shadow-sm" Text="Realizar Pago" OnClick="btnRealizarPagoTop_Click"/>
+                            <button type="button" class="btn btn-primary btn-lg fw-bold shadow-sm w-100" data-bs-toggle="modal" data-bs-target="#pagoModal">Realizar Pago </button>
                         </div>
 
                         <div class="text-center mt-3 text-muted small">
@@ -101,13 +99,20 @@
                                 </button>
                             </div>
                         </div>
-                        <div class="d-flex align-items-center justify-content-between pt-1">
-                            <span class="text-body-secondary small">Monto Exacto a Transferir</span>
+
+                        <div class="d-flex justify-content-between border-bottom pb-2 mb-2">
+                            <span class="text-body-secondary small">Concepto</span>
+
+                            <asp:Label ID="lblNombreCursoModal" runat="server" CssClass="fw-medium text-body-emphasis small text-end" Text="Nombre del Curso" />
+                        </div>
+
+                        <div class="d-flex justify-content-between pt-1">
+                            <span class="text-body-secondary small">Monto a Transferir</span>
                             <div class="d-flex align-items-center gap-2">
-                                <span class="fw-medium text-body-emphasis small">$5,000.00 ARS</span>
-                                <button class="btn btn-link text-primary p-0 text-decoration-none">
-                                    <span class="material-symbols-outlined fs-6">content_copy</span>
-                                </button>
+
+                                <asp:Label ID="lblMontoModal" runat="server" CssClass="fw-bold text-primary small" Text="$0.00" />
+
+                                <button class="btn btn-link text-primary p-0"><span class="material-symbols-outlined fs-6">content_copy</span></button>
                             </div>
                         </div>
                     </div>

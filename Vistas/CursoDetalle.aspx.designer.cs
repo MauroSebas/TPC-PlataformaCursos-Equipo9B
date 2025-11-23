@@ -78,13 +78,13 @@ namespace Vistas
         protected global::System.Web.UI.WebControls.Button btnAgregarCarrito;
 
         /// <summary>
-        /// Control lnkComprar.
+        /// Control btnComprar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink lnkComprar;
+        protected global::System.Web.UI.WebControls.Button btnComprar;
 
         /// <summary>
         /// Control lblDuracion.
@@ -121,5 +121,32 @@ namespace Vistas
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl liCertificado;
+
+        /// <summary>
+        /// Control pnlAlertaYaComprado.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlAlertaYaComprado;
+
+        /// <summary>
+        /// Control btnVolverAHome.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnVolverAHome;
+
+        /// <summary>
+        /// Control btnVolverAMisCursos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnVolverAMisCursos;
     }
 }

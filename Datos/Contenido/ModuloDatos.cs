@@ -27,6 +27,7 @@ namespace Datos.Contenido
                     aux.Nombre = (string)datos.Lector["NombreModulo"];
                     aux.Orden = (int)datos.Lector["Orden"];
                     aux.EstaActivo = (bool)datos.Lector["EstaActivo"];
+                    aux.CantidadLecciones = (int)datos.Lector["CantidadLecciones"];
 
                     lista.Add(aux);
                 }

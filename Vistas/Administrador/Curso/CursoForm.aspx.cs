@@ -62,7 +62,7 @@ namespace Vistas.Aministrador
             try
             {
                 // 1. Categorías
-                ddlCategoria.DataSource = _catNegocio.listarCategoria();
+                ddlCategoria.DataSource = _catNegocio.Listar();
                 ddlCategoria.DataValueField = "Id";
                 ddlCategoria.DataTextField = "Nombre";
                 ddlCategoria.DataBind();

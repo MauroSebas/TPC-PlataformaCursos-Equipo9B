@@ -185,13 +185,18 @@ namespace Datos
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.setearConSP("sp_Curso_ContarPorCategoria");
-                datos.setearParametro("@CategoriaID", categoriaId);
+                datos.setearConsulta("SELECT COUNT(*) FROM Curso WHERE CategoriaID = @CatID AND EstaActivo = 1");
+                datos.setearParametro("@CatID", categoriaId);
+
                 return datos.ejecutarAccionScalar();
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al contar cursos por categoría", ex);
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
             }
         }
         public List<Curso> filtrarCursosConSP(string titulo, int categoriaId)

@@ -37,7 +37,7 @@ namespace Vistas
         {
             try
             {
-                List<Categoria> lista = _catNegocio.listarCategoria();
+                List<Categoria> lista = _catNegocio.Listar();
                 repCategorias.DataSource = lista;
                 repCategorias.DataBind();                
             }
@@ -53,15 +53,13 @@ namespace Vistas
 
                
                 List<Curso> listaFiltrada = listaCompleta.FindAll(x => x.Publicado == true);
-
-                // 3. AHORA LA CORRECCIÓN:
-                // Si hay una categoría seleccionada (ID > 0), aplicamos ese filtro extra
+               
                 if (this.CategoriaSeleccionadaId > 0)
                 {
                     listaFiltrada = listaFiltrada.FindAll(x => x.Categoria.Id == this.CategoriaSeleccionadaId);
                 }
 
-                // 4. Asignamos la lista final
+               
                 repCursos.DataSource = listaFiltrada;
                 repCursos.DataBind();
             }

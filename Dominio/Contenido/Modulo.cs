@@ -15,7 +15,8 @@ namespace Dominio
 
         public string Nombre { get; set; }
         public int Orden { get; set; }
-        public bool EstaActivo { get; set; } 
+        public bool EstaActivo { get; set; }
+        public int CantidadLecciones { get; set; }
         public List<Leccion> Lecciones { get; set; }        
         public Modulo()
         {

@@ -108,7 +108,9 @@
                                     <asp:TemplateField HeaderText="Nombre del Módulo">
                                         <ItemTemplate>
                                             <span class="fw-medium"><%# Eval("Nombre") %></span>
-                                            <div class="small text-muted">0 Lecciones (Próximamente)</div>
+                                            <div class="small text-muted">
+                                                <%# Eval("CantidadLecciones") %> Lecciones
+                                            </div>
                                         </ItemTemplate>
                                     </asp:TemplateField>
 
@@ -120,10 +122,11 @@
                                                 <i class="bi bi-pencil-square"></i>
                                             </asp:LinkButton>
 
-                                            <asp:HyperLink ID="hlLecciones" runat="server" NavigateUrl="#"
+                                            <asp:HyperLink ID="hlLecciones" runat="server"
+                                                NavigateUrl='<%# Eval("Id", "~/Administrador/Curso/LeccionPanel.aspx?id={0}") %>'
                                                 CssClass="btn btn-sm btn-outline-info border-0 me-1" ToolTip="Ver Lecciones">
-                                                <i class="bi bi-collection-play"></i>
-                                            </asp:HyperLink>
+                                                    <i class="bi bi-collection-play"></i>
+                                                </asp:HyperLink>
 
                                             <asp:LinkButton ID="btnEliminar" runat="server" CommandName="Eliminar" CommandArgument='<%# Eval("Id") %>'
                                                 CssClass="btn btn-sm btn-outline-danger border-0" ToolTip="Eliminar"

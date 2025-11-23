@@ -88,7 +88,6 @@ namespace Datos
             }
             finally { datos.cerrarConexion(); }
         }
-
         public List<Pago> ListarAdmin(string estado = null)
         {
             List<Pago> lista = new List<Pago>();

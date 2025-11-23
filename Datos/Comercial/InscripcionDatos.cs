@@ -151,39 +151,7 @@ namespace Datos
             }
         }
 
-        public List<Pago> ListarAdmin(string estado = null)
-        {
-            List<Pago> lista = new List<Pago>();
-            AccesoDatos datos = new AccesoDatos();
-            try
-            {
-                datos.setearConSP("sp_Pago_ListarAdmin");
 
-                // Si viene null o vacío, mandamos DBNull para que el SP traiga todo
-                if (string.IsNullOrEmpty(estado))
-                    datos.setearParametro("@Estado", DBNull.Value);
-                else
-                    datos.setearParametro("@Estado", estado);
-
-                datos.ejecutarLectura();
-
-                while (datos.Lector.Read())
-                {
-                    // Usamos el método privado que ya tenés para no repetir código de mapeo
-                    // Si no lo tenés privado, copialo de ListarPagosPendientes
-                    lista.Add(MapearPago(datos));
-                }
-                return lista;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error al listar pagos para admin.", ex);
-            }
-            finally
-            {
-                datos.cerrarConexion();
-            }
-        }
     }
 }
 

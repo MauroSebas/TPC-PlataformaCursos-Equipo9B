@@ -13,34 +13,46 @@ namespace Vistas
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+           
+            if (Session["Usuario"] == null)
+            {
+                Response.Redirect("~/Auth/Loguin.aspx");
+                return;
+            }
+
             if (!IsPostBack)
             {
-                CargarCursosSimulados();
+                CargarMisCursos();
             }
         }
 
-        private void CargarCursosSimulados()
+        private void CargarMisCursos()
         {
             try
             {
-                CursoNegocio negocio = new CursoNegocio();
+               
+                Usuario usuario = (Usuario)Session["Usuario"];
 
-                // TODO: Cuando esté el módulo de Inscripción, cambiar esto por:
-                // List<Curso> lista = negocio.ListarPorAlumno(usuarioId);
+               
+                InscripcionNegocio negocio = new InscripcionNegocio();
+                List<Inscripcion> listaInscripciones = negocio.ListarPorUsuario(usuario.UsuarioID);
 
-                // POR AHORA: Traemos todos para probar el flujo
-                List<Curso> lista = negocio.listarCursos();
-
-                // Filtramos solo los publicados para que no se vea basura
-                // (O podés dejar todo si querés ver cómo queda)
-                var listaVisible = lista.FindAll(x => x.Publicado);
-
-                repMisCursos.DataSource = listaVisible;
-                repMisCursos.DataBind();
+               
+                if (listaInscripciones.Count > 0)
+                {
+                    repMisCursos.DataSource = listaInscripciones;
+                    repMisCursos.DataBind();
+                }
+                else
+                {
+                    pnlSinCursos.Visible = true; 
+                }
             }
             catch (Exception ex)
             {
-                // Manejo error
+               
+                Session.Add("Error", ex.Message);
+                Response.Redirect("Error.aspx");
             }
         }
 

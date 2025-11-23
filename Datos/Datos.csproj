@@ -49,8 +49,8 @@
     <Compile Include="CertificadoDatos.cs" />
     <Compile Include="Contenido\LeccionDatos.cs" />
     <Compile Include="Contenido\ModuloDatos.cs" />
-    <Compile Include="InscripcionDatos.cs" />
-    <Compile Include="PagoDatos.cs" />
+    <Compile Include="Comercial\InscripcionDatos.cs" />
+    <Compile Include="Comercial\PagoDatos.cs" />
     <Compile Include="Seguridad\EstadoCuentaDatos.cs" />
     <Compile Include="Seguridad\PerfilDatos.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -65,7 +65,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Comercial\" />
     <Folder Include="Cursada\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

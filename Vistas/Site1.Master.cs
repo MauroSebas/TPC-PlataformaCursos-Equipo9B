@@ -19,15 +19,15 @@ namespace Vistas
         }
             private void ConfigurarMenu()
              {
-            // 1. Verificar si hay usuario en sesión
+           
             if (Session["Usuario"] != null)
             {
                 Usuario usuario = (Usuario)Session["Usuario"];
 
-                // Ocultar botones de login/registro
+               
                 phAnonimo.Visible = false;
 
-                // Mostrar zona de usuario logueado
+                
                 phLogueado.Visible = true;
                 if(usuario.Perfil.NombreCompleto != "")
                 {
@@ -39,7 +39,7 @@ namespace Vistas
                 }
 
 
-                // Avatar por defecto o cargado
+              
                 if (usuario.Perfil != null && !string.IsNullOrEmpty(usuario.Perfil.UrlFotoPerfil))
                     imgAvatar.ImageUrl = ResolveUrl(usuario.Perfil.UrlFotoPerfil);
                 else
@@ -49,7 +49,8 @@ namespace Vistas
                 if (usuario.Rol.NombreRol == "Administrador")
                 {                    
                     phBotonAdmin.Visible = true;
-                    phBotonAlumno.Visible = false; 
+                    phBotonAlumno.Visible = false;
+                    phCart.Visible = false;
                 }
                 else 
                 {
@@ -60,7 +61,7 @@ namespace Vistas
             
             else
             {
-                // Usuario Anónimo
+               
                 phAnonimo.Visible = true;
                 phLogueado.Visible = false;
                 phBotonAlumno.Visible = false;

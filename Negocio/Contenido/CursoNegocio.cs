@@ -29,16 +29,16 @@ namespace Negocio
         {
             try
             {
-                // 1. Buscamos la info básica del curso (Título, Precio, etc.)
+               
                 Curso curso = datos.BuscarCursoPorId(id);
 
-                // 2. Si el curso existe, llenamos la lista de Objetivos
+              
                 if (curso != null)
                 {
-                    // Instanciamos el negocio de objetivos para pedirle la lista
+                   
                     CursoObjetivoNegocio objetivosNegocio = new CursoObjetivoNegocio();
 
-                    // Le asignamos la lista al objeto curso
+                    
                     curso.Objetivos = objetivosNegocio.Listar(curso.Id);
                 }
 

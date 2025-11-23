@@ -9,88 +9,71 @@ namespace Negocio
 {
     public class CategoriaNegocio
     {
-        
+
         private readonly CategoriaDatos datos = new CategoriaDatos();
-        public List<Categoria> listarCategoria()
+
+        public List<Categoria> Listar()
         {
-            try
-            {                
-                return datos.listarCategoriaConSP();
-            }
-            catch (Exception ex)
-            {
-                
-                throw new Exception("Error al listar las categorías.", ex);
-            }
+            try { return datos.Listar(); }
+            catch (Exception ex) { throw new Exception("Error al listar categorías.", ex); }
         }
-        public int agregarCategoria(Categoria nueva)
+
+        public Categoria Obtener(int id)
         {
-            try
-            {                
-                if (nueva == null)
-                    throw new Exception("La categoría es nula.");
-                if (string.IsNullOrWhiteSpace(nueva.Nombre))
-                    throw new Exception("El nombre de la categoría es obligatorio.");
-                if (nueva.Nombre.Length > 40) 
-                    throw new Exception("El nombre no puede superar los 40 caracteres.");
-                
-                int idNuevo = datos.agregarCategoriaConSP(nueva);
-                return idNuevo;
-            }
-            catch (Exception ex)
-            {
-                
-                throw new Exception("Error al agregar la categoría: " + ex.Message, ex);
-            }
+            try { return datos.Obtener(id); }
+            catch (Exception ex) { throw new Exception("Error al buscar categoría.", ex); }
         }
-        public Categoria BuscarPorId(int id)
+
+        public int Guardar(Categoria categoria)
         {
             try
-            {                
-                return datos.BuscarPorId(id);
-            }
-            catch (Exception ex)
             {
-                throw new Exception("Error al buscar la categoría.", ex);
+                if (string.IsNullOrWhiteSpace(categoria.Nombre))
+                    throw new Exception("El nombre es obligatorio.");
+                if (categoria.Nombre.Length < 3)
+                    throw new Exception("Nombre demasiado corto(Minimo 3 Caracteres).");
+                if (categoria.Nombre.Length > 50)
+                    throw new Exception("Nombre demasiado largo.");
+
+                if (categoria.Id > 0)
+                {
+                    datos.Modificar(categoria);
+                    return categoria.Id;
+                }
+                else
+                {
+                    return datos.Agregar(categoria);
+                }
             }
-        }     
-        public void modificarCategoria(Categoria categoria)
+            catch (Exception ex) { throw new Exception("Error al guardar categoría: " + ex.Message, ex); }
+        }
+
+        public void Eliminar(int id)
         {
             try
             {
                
-                if (categoria == null)
-                    throw new Exception("La categoría es nula.");
-                if (categoria.Id <= 0)
-                    throw new Exception("El ID de la categoría no es válido.");
-                if (string.IsNullOrWhiteSpace(categoria.Nombre))
-                    throw new Exception("El nombre de la categoría es obligatorio.");
-                if (categoria.Nombre.Length > 40) 
-                    throw new Exception("El nombre no puede superar los 40 caracteres.");
-                 
-                datos.modificarConSP(categoria);
+                CursoNegocio cn = new CursoNegocio();
+
+               
+                if (cn.ContarCursosPorCategoria(id) > 0)
+                    throw new Exception("No se puede eliminar: Esta categoría tiene cursos activos.");
+
+              
+                datos.Eliminar(id);
             }
-            catch (Exception ex)
-            {
-                throw new Exception("Error al modificar la categoría: " + ex.Message, ex);
-            }
-        }       
-        public void eliminarLogico(int id)
+            catch (Exception ex) { throw ex; }
+        }
+
+        public int ContarCursosPorCategoria(int categoriaId)
         {
             try
             {
-                
-                CursoNegocio cursoNegocio = new CursoNegocio();
-                if (cursoNegocio.ContarCursosPorCategoria(id) > 0)
-                {
-                    throw new Exception("No se puede eliminar una categoría con cursos asociados.");
-                }
-                
-                datos.eliminarLogicoConSP(id);
+                return datos.ContarCursosPorCategoria(categoriaId);
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al eliminar la categoría.", ex);
+                throw new Exception("Error al contar cursos por categoría.", ex);
             }
         }
     }

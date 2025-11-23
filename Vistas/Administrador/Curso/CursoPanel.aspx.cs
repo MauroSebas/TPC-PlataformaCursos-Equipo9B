@@ -49,7 +49,7 @@ namespace Vistas.Aministrador
             try
             {
                 
-                ddlCategoriaFiltro.DataSource = _catNegocio.listarCategoria();
+                ddlCategoriaFiltro.DataSource = _catNegocio.Listar();
                 ddlCategoriaFiltro.DataBind();                
                 ddlCategoriaFiltro.Items.Insert(0, new ListItem("-- Todas las Categorías --", "0"));
             }

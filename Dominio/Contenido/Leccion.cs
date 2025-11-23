@@ -8,15 +8,19 @@ namespace Dominio
 {
     public class Leccion
     {
-        public int Id { get; set; }
-        public int ModuloId { get; set; }
+        public int Id { get; set; }       
+        public int IdModulo { get; set; }       
         public Modulo Modulo { get; set; }
         public string Titulo { get; set; }
-        public int Orden { get; set; } 
-        public string TipoMaterial { get; set; } 
-        public string UrlRecurso { get; set; }
-        public int DuracionMinutos { get; set; } 
-        public bool EstaActivo { get; set; }
-
+        public int Orden { get; set; }        
+        public string TipoMaterial { get; set; }
+        public string UrlRecurso { get; set; }   
+        public string UrlDocumento { get; set; }
+        public string Descripcion { get; set; }
+        public int DuracionMinutos { get; set; }
+        public bool Estado { get; set; }        
+        public Leccion() { }
     }
+
 }
+

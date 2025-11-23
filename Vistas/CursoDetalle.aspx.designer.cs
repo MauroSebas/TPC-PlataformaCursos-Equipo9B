@@ -88,6 +88,7 @@ namespace Vistas
 
         /// <summary>
         /// Control btnComprar.
+
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
@@ -106,12 +107,17 @@ namespace Vistas
 
         /// <summary>
         /// Control btnInscribirse.
+
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
+
+        protected global::System.Web.UI.WebControls.Button btnComprar;
+
         protected global::System.Web.UI.WebControls.Button btnInscribirse;
+
 
         /// <summary>
         /// Control lblDuracion.
@@ -148,5 +154,32 @@ namespace Vistas
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl liCertificado;
+
+        /// <summary>
+        /// Control pnlAlertaYaComprado.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlAlertaYaComprado;
+
+        /// <summary>
+        /// Control btnVolverAHome.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnVolverAHome;
+
+        /// <summary>
+        /// Control btnVolverAMisCursos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnVolverAMisCursos;
     }
 }

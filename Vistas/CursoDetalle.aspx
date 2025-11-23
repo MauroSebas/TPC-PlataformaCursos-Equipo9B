@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="CursoDetalle.aspx.cs" Inherits="Vistas.CursoDetalle" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
@@ -36,14 +37,18 @@
                                 </ItemTemplate>
                             </asp:Repeater>
 
+
                             <%-- Mensaje por si no hay objetivos --%>
+
                             <asp:Label ID="lblSinObjetivos" runat="server" Visible="false" Text="No se detallan objetivos específicos." CssClass="text-muted small"></asp:Label>
                         </ul>
                     </div>
                 </div>
 
             </div>
+
             <%-- Fin Columna Izquierda --%>
+
 
             <%-- Columna Derecha: Sidebar --%>
             <div class="col-lg-4">
@@ -53,7 +58,6 @@
                         <%-- Imagen Sidebar --%>
                         <asp:Image ID="imgSidebar" runat="server" CssClass="card-img-top" AlternateText="Portada" />
 
-                        <%-- ACÁ ESTABA EL ERROR: Faltaba el '<' --%>
                         <div class="card-body p-4">
 
                             <%-- PRECIO --%>
@@ -61,7 +65,7 @@
                                 <asp:Label ID="lblPrecio" runat="server" Text="$0.00"></asp:Label>
                             </h2>
 
-                            <%-- BOTONES DE ACCIÓN --%>
+                            <%-- BOTONES DE ACCIÓN (Lógica Condicional - Tu versión) --%>
                             <div class="d-grid gap-2">
 
                                 <%-- GRUPO 1: Cursos PAGOS --%>
@@ -75,7 +79,7 @@
 
                                 <%-- GRUPO 2: Cursos GRATUITOS --%>
                                 <asp:PlaceHolder ID="phCursoGratis" runat="server" Visible="false">
-                                    <asp:Button runat="server" ID="btnInscribirse" Text="Inscribirse Gratis"
+                                    <asp:Button runat="server" ID="btnInscribirse" Text="🚀 Inscribirse Gratis"
                                         CssClass="btn btn-success btn-lg fw-bold py-3" OnClick="btnInscribirse_Click" />
                                     <small class="text-center text-muted mt-1">Acceso inmediato sin costo.</small>
                                 </asp:PlaceHolder>
@@ -87,10 +91,9 @@
                             <h5 class="fw-semibold mb-3">Este curso incluye:</h5>
                             <ul class="list-unstyled text-muted small">
 
-                                <%-- DURACIÓN (Lo nuevo) --%>
+                                <%-- DURACIÓN (Label completo) --%>
                                 <li class="mb-2 d-flex align-items-center">
                                     <i class="bi bi-calendar-check me-2 fs-5"></i>
-                                    <%-- El Label ahora va a contener toda la frase --%>
                                     <asp:Label ID="lblDuracion" runat="server"></asp:Label>
                                 </li>
 
@@ -103,8 +106,7 @@
                                 <%-- Idioma --%>
                                 <li class="mb-2 d-flex align-items-center">
                                     <i class="bi bi-translate me-2 fs-5"></i>
-                                    Idioma:
-                                    <asp:Label ID="lblIdioma" runat="server" Text="Español"></asp:Label>
+                                    Idioma: <asp:Label ID="lblIdioma" runat="server" Text="Español"></asp:Label>
                                 </li>
 
                                 <%-- Certificado --%>
@@ -112,16 +114,43 @@
                                     <i class="bi bi-patch-check me-2 fs-5"></i>Certificado de finalización
                                 </li>
                             </ul>
-                        </div>
-                        <%-- Fin Card Body --%>
+                        </div> <%-- Fin Card Body --%>
+                    </div> <%-- Fin Card --%>
+                </div> <%-- Fin Sticky --%>
+            </div> <%-- Fin Columna Derecha --%>
+
+        </div> <%-- Fin Row --%>
+    </div> <%-- Fin Container --%>
+
+    <%-- MODAL DE ALERTA (Si ya tiene el curso seleccionado - EL CODIGO DE MAURO) --%>
+    <asp:Panel ID="pnlAlertaYaComprado" runat="server" Visible="false">
+
+        <div class="modal-backdrop fade show"></div>
+
+        <div class="modal fade show d-block" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content rounded-4 shadow-lg border-0">
+
+                    <div class="modal-header border-bottom-0 pb-0">
+                        <h5 class="modal-title fw-bold text-primary">
+                            <i class="bi bi-info-circle-fill me-2"></i>¡Atención!
+                        </h5>
                     </div>
-                    <%-- Fin Card --%>
+
+                    <div class="modal-body py-4 text-center">
+                        <h4 class="fw-bold mb-3">Ya tienes este curso</h4>
+                        <p class="text-secondary mb-0">
+                            Detectamos que ya estás inscripto en este curso.
+                        </p>
+                    </div>
+
+                    <div class="modal-footer border-top-0 justify-content-center pb-4">
+                        <asp:Button ID="btnVolverAHome" runat="server" Text="Seguir Viendo Cursos" CssClass="btn btn-outline-secondary btn-lg px-5 rounded-pill" OnClick="btnVolverAHome_Click"/>
+                        <asp:Button ID="btnVolverAMisCursos" runat="server" Text="Volver a Mis Cursos" CssClass="btn btn-primary btn-lg px-5 rounded-pill" OnClick="btnVolverAMisCursos_Click" />
+                    </div>
+
                 </div>
-                <%-- Fin Sticky --%>
             </div>
-            <%-- Fin Columna Derecha --%>
         </div>
-        <%-- Fin Row --%>
-    </div>
-    <%-- Fin Container --%>
+    </asp:Panel>
 </asp:Content>

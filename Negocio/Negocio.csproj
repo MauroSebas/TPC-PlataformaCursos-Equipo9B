@@ -50,9 +50,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+
+    <Compile Include="CertificadoNegocio.cs" />
+    
+    <Compile Include="InscripcionNegocio.cs" />
+  
+    <Compile Include="PagoNegocio.cs" />
+
     <Compile Include="Contenido\CursoObjetivoNegocio.cs" />
     <Compile Include="Contenido\LeccionNegocio.cs" />
     <Compile Include="Contenido\ModuloNegocio.cs" />
+
     <Compile Include="Seguridad\EstadoCuentaNegocio.cs" />
     <Compile Include="Contenido\CategoriaNegocio.cs" />
     <Compile Include="Seguridad\PerfilNegocio.cs" />

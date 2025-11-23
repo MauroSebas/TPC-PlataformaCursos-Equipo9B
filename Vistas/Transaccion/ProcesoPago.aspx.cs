@@ -14,11 +14,19 @@ namespace Vistas
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            Usuario usuario = (Usuario)Session["Usuario"];
+
             if (!IsPostBack)
-            {
+            {            
                 if (Session["Usuario"] == null)
                 {
                     Response.Redirect("~/Auth/Loguin.aspx?returnUrl=" + Request.Url.PathAndQuery);
+                    return;
+                }
+
+                if (usuario.Rol.NombreRol == "Administrador")
+                {
+                    Response.Redirect("~/Administrador/AdminPanel.aspx");
                     return;
                 }
 

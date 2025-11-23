@@ -90,16 +90,16 @@ namespace Vistas
         // ================================
         protected void btnComprar_Click(object sender, EventArgs e)
         {
-            // 1. Validar Sesión
+           
             if (!ValidarSesion()) return;
 
             int idCurso = this.IdCursoSeleccionado;
 
-            // 2. Validar si ya compró (DESCOMENTADO y CORREGIDO)
+           
             Usuario usuario = (Usuario)Session["usuario"];
             InscripcionNegocio negocio = new InscripcionNegocio();
 
-            // Usamos el método correcto: ObtenerInscripcionActiva
+           
             var inscripcion = negocio.ObtenerInscripcionActiva(usuario.UsuarioID, idCurso);
 
             if (inscripcion != null)
@@ -108,7 +108,7 @@ namespace Vistas
                 return;
             }
 
-            // 3. Redirigir al proceso de pago (Todo OK)
+           
             Response.Redirect($"~/Transaccion/ProcesoPago.aspx?idCurso={idCurso}", false);
         }
 
@@ -118,22 +118,29 @@ namespace Vistas
         protected void btnInscribirse_Click(object sender, EventArgs e)
         {
             if (!ValidarSesion()) return;
-
+            int idCurso = this.IdCursoSeleccionado;
             try
             {
-                // ACÁ SÍ LLAMAMOS A LA LÓGICA DE INSCRIPCIÓN GRATUITA
+               
                 Usuario usuario = (Usuario)Session["usuario"];
                 InscripcionNegocio negocio = new InscripcionNegocio();
 
+                var inscripcion = negocio.ObtenerInscripcionActiva(usuario.UsuarioID, idCurso);
+
+                if (inscripcion != null)
+                {
+                    pnlAlertaYaComprado.Visible = true;
+                    return;
+                }
                 negocio.InscribirGratuito(usuario.UsuarioID, this.IdCursoSeleccionado);
 
-                // Éxito -> Mis Cursos
+               
                 Response.Redirect("~/Alumno/MisCursos.aspx?msg=exito");
             }
-            catch (Exception) { /* Manejar error */ }
+            catch (Exception) {  }
         }
 
-        // Otros botones
+        
         protected void btnAgregarCarrito_Click(object sender, EventArgs e) { if (ValidarSesion()) Response.Redirect("Carrito.aspx"); }
         protected void btnVolverAHome_Click(object sender, EventArgs e) { Response.Redirect("Home.aspx"); }
         protected void btnVolverAMisCursos_Click(object sender, EventArgs e) { Response.Redirect("~/Alumno/MisCursos.aspx"); }

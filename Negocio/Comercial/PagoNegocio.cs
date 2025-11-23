@@ -64,7 +64,6 @@ namespace Negocio
         {           
             datos.ActualizarComprobante(idInscripcion, urlComprobante, metodoPago, estadoPago);
         }
-
         public List<Pago> ListarPagos(string estado = null)
         {
             try

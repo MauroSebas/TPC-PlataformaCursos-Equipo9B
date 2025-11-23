@@ -122,7 +122,7 @@
         </div> <%-- Fin Row --%>
     </div> <%-- Fin Container --%>
 
-    <%-- MODAL DE ALERTA (Si ya tiene el curso seleccionado - EL CODIGO DE MAURO) --%>
+    <%-- MODAL DE ALERTA  --%>
     <asp:Panel ID="pnlAlertaYaComprado" runat="server" Visible="false">
 
         <div class="modal-backdrop fade show"></div>

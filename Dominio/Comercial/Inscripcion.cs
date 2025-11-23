@@ -8,14 +8,19 @@ namespace Dominio
     public class Inscripcion
     {
         public int Id { get; set; }
-        public int UsuarioID { get; set; }// Mas facil para guardar
-        public Usuario Usuario { get; set; }//Mas facil para la lectura de atributos
+        public int UsuarioID { get; set; }
+        public Usuario Usuario { get; set; }
         public int CursoID { get; set; }
         public Curso Curso { get; set; }
         public DateTime FechaInscripcion { get; set; }
-        public DateTime? FechaExpiracion { get; set; } 
-        public string Estado { get; set; } // "Activo", "Pendiente"
-
+        public DateTime? FechaExpiracion { get; set; }
+        public string Estado { get; set; }
+        
+        public Inscripcion()
+        {
+            Usuario = new Usuario();
+            Curso = new Curso();
+        }
 
     }
 }

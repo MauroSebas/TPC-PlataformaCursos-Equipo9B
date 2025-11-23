@@ -21,86 +21,57 @@ namespace Vistas
         {
             if (!IsPostBack)
             {
-                // 1. Validar ID en URL
                 string idStr = Request.QueryString["id"];
-
                 if (string.IsNullOrEmpty(idStr) || !int.TryParse(idStr, out int id))
                 {
                     Response.Redirect("Home.aspx");
                     return;
                 }
 
-                // Guardamos el ID para usarlo en los botones
                 this.IdCursoSeleccionado = id;
-
-                // 2. Cargar datos
                 CargarDatosDelCurso(id);
             }
         }
 
         private void CargarDatosDelCurso(int id)
         {
-            CursoNegocio negocio = new CursoNegocio();
             try
             {
+                CursoNegocio negocio = new CursoNegocio();
                 Curso seleccionado = negocio.BuscarCurso(id);
 
-                if (seleccionado == null)
-                {
-                    Response.Redirect("Error.aspx?mensaje=CursoNoEncontrado");
-                    return;
-                }
+                if (seleccionado == null) { Response.Redirect("Home.aspx"); return; }
 
-                // --- MAPEO VISUAL ---
+                // Mapeo visual
                 lblTitulo.Text = seleccionado.Titulo;
                 lblDescripcion.Text = seleccionado.Descripcion;
 
-                // Info Sidebar
-                // --- LÓGICA DE DURACIÓN (NUEVO) ---
-                if (seleccionado.DuracionAccesoDias == 0)
-                {
-                    // Si es 0, mostramos el texto bonito
-                    lblDuracion.Text = "Acceso ilimitado";
-                    // Opcional: Podés darle un colorcito verde para destacar
-                    // lblDuracion.CssClass = "text-success fw-medium"; 
-                }
-                else
-                {
-                    // Si tiene días, armamos la frase completa
-                    lblDuracion.Text = $"Acceso por {seleccionado.DuracionAccesoDias} días";
-                }
-                // ------------------------------------
+                // Duración
+                lblDuracion.Text = (seleccionado.DuracionAccesoDias == 0)
+                    ? "Acceso ilimitado"
+                    : $"Acceso por {seleccionado.DuracionAccesoDias} días";
 
-                lblNivel.Text = seleccionado.NivelDificultad;
                 lblNivel.Text = seleccionado.NivelDificultad;
                 lblIdioma.Text = seleccionado.Idioma;
                 liCertificado.Visible = seleccionado.ConCertificado;
+                imgSidebar.ImageUrl = string.IsNullOrEmpty(seleccionado.UrlImagenPortada) ? ResolveUrl("~/Assets/img/placeholder-curso.jpg") : seleccionado.UrlImagenPortada;
 
-                // Imagen
-                string urlImagen = string.IsNullOrEmpty(seleccionado.UrlImagenPortada)
-                                   ? "https://via.placeholder.com/800x400?text=Sin+Imagen"
-                                   : seleccionado.UrlImagenPortada;
-                imgSidebar.ImageUrl = urlImagen;
-
-
-                // --- LÓGICA DE PRECIO Y BOTONES (NUEVO) ---
+                // Lógica Botones
                 if (seleccionado.Precio > 0)
                 {
-                    // CURSO PAGO
                     lblPrecio.Text = seleccionado.PrecioFormateado;
-                    phCursoPago.Visible = true;   // Mostramos Carrito y Comprar
-                    phCursoGratis.Visible = false; // Ocultamos Inscripción Directa
+                    phCursoPago.Visible = true;
+                    phCursoGratis.Visible = false;
                 }
                 else
                 {
-                    // CURSO GRATUITO
-                    lblPrecio.Text = "Gratis";
-                    lblPrecio.CssClass += " text-success"; // Color verde
+                    lblPrecio.Text = "GRATIS";
+                    lblPrecio.CssClass += " text-success";
                     phCursoPago.Visible = false;
-                    phCursoGratis.Visible = true; // Mostramos Botón "Inscribirse Gratis"
+                    phCursoGratis.Visible = true;
                 }
 
-                // --- CARGA DE OBJETIVOS ---
+                // Objetivos
                 if (seleccionado.Objetivos != null && seleccionado.Objetivos.Count > 0)
                 {
                     repObjetivos.DataSource = seleccionado.Objetivos;
@@ -111,75 +82,38 @@ namespace Vistas
                     lblSinObjetivos.Visible = true;
                 }
             }
-            catch (Exception ex)
-            {
-                Session.Add("Error", ex.Message);
-                Response.Redirect("Error.aspx");
-            }
-        }
-
-        // --- BOTONES DE ACCIÓN ---
-
-        protected void btnAgregarCarrito_Click(object sender, EventArgs e)
-        {
-            if (!ValidarSesion()) return;
-
-            // Lógica futura: CarritoNegocio.Agregar(...)
-            Response.Redirect("Carrito.aspx");
+            catch (Exception ex) { /* Log error */ }
         }
 
         // ================================
-        // BOTÓN COMPRAR
+        // BOTÓN COMPRAR (El que querés probar)
         // ================================
         protected void btnComprar_Click(object sender, EventArgs e)
         {
-            // Validar sesión
-            if (Session["usuario"] == null)
-            {
-                Response.Redirect("~/Auth/Loguin.aspx?ReturnUrl=" + Server.UrlEncode(Request.Url.PathAndQuery));
-                return;
-            }
+            // 1. Validar Sesión
+            if (!ValidarSesion()) return;
 
-            // Obtener ID del curso actual
             int idCurso = this.IdCursoSeleccionado;
-            if (idCurso <= 0)
-            {
-                Response.Redirect("Home.aspx");
-                return;
-            }
 
-            // Validar si el usuario ya está inscripto
+            // 2. Validar si ya compró (DESCOMENTADO y CORREGIDO)
             Usuario usuario = (Usuario)Session["usuario"];
             InscripcionNegocio negocio = new InscripcionNegocio();
 
-            var inscripcion = negocio.ObtenerInscripcion(usuario.UsuarioID, idCurso);
+            // Usamos el método correcto: ObtenerInscripcionActiva
+            var inscripcion = negocio.ObtenerInscripcionActiva(usuario.UsuarioID, idCurso);
+
             if (inscripcion != null)
             {
                 pnlAlertaYaComprado.Visible = true;
                 return;
             }
 
-            // Redirigir al proceso de pago
-            Response.Redirect("~/Transaccion/ProcesoPago.aspx?idCurso=" + idCurso, false);
+            // 3. Redirigir al proceso de pago (Todo OK)
+            Response.Redirect($"~/Transaccion/ProcesoPago.aspx?idCurso={idCurso}", false);
         }
 
-
         // ================================
-        // BOTONES DEL MODAL
-        // ================================
-        protected void btnVolverAHome_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("Home.aspx");
-        }
-
-        protected void btnVolverAMisCursos_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("~/Alumno/MisCursos.aspx");
-        }
-
-
-        // ================================
-        // BOTÓN INSCRIBIRSE (CURSO GRATIS)
+        // BOTÓN INSCRIBIRSE (GRATIS)
         // ================================
         protected void btnInscribirse_Click(object sender, EventArgs e)
         {
@@ -187,25 +121,28 @@ namespace Vistas
 
             try
             {
-                // TODO: registrar inscripción del curso gratuito
+                // ACÁ SÍ LLAMAMOS A LA LÓGICA DE INSCRIPCIÓN GRATUITA
+                Usuario usuario = (Usuario)Session["usuario"];
+                InscripcionNegocio negocio = new InscripcionNegocio();
+
+                negocio.InscribirGratuito(usuario.UsuarioID, this.IdCursoSeleccionado);
+
+                // Éxito -> Mis Cursos
                 Response.Redirect("~/Alumno/MisCursos.aspx?msg=exito");
             }
-            catch (Exception ex)
-            {
-                // Manejar error
-            }
+            catch (Exception) { /* Manejar error */ }
         }
 
+        // Otros botones
+        protected void btnAgregarCarrito_Click(object sender, EventArgs e) { if (ValidarSesion()) Response.Redirect("Carrito.aspx"); }
+        protected void btnVolverAHome_Click(object sender, EventArgs e) { Response.Redirect("Home.aspx"); }
+        protected void btnVolverAMisCursos_Click(object sender, EventArgs e) { Response.Redirect("~/Alumno/MisCursos.aspx"); }
 
-        // ================================
-        // VALIDAR SESIÓN
-        // ================================
         private bool ValidarSesion()
         {
             if (Session["usuario"] == null)
             {
-                string urlActual = Request.Url.PathAndQuery;
-                Response.Redirect("~/Auth/Loguin.aspx?ReturnUrl=" + Server.UrlEncode(urlActual));
+                Response.Redirect("~/Auth/Loguin.aspx?ReturnUrl=" + Server.UrlEncode(Request.Url.PathAndQuery));
                 return false;
             }
             return true;

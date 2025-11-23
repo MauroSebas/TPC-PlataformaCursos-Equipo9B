@@ -164,12 +164,13 @@
                     <div class="d-flex flex-column gap-2">
                         <h4 class="fw-bold text-body-emphasis mb-0">Comprobante recibido con éxito</h4>
                         <p class="text-body-secondary small mb-0">
-                            Nuestro equipo administrativo revisará el pago. Recibirás una notificación por email una vez que se apruebe.
+                            El administrador revisará el pago. Recibirás una notificación por email una vez que se apruebe.
                         </p>
                     </div>
-                    <button type="button" class="btn btn-primary w-100 fw-bold mt-3" data-bs-dismiss="modal">Entendido</button>
+                    <asp:Button ID="btnEntendido" runat="server" Text="Entendido, ir a Mis Cursos" CssClass="btn btn-primary w-100 fw-bold mt-3" OnClick="btnEntendido_Click" />
                 </div>
             </div>
         </div>
     </div>
+    <script src="<%= ResolveUrl("~/Assets/js/pago-script.js") %>"></script>
 </asp:Content>

@@ -56,6 +56,7 @@
     <Content Include="Assets\Cursos\placeholder-curso.jpg" />
     <Content Include="Assets\js\admin.js" />
     <Content Include="Assets\js\main.js" />
+    <Content Include="Assets\js\pago-script.js" />
     <Content Include="Assets\js\perfilAlumno.js" />
     <Content Include="Assets\js\togglePassword.js" />
     <Content Include="Alumno\Aula.aspx" />

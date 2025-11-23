@@ -7,21 +7,39 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace Vistas
+namespace Vistas.Aministrador
 {
 
 
-    public partial class CategoriaGestion
+    public partial class ModuloGestion
     {
 
         /// <summary>
-        /// Control hfIdCategoriaEliminar.
+        /// Control hfIdModuloEliminar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hfIdCategoriaEliminar;
+        protected global::System.Web.UI.WebControls.HiddenField hfIdModuloEliminar;
+
+        /// <summary>
+        /// Control litTituloCurso.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litTituloCurso;
+
+        /// <summary>
+        /// Control btnVolver.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink btnVolver;
 
         /// <summary>
         /// Control updMensaje.
@@ -60,22 +78,22 @@ namespace Vistas
         protected global::System.Web.UI.UpdatePanel updFormulario;
 
         /// <summary>
-        /// Control hfIdCategoriaEditar.
+        /// Control hfIdModuloEditar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hfIdCategoriaEditar;
+        protected global::System.Web.UI.WebControls.HiddenField hfIdModuloEditar;
 
         /// <summary>
-        /// Control txtNombre.
+        /// Control txtNombreModulo.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNombre;
+        protected global::System.Web.UI.WebControls.TextBox txtNombreModulo;
 
         /// <summary>
         /// Control rfvNombre.
@@ -87,22 +105,22 @@ namespace Vistas
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvNombre;
 
         /// <summary>
-        /// Control btnGuardar.
+        /// Control btnAgregar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnGuardar;
+        protected global::System.Web.UI.WebControls.Button btnAgregar;
 
         /// <summary>
-        /// Control btnCancelar.
+        /// Control btnCancelarEdicion.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCancelar;
+        protected global::System.Web.UI.WebControls.Button btnCancelarEdicion;
 
         /// <summary>
         /// Control updGrilla.
@@ -114,13 +132,13 @@ namespace Vistas
         protected global::System.Web.UI.UpdatePanel updGrilla;
 
         /// <summary>
-        /// Control gvCategorias.
+        /// Control gvModulos.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvCategorias;
+        protected global::System.Web.UI.WebControls.GridView gvModulos;
 
         /// <summary>
         /// Control btnConfirmarEliminar.

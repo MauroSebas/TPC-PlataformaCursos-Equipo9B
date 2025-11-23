@@ -45,8 +45,9 @@
     <Content Include="Administrador\AdminPanel.aspx" />
     <Content Include="Administrador\Curso\CursoForm.aspx" />
     <Content Include="Administrador\Curso\CursoPanel.aspx" />
+    <Content Include="Administrador\Curso\LeccionPanel.aspx" />
     <Content Include="Administrador\LeccionForm.aspx" />
-    <Content Include="Administrador\ModuloGestion.aspx" />
+    <Content Include="Administrador\Curso\ModuloGestion.aspx" />
     <Content Include="Administrador\PagosPanel.aspx" />
     <Content Include="Administrador\PerfilAdministrador.aspx" />
     <Content Include="Alumno\PerfilAlumno.aspx" />
@@ -59,13 +60,11 @@
     <Content Include="Assets\js\pago-script.js" />
     <Content Include="Assets\js\perfilAlumno.js" />
     <Content Include="Assets\js\togglePassword.js" />
-    <Content Include="Alumno\Aula.aspx" />
+    <Content Include="Alumno\Aula\Aula.aspx" />
     <Content Include="Auth\ActivarCuenta.aspx" />
     <Content Include="Auth\RecuperarContraseña.aspx" />
     <Content Include="Auth\RestablecerContraseña.aspx" />
-    <Content Include="Administrador\CategoriaEliminarEditar.aspx" />
     <Content Include="Administrador\CategoriaGestion.aspx" />
-    <Content Include="Contacto.aspx" />
     <Content Include="CursoDetalle.aspx" />
     <Content Include="EmailTemplates\ActivacionCuenta.html" />
     <Content Include="EmailTemplates\RestablecerContraseña.html" />
@@ -87,6 +86,13 @@
     <Compile Include="Administrador.Master.designer.cs">
       <DependentUpon>Administrador.Master</DependentUpon>
     </Compile>
+    <Compile Include="Administrador\Curso\LeccionPanel.aspx.cs">
+      <DependentUpon>LeccionPanel.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administrador\Curso\LeccionPanel.aspx.designer.cs">
+      <DependentUpon>LeccionPanel.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Administrador\PerfilAdministrador.aspx.cs">
       <DependentUpon>PerfilAdministrador.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -94,18 +100,18 @@
     <Compile Include="Administrador\PerfilAdministrador.aspx.designer.cs">
       <DependentUpon>PerfilAdministrador.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Alumno.Master.cs">
+    <Compile Include="Alumno\Alumno.Master.cs">
       <DependentUpon>Alumno.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Alumno.Master.designer.cs">
+    <Compile Include="Alumno\Alumno.Master.designer.cs">
       <DependentUpon>Alumno.Master</DependentUpon>
     </Compile>
-    <Compile Include="Alumno\Aula.aspx.cs">
+    <Compile Include="Alumno\Aula\Aula.aspx.cs">
       <DependentUpon>Aula.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Alumno\Aula.aspx.designer.cs">
+    <Compile Include="Alumno\Aula\Aula.aspx.designer.cs">
       <DependentUpon>Aula.aspx</DependentUpon>
     </Compile>
     <Compile Include="Administrador\AdminPanel.aspx.cs">
@@ -136,11 +142,11 @@
     <Compile Include="Administrador\LeccionForm.aspx.designer.cs">
       <DependentUpon>LeccionForm.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Administrador\ModuloGestion.aspx.cs">
+    <Compile Include="Administrador\Curso\ModuloGestion.aspx.cs">
       <DependentUpon>ModuloGestion.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Administrador\ModuloGestion.aspx.designer.cs">
+    <Compile Include="Administrador\Curso\ModuloGestion.aspx.designer.cs">
       <DependentUpon>ModuloGestion.aspx</DependentUpon>
     </Compile>
     <Compile Include="Administrador\PagosPanel.aspx.cs">
@@ -156,6 +162,13 @@
     </Compile>
     <Compile Include="Alumno\PerfilAlumno.aspx.designer.cs">
       <DependentUpon>PerfilAlumno.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Alumno\Aula\Aula.Master.cs">
+      <DependentUpon>Aula.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Alumno\Aula\Aula.Master.designer.cs">
+      <DependentUpon>Aula.Master</DependentUpon>
     </Compile>
     <Compile Include="Auth\ActivarCuenta.aspx.cs">
       <DependentUpon>ActivarCuenta.aspx</DependentUpon>
@@ -178,26 +191,12 @@
     <Compile Include="Auth\RestablecerContraseña.aspx.designer.cs">
       <DependentUpon>RestablecerContraseña.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Administrador\CategoriaEliminarEditar.aspx.cs">
-      <DependentUpon>CategoriaEliminarEditar.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Administrador\CategoriaEliminarEditar.aspx.designer.cs">
-      <DependentUpon>CategoriaEliminarEditar.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Administrador\CategoriaGestion.aspx.cs">
       <DependentUpon>CategoriaGestion.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Administrador\CategoriaGestion.aspx.designer.cs">
       <DependentUpon>CategoriaGestion.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Contacto.aspx.cs">
-      <DependentUpon>Contacto.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Contacto.aspx.designer.cs">
-      <DependentUpon>Contacto.aspx</DependentUpon>
     </Compile>
     <Compile Include="CursoDetalle.aspx.cs">
       <DependentUpon>CursoDetalle.aspx</DependentUpon>
@@ -261,12 +260,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Alumno.Master" />
+    <Content Include="Alumno\Alumno.Master" />
     <Content Include="Administrador.Master" />
     <Content Include="Alumno\Web.config" />
     <Content Include="Administrador\Web.config" />
     <Content Include="Auth\Web.config" />
     <Content Include="Site1.Master" />
+    <None Include=".editorconfig" />
+    <Content Include="Alumno\Aula\Aula.Master" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -280,6 +281,7 @@
     <Folder Include="Assets\Avatares\" />
     <Folder Include="Assets\Comprobantes\" />
     <Folder Include="Assets\img\" />
+    <Folder Include="Assets\Material\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

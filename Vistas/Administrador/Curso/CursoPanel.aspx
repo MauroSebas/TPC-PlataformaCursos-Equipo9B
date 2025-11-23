@@ -109,7 +109,7 @@
                                             <i class="bi bi-pencil"></i>
                                         </asp:HyperLink>
                                         <asp:HyperLink ID="hlModulos" runat="server"
-                                            NavigateUrl='<%# Eval("Id", "~/Administrador/ModuloPanel.aspx?id={0}") %>'
+                                            NavigateUrl='<%# Eval("Id", "~/Administrador/Curso/ModuloGestion.aspx?id={0}") %>'
                                             CssClass="btn btn-sm btn-outline-info" ToolTip="Gestionar Módulos/Lecciones">
                                             <i class="bi bi-list-task"></i>
                                         </asp:HyperLink>
@@ -128,7 +128,7 @@
                                 <h4 class="mt-3 fw-bold">No se encontraron cursos</h4>
                                 <p class="text-body-secondary">Aún no se han creado cursos. ¡Empezá creando el primero!</p>
                                 <asp:HyperLink ID="btnCrearVacio" runat="server"
-                                    NavigateUrl="~/Administrador/CursoForm.aspx"
+                                    NavigateUrl="~/Administrador/Curso/CursoForm.aspx"
                                     CssClass="btn btn-primary mt-3">
                                     <i class="bi bi-plus-circle me-2"></i>Crear Nuevo Curso
                                 </asp:HyperLink>

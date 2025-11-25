@@ -56,7 +56,7 @@ namespace Vistas
                 liCertificado.Visible = seleccionado.ConCertificado;
                 imgSidebar.ImageUrl = string.IsNullOrEmpty(seleccionado.UrlImagenPortada) ? ResolveUrl("~/Assets/img/placeholder-curso.jpg") : seleccionado.UrlImagenPortada;
 
-                // Lógica Botones
+               
                 if (seleccionado.Precio > 0)
                 {
                     lblPrecio.Text = seleccionado.PrecioFormateado;
@@ -71,7 +71,7 @@ namespace Vistas
                     phCursoGratis.Visible = true;
                 }
 
-                // Objetivos
+                
                 if (seleccionado.Objetivos != null && seleccionado.Objetivos.Count > 0)
                 {
                     repObjetivos.DataSource = seleccionado.Objetivos;
@@ -90,26 +90,34 @@ namespace Vistas
         // ================================
         protected void btnComprar_Click(object sender, EventArgs e)
         {
-           
             if (!ValidarSesion()) return;
 
-            int idCurso = this.IdCursoSeleccionado;
-
            
-            Usuario usuario = (Usuario)Session["usuario"];
-            InscripcionNegocio negocio = new InscripcionNegocio();
+            AgregarAlCarrito(this.IdCursoSeleccionado);
 
-           
-            var inscripcion = negocio.ObtenerInscripcionActiva(usuario.UsuarioID, idCurso);
+            
+            Response.Redirect("~/Transaccion/ProcesoPago.aspx");
+        }
 
-            if (inscripcion != null)
+        private void AgregarAlCarrito(int idCurso)
+        {
+            List<int> carrito;
+
+            if (Session["Carrito"] == null)
             {
-                pnlAlertaYaComprado.Visible = true;
-                return;
+                carrito = new List<int>();
+            }
+            else
+            {
+                carrito = (List<int>)Session["Carrito"];
             }
 
            
-            Response.Redirect($"~/Transaccion/ProcesoPago.aspx?idCurso={idCurso}", false);
+            if (!carrito.Contains(idCurso))
+            {
+                carrito.Add(idCurso);
+                Session["Carrito"] = carrito;
+            }
         }
 
         // ================================
@@ -137,13 +145,34 @@ namespace Vistas
                
                 Response.Redirect("~/Alumno/MisCursos.aspx?msg=exito");
             }
-            catch (Exception) {  }
+            catch (Exception) { }
         }
 
-        
-        protected void btnAgregarCarrito_Click(object sender, EventArgs e) { if (ValidarSesion()) Response.Redirect("Carrito.aspx"); }
-        protected void btnVolverAHome_Click(object sender, EventArgs e) { Response.Redirect("Home.aspx"); }
-        protected void btnVolverAMisCursos_Click(object sender, EventArgs e) { Response.Redirect("~/Alumno/MisCursos.aspx"); }
+
+        protected void btnAgregarCarrito_Click(object sender, EventArgs e)
+        {
+            if (!ValidarSesion()) return;
+
+           
+            AgregarAlCarrito(this.IdCursoSeleccionado);
+
+            if (this.Master is Site1 master)
+            {
+                master.ActualizarContadorCarrito();
+            }
+
+           
+            btnAgregarCarrito.Text = "¡Agregado!";
+            btnAgregarCarrito.Enabled = false;
+            btnAgregarCarrito.CssClass = "btn btn-success btn-lg";
+        }
+
+        protected void btnVolverAHome_Click(object sender, EventArgs e) {
+            Response.Redirect("Home.aspx");
+        }
+        protected void btnVolverAMisCursos_Click(object sender, EventArgs e) { 
+            Response.Redirect("~/Alumno/MisCursos.aspx"); 
+        }
 
         private bool ValidarSesion()
         {

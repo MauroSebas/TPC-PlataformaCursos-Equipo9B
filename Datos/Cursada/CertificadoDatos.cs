@@ -12,23 +12,15 @@ namespace Datos
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                // Usamos el SP que creamos en el script "Delta"
                 datos.setearConSP("sp_Certificado_Generar");
 
-                // Usamos las propiedades correctas del Dominio
                 datos.setearParametro("@InscripcionID", nuevo.InscripcionId);
                 datos.setearParametro("@UrlArchivo", nuevo.UrlArchivo);
 
                 datos.ejecutarAccion();
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                datos.cerrarConexion();
-            }
+            catch (Exception ex) { throw ex; }
+            finally { datos.cerrarConexion(); }
         }
 
         // 2. LISTAR POR USUARIO (Para "Mis Certificados")

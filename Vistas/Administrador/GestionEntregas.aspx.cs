@@ -1,17 +1,20 @@
-﻿using Negocio;
+﻿using Dominio;
+using Dominio.Cursada;
+using Negocio;
 using Negocio.Cursada;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace Vistas.Administrador
+namespace Vistas.Administrador // Asegurate que coincida con tu namespace (Aministrador o Administrador)
 {
     public partial class GestionEntregas : System.Web.UI.Page
     {
-        // Propiedades temporales en ViewState para saber qué estamos corrigiendo
+        // Propiedades temporales
         private int IdEntregaSeleccionada
         {
             get { return (int)(ViewState["IdEntrega"] ?? 0); }
@@ -32,38 +35,59 @@ namespace Vistas.Administrador
             }
         }
 
+        // --- LISTADO Y FILTROS ---
+
         private void CargarEntregas()
         {
             try
             {
                 EntregaNegocio negocio = new EntregaNegocio();
-                dgvEntregas.DataSource = negocio.ListarPendientes();
+                string filtro = ddlFiltroEstado.SelectedValue;
+
+                dgvEntregas.DataSource = negocio.ListarEntregas(filtro);
                 dgvEntregas.DataBind();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // Manejo de error silencioso o log
+                MostrarMensaje("Error al cargar: " + ex.Message, true);
             }
         }
 
-        // Seleccionar alumno de la grilla
+        protected void ddlFiltroEstado_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            CargarEntregas();
+            pnlCorreccion.Visible = false;
+            this.IdEntregaSeleccionada = 0;
+        }
+
+        // --- SELECCIÓN ---
+
         protected void dgvEntregas_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Recuperamos los IDs guardados en DataKeyNames
-            // Indice 0 = Id (Entrega), Indice 1 = InscripcionId
             int idEntrega = Convert.ToInt32(dgvEntregas.SelectedDataKey.Values[0]);
             int idInscripcion = Convert.ToInt32(dgvEntregas.SelectedDataKey.Values[1]);
 
             this.IdEntregaSeleccionada = idEntrega;
             this.IdInscripcionSeleccionada = idInscripcion;
 
-            // Preparamos la UI
-            pnlCorreccion.Visible = true;
-            txtDevolucion.Text = ""; // Limpiar caja
+            EntregaNegocio negocio = new EntregaNegocio();
+            Entrega ent = negocio.ObtenerUltimaEntrega(idInscripcion);
 
-            // Hacemos foco visual (opcional)
-            txtDevolucion.Focus();
+            if (ent != null)
+            {
+                txtDevolucion.Text = ent.DevolucionProfesor;
+
+                if (ent.Estado == "Pendiente")
+                    litTituloAccion.Text = "Nueva Corrección";
+                else
+                    litTituloAccion.Text = "Editar Corrección (" + ent.Estado + ")";
+            }
+
+            pnlCorreccion.Visible = true;
+            pnlMensaje.Visible = false;
         }
+
+        // --- ACCIONES ---
 
         protected void btnAprobar_Click(object sender, EventArgs e)
         {
@@ -81,32 +105,56 @@ namespace Vistas.Administrador
             {
                 if (this.IdEntregaSeleccionada == 0) return;
 
-                // 1. Guardar Corrección (Feedback y Estado)
+                string urlCertificado = "";
+
+                // 1. SI APRUEBA -> VALIDAR Y GUARDAR ARCHIVO
+                if (aprobado)
+                {
+                    if (!fuCertificado.HasFile)
+                    {
+                        MostrarMensaje("⚠️ Para APROBAR es obligatorio subir el certificado (PDF).", true);
+                        return;
+                    }
+
+                    string ext = Path.GetExtension(fuCertificado.FileName).ToLower();
+                    if (ext != ".pdf")
+                    {
+                        MostrarMensaje("⚠️ El certificado debe ser un archivo PDF.", true);
+                        return;
+                    }
+
+                    string nombreArchivo = "Cert_" + this.IdInscripcionSeleccionada + "_" + DateTime.Now.Ticks + ".pdf";
+                    string rutaVirtual = "~/Assets/Certificados/" + nombreArchivo;
+                    string rutaFisica = Server.MapPath(rutaVirtual);
+
+                    string directorio = Path.GetDirectoryName(rutaFisica);
+                    if (!Directory.Exists(directorio)) Directory.CreateDirectory(directorio);
+
+                    fuCertificado.SaveAs(rutaFisica);
+                    urlCertificado = rutaVirtual;
+                }
+
+                // 2. GUARDAR CORRECCIÓN
                 EntregaNegocio entNeg = new EntregaNegocio();
                 entNeg.CorregirEntrega(this.IdEntregaSeleccionada, aprobado, txtDevolucion.Text);
 
-                // 2. Si aprobó -> Generar Certificado Automático
+                // 3. SI APROBÓ -> GENERAR CERTIFICADO
                 if (aprobado)
                 {
                     CertificadoNegocio certNeg = new CertificadoNegocio();
-                    certNeg.GenerarCertificado(this.IdInscripcionSeleccionada);
+                    certNeg.GenerarCertificado(this.IdInscripcionSeleccionada, urlCertificado);
                 }
 
-                // 3. Feedback visual y limpieza
-                MostrarMensaje(aprobado ? "Entrega APROBADA y certificado generado." : "Entrega RECHAZADA correctamente.");
+                // 4. FIN
+                MostrarMensaje(aprobado ? "✅ Entrega APROBADA y Certificado generado." : "❌ Entrega RECHAZADA correctamente.", false);
 
                 pnlCorreccion.Visible = false;
                 this.IdEntregaSeleccionada = 0;
-
-                // Recargar lista
                 CargarEntregas();
             }
             catch (Exception ex)
             {
-                // Mostrar error si explota
-                litMensaje.Text = "Error: " + ex.Message;
-                pnlMensaje.CssClass = "alert alert-danger alert-dismissible fade show";
-                pnlMensaje.Visible = true;
+                MostrarMensaje("Error: " + ex.Message, true);
             }
         }
 
@@ -117,11 +165,24 @@ namespace Vistas.Administrador
             dgvEntregas.SelectedIndex = -1;
         }
 
-        private void MostrarMensaje(string texto)
+        // --- HELPERS ---
+
+        private void MostrarMensaje(string texto, bool esError)
         {
             litMensaje.Text = texto;
-            pnlMensaje.CssClass = "alert alert-success alert-dismissible fade show";
+            pnlMensaje.CssClass = esError ? "alert alert-danger alert-dismissible fade show" : "alert alert-success alert-dismissible fade show";
             pnlMensaje.Visible = true;
+        }
+
+        public string ObtenerClaseBadge(string estado)
+        {
+            switch (estado)
+            {
+                case "Pendiente": return "text-bg-warning";
+                case "Aprobado": return "text-bg-success";
+                case "Rechazado": return "text-bg-danger";
+                default: return "text-bg-secondary";
+            }
         }
     }
 }

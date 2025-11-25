@@ -118,23 +118,21 @@ namespace Negocio
         }
         public void eliminarCursoLogico(int id)
         {
+            InscripcionNegocio inscripcionNegocio = new InscripcionNegocio();
+            if (inscripcionNegocio.CursoTieneInscripciones(id))
+            {
+                throw new Exception("No se puede eliminar un curso que ya tiene alumnos inscriptos.");
+            }
+
+            // 2. DESPUÉS LA OPERACIÓN TÉCNICA (Con Try/Catch)
             try
             {
-                // --- 4. ¡¡LA REGLA DE NEGOCIO MÁS IMPORTANTE!! ---
-                // (Por ahora la dejamos comentada, porque falta InscripcionNegocio)
-
-                // InscripcionNegocio inscripcionNegocio = new InscripcionNegocio();
-                // if (inscripcionNegocio.CursoTieneInscripciones(id))
-                // {
-                //    throw new Exception("No se puede eliminar un curso que ya tiene alumnos inscriptos. Desactívelo en su lugar.");
-                // }
-
-                // Si pasa la validación, le da la orden al mecánico
                 datos.eliminarCursoSP(id);
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al eliminar el curso.", ex);
+                // Aquí solo caerá si falla la base de datos (conexión, SP, etc.)
+                throw new Exception("Error al eliminar el curso. Detalle técnico: " + ex.Message);
             }
         }
         public int ContarCursosPorCategoria(int categoriaId)

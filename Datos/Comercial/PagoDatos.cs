@@ -160,7 +160,6 @@ namespace Datos
         private Pago MapearPago(AccesoDatos datos)
         {
             Pago aux = new Pago();
-
             aux.Id = (int)datos.Lector["PagoID"];
             aux.Monto = (decimal)datos.Lector["Monto"];
             aux.MetodoPago = (string)datos.Lector["MetodoPago"];
@@ -168,22 +167,35 @@ namespace Datos
 
             if (!(datos.Lector["UrlComprobante"] is DBNull))
                 aux.UrlComprobante = (string)datos.Lector["UrlComprobante"];
+
             if (!(datos.Lector["FechaPago"] is DBNull))
                 aux.FechaPago = (DateTime)datos.Lector["FechaPago"];
+
             if (!(datos.Lector["Observaciones"] is DBNull))
                 aux.Observaciones = (string)datos.Lector["Observaciones"];
 
             aux.Inscripcion = new Inscripcion();
             aux.Inscripcion.Id = (int)datos.Lector["InscripcionID"];
 
-            aux.Inscripcion.Curso = new Curso();
-            if (!(datos.Lector["TituloCurso"] is DBNull))
-                aux.Inscripcion.Curso.Titulo = (string)datos.Lector["TituloCurso"];
+            // --- MAPEO INTELIGENTE DE COLUMNAS (Fix) ---
 
+            // Inicializamos objetos
+            aux.Inscripcion.Curso = new Curso();
             aux.Inscripcion.Usuario = new Usuario();
-           
-            if (!(datos.Lector["EmailAlumno"] is DBNull))
-                aux.Inscripcion.Usuario.Email = (string)datos.Lector["EmailAlumno"];
+
+            // Intentamos leer "Titulo" (Nombre original en tabla) O "TituloCurso" (Alias en SP de Admin)
+            try { aux.Inscripcion.Curso.Titulo = (string)datos.Lector["Titulo"]; }
+            catch
+            {
+                try { aux.Inscripcion.Curso.Titulo = (string)datos.Lector["TituloCurso"]; } catch { }
+            }
+
+            // Intentamos leer "Email" O "EmailAlumno"
+            try { aux.Inscripcion.Usuario.Email = (string)datos.Lector["Email"]; }
+            catch
+            {
+                try { aux.Inscripcion.Usuario.Email = (string)datos.Lector["EmailAlumno"]; } catch { }
+            }
 
             return aux;
         }

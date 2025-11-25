@@ -75,6 +75,7 @@ namespace Negocio
                 throw new Exception("Error al recuperar el listado de pagos.", ex);
             }
         }
+
         public List<Pago> ListarPorUsuario(int idUsuario)
         {
             try
@@ -82,6 +83,20 @@ namespace Negocio
                 return datos.ListarPorUsuario(idUsuario);
             }
             catch (Exception ex) { throw ex; }
+
+        public List<Pago> FiltrarPagos(string estado, string busqueda)
+        {
+
+            try
+            {
+                return datos.Filtrar(estado, busqueda);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al recuperar el listado de pagos.", ex);
+            }
+
+
         }
     }
 }

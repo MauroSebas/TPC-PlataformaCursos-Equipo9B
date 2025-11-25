@@ -118,6 +118,45 @@ namespace Datos
                 datos.cerrarConexion();
             }
         }
+
+        public List<Pago> Filtrar(string estado, string busqueda)
+        {
+            List<Pago> lista = new List<Pago>();
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConSP("sp_Pago_Filtrar");
+
+                if (string.IsNullOrEmpty(estado))
+                    datos.setearParametro("@Estado", DBNull.Value);
+                else
+                    datos.setearParametro("@Estado", estado);
+
+                // Manejo del parámetro Búsqueda
+                if (string.IsNullOrEmpty(busqueda))
+                    datos.setearParametro("@Busqueda", DBNull.Value);
+                else
+                    datos.setearParametro("@Busqueda", busqueda);
+
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    lista.Add(MapearPago(datos));
+                }
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al filtrar pagos.", ex);
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+
         private Pago MapearPago(AccesoDatos datos)
         {
             Pago aux = new Pago();
@@ -138,13 +177,13 @@ namespace Datos
             aux.Inscripcion.Id = (int)datos.Lector["InscripcionID"];
 
             aux.Inscripcion.Curso = new Curso();
-            if (!(datos.Lector["Titulo"] is DBNull))
-                aux.Inscripcion.Curso.Titulo = (string)datos.Lector["Titulo"];
+            if (!(datos.Lector["TituloCurso"] is DBNull))
+                aux.Inscripcion.Curso.Titulo = (string)datos.Lector["TituloCurso"];
 
             aux.Inscripcion.Usuario = new Usuario();
            
-            if (!(datos.Lector["Email"] is DBNull))
-                aux.Inscripcion.Usuario.Email = (string)datos.Lector["Email"];
+            if (!(datos.Lector["EmailAlumno"] is DBNull))
+                aux.Inscripcion.Usuario.Email = (string)datos.Lector["EmailAlumno"];
 
             return aux;
         }

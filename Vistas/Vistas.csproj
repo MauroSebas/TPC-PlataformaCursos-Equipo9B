@@ -50,6 +50,7 @@
     <Content Include="Administrador\GestionEntregas.aspx" />
     <Content Include="Administrador\PagosPanel.aspx" />
     <Content Include="Administrador\PerfilAdministrador.aspx" />
+    <Content Include="Alumno\Certificados.aspx" />
     <Content Include="Alumno\PerfilAlumno.aspx" />
     <Content Include="Assets\css\admin-style.css" />
     <Content Include="Assets\css\Home.css" />
@@ -155,6 +156,13 @@
     </Compile>
     <Compile Include="Administrador\PagosPanel.aspx.designer.cs">
       <DependentUpon>PagosPanel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Alumno\Certificados.aspx.cs">
+      <DependentUpon>Certificados.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Alumno\Certificados.aspx.designer.cs">
+      <DependentUpon>Certificados.aspx</DependentUpon>
     </Compile>
     <Compile Include="Alumno\PerfilAlumno.aspx.cs">
       <DependentUpon>PerfilAlumno.aspx</DependentUpon>
@@ -279,6 +287,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Assets\Avatares\" />
+    <Folder Include="Assets\Certificado\" />
     <Folder Include="Assets\Comprobantes\" />
     <Folder Include="Assets\img\" />
     <Folder Include="Assets\Material\" />

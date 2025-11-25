@@ -6,26 +6,41 @@
    <div class="container my-5">
         <div class="row g-5">
             
-            <div class="col-lg-7">
-                <h2 class="fw-bold mb-4 text-body-emphasis">Confirma tu compra</h2>
-                <div class="card mb-4 shadow-sm bg-body rounded-3 border-0">
-                    <div class="card-header bg-transparent border-bottom fw-semibold text-body-emphasis py-3">
-                        Resumen del Pedido
-                    </div>
-                    <div class="card-body p-4">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="d-flex align-items-center">
-                                <img src="<%= ResolveUrl("~/Assets/img/curso_uiux.png") %>" alt="Curso" class="me-4 rounded shadow-sm" width="120" height="80" style="object-fit: cover;" />
-                                <div>
-                                    <asp:Label runat="server" ID="lblTituloCurso" CssClass="fw-bold d-block fs-5 text-body-emphasis mb-1" Text="Curso..." />
-                                    <asp:Label runat="server" ID="lblAutorCurso" CssClass="text-muted small" Text="Plataforma LMS" />
-                                </div>
+           <div class="col-lg-7">
+    <h2 class="fw-bold mb-4 text-body-emphasis">Confirma tu compra</h2>
+    
+    <div class="card mb-4 shadow-sm bg-body rounded-3 border-0">
+        <div class="card-header bg-transparent border-bottom fw-semibold text-body-emphasis py-3">
+            Tu Carrito (<asp:Literal ID="litCantidadCursos" runat="server" Text="0" /> cursos)
+        </div>
+        <div class="card-body p-0">
+            
+            <asp:Repeater ID="repCarrito" runat="server">
+                <ItemTemplate>
+                    <div class="d-flex justify-content-between align-items-center p-3 border-bottom">
+                        <div class="d-flex align-items-center">
+                            <img src='<%# ResolveUrl(Eval("UrlImagenPortada").ToString()) %>' 
+                                 alt="Curso" class="me-3 rounded shadow-sm" width="80" height="50" style="object-fit: cover;" 
+                                 onerror="this.src='../../Assets/Images/placeholder.jpg';" />
+                            
+                            <div>
+                                <h6 class="fw-bold text-body-emphasis mb-0"><%# Eval("Titulo") %></h6>
+                                <small class="text-muted">Nivel <%# Eval("NivelDificultad") %></small>
                             </div>
-                            <asp:Label runat="server" ID="lblPrecioCurso" CssClass="fw-bold fs-4 text-primary" Text="$0.00" />
                         </div>
+                        <span class="fw-bold text-primary"><%# Eval("Precio", "{0:C}") %></span>
                     </div>
-                </div>
-            </div>
+                </ItemTemplate>
+            </asp:Repeater>
+
+            <asp:Panel ID="pnlCarritoVacio" runat="server" Visible="false" CssClass="p-4 text-center">
+                <p class="text-muted">Tu carrito está vacío.</p>
+                <a href="../Home.aspx" class="btn btn-sm btn-outline-primary">Ir al Catálogo</a>
+            </asp:Panel>
+
+        </div>
+    </div>
+</div>
 
             <div class="col-lg-5">
                 <div class="card shadow-lg border-primary border-2 mt-lg-2 bg-body rounded-4">

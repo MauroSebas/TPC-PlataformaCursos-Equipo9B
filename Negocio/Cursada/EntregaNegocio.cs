@@ -51,5 +51,13 @@ namespace Negocio.Cursada
 
             datos.Corregir(idEntrega, estado, devolucion);
         }
+
+        public List<Entrega> ListarEntregas(string estado)
+        {
+            // "Todos" es la palabra clave del DropDown, la convertimos a null para la DB
+            if (estado == "Todos") return datos.ListarAdmin(null);
+
+            return datos.ListarAdmin(estado);
+        }
     }
 }

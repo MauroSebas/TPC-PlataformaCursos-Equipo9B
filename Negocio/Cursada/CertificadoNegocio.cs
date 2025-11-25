@@ -10,14 +10,17 @@ namespace Negocio
         private CertificadoDatos datos = new CertificadoDatos();
 
         // Este método lo llama el Admin cuando aprueba la entrega
-        public void GenerarCertificado(int idInscripcion)
+        public void GenerarCertificado(int idInscripcion, string urlReal)
         {
-            // Simulamos la creación del archivo PDF
-            string urlFicticia = "~/Assets/Certificados/Diploma_Generico.pdf";
+            // Validamos que llegue algo
+            if (string.IsNullOrEmpty(urlReal))
+            {
+                throw new Exception("La URL del certificado no puede estar vacía.");
+            }
 
             Certificado nuevo = new Certificado();
             nuevo.InscripcionId = idInscripcion;
-            nuevo.UrlArchivo = urlFicticia;
+            nuevo.UrlArchivo = urlReal;
 
             datos.Generar(nuevo);
         }

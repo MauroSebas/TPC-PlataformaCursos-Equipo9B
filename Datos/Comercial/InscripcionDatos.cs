@@ -151,6 +151,27 @@ namespace Datos
             }
         }
 
+        public int ContarInscripciones(int idCurso)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConSP("sp_Inscripcion_ContarPorCurso");
+                datos.setearParametro("@CursoID", idCurso);
+
+               
+                return datos.ejecutarAccionScalar();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
 
     }
 }

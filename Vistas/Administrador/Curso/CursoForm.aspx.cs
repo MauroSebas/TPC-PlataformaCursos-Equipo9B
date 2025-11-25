@@ -125,7 +125,7 @@ namespace Vistas.Aministrador
                 }
 
 
-                // Habilitar el Panel de Objetivos si estamos editando
+                // Habilitar el Panel de Objetivos
                 pnlObjetivos.Visible = true;
                 CargarGrillaObjetivos(idCurso);
                 // DropDowns
@@ -156,7 +156,7 @@ namespace Vistas.Aministrador
                     }
                 }
 
-                // Disparar eventos de UI para acomodar los campos visualmente
+                // Disparar eventos de UI 
                 ddlModalidadPago_SelectedIndexChanged(null, null);
                 rbTipoImagen_CheckedChanged(null, null);
             }

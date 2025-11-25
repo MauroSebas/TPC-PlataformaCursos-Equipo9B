@@ -12,10 +12,9 @@ namespace Vistas
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
-            {
+            
                 ConfigurarMenu();
-            }
+            
         }
             private void ConfigurarMenu()
              {
@@ -55,16 +54,18 @@ namespace Vistas
                 else 
                 {
                     phBotonAdmin.Visible = false;
-                    phBotonAlumno.Visible = true; 
+                    phBotonAlumno.Visible = true;
+                    ActualizarContadorCarrito();
                 }
             }
             
             else
             {
-               
+               //anonimo
                 phAnonimo.Visible = true;
                 phLogueado.Visible = false;
                 phBotonAlumno.Visible = false;
+                ActualizarContadorCarrito();
             }
         }
         protected void btnSalir_Click(object sender, EventArgs e)
@@ -72,6 +73,22 @@ namespace Vistas
             Session.Clear();
             Session.Abandon();
             Response.Redirect("~/Home.aspx");
+        }
+
+        public void ActualizarContadorCarrito()
+        {
+            if (Session["Carrito"] != null)
+            {
+                List<int> lista = (List<int>)Session["Carrito"];
+                litCantCarrito.Text = lista.Count.ToString();
+
+                
+                litCantCarrito.Visible = lista.Count > 0; 
+            }
+            else
+            {
+                litCantCarrito.Text = "0";
+            }
         }
 
     }

@@ -118,6 +118,12 @@ namespace Negocio
 
             return idNuevaInscripcion;
         }
+
+        public bool CursoTieneInscripciones(int idCurso)
+        {
+            int cantidad = datos.ContarInscripciones(idCurso);
+            return cantidad > 0;
+        }
     }
 
 }

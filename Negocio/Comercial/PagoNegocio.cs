@@ -83,6 +83,7 @@ namespace Negocio
                 return datos.ListarPorUsuario(idUsuario);
             }
             catch (Exception ex) { throw ex; }
+        }
 
         public List<Pago> FiltrarPagos(string estado, string busqueda)
         {

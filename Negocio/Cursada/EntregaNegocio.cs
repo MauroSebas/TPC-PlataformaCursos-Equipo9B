@@ -51,5 +51,11 @@ namespace Negocio.Cursada
 
             datos.Corregir(idEntrega, estado, devolucion);
         }
+
+        public List<Entrega> ListarEntregas(string estado)
+        {
+            if (estado == "Todos") return datos.ListarAdmin(null);
+            return datos.ListarAdmin(estado);
+        }
     }
 }

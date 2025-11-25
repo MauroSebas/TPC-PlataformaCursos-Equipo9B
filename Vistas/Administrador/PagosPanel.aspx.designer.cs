@@ -42,13 +42,22 @@ namespace Vistas.Aministrador
         protected global::System.Web.UI.WebControls.Literal litMensajeGlobal;
 
         /// <summary>
-        /// Control updFiltros.
+        /// Control updPrincipal.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel updFiltros;
+        protected global::System.Web.UI.UpdatePanel updPrincipal;
+
+        /// <summary>
+        /// Control hfPagoIdRechazo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfPagoIdRechazo;
 
         /// <summary>
         /// Control lblBuscar.
@@ -105,15 +114,6 @@ namespace Vistas.Aministrador
         protected global::System.Web.UI.WebControls.Button btnLimpiar;
 
         /// <summary>
-        /// Control updGrillaPagos.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel updGrillaPagos;
-
-        /// <summary>
         /// Control gvPagos.
         /// </summary>
         /// <remarks>
@@ -121,5 +121,32 @@ namespace Vistas.Aministrador
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvPagos;
+
+        /// <summary>
+        /// Control txtObservacionRechazo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtObservacionRechazo;
+
+        /// <summary>
+        /// Control rfvRechazo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvRechazo;
+
+        /// <summary>
+        /// Control btnConfirmarRechazo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnConfirmarRechazo;
     }
 }

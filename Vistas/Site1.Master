@@ -33,44 +33,44 @@
                         <span class="navbar-toggler-icon"></span>
                     </button>
 
-                    <div class="collapse navbar-collapse" id="navbarMenu">                      
+                    <div class="collapse navbar-collapse" id="navbarMenu">
 
 
-                        
+
                         <div class="d-flex align-items-center ms-auto">
 
-                           
-                            <asp:PlaceHolder ID="phCart" runat="server">
-    <a href='<%= ResolveUrl("~/Transaccion/ProcesoPago.aspx") %>' class="nav-link fs-5 me-3 text-secondary hover-primary position-relative">
-        <i class="bi bi-cart"></i>
-        
-        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" 
-              style="font-size: 0.6rem;">
-            <asp:Literal ID="litCantCarrito" runat="server" Text="0"></asp:Literal>
-        </span>
-    </a>
-</asp:PlaceHolder>
 
-                           
+                            <asp:PlaceHolder ID="phCart" runat="server">
+                                <a href='<%= ResolveUrl("~/Transaccion/ProcesoPago.aspx") %>' class="nav-link fs-5 me-3 text-secondary hover-primary position-relative">
+                                    <i class="bi bi-cart"></i>
+
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                                        style="font-size: 0.6rem;">
+                                        <asp:Literal ID="litCantCarrito" runat="server" Text="0"></asp:Literal>
+                                    </span>
+                                </a>
+                            </asp:PlaceHolder>
+
+
                             <a href="#" class="nav-link fs-5 me-3 text-secondary" id="theme-toggler">
                                 <i class="bi bi-sun" id="theme-icon"></i>
                             </a>
 
-                           
+
                             <asp:PlaceHolder ID="phBotonAdmin" runat="server" Visible="false">
                                 <a href='<%= ResolveUrl("~/Administrador/AdminPanel.aspx") %>' class="btn btn-sm btn-dark me-3 fw-bold shadow-sm">
                                     <i class="bi bi-speedometer2 me-1"></i>Panel Admin
                                 </a>
                             </asp:PlaceHolder>
 
-                           
+
                             <asp:PlaceHolder ID="phBotonAlumno" runat="server" Visible="false">
                                 <a href='<%= ResolveUrl("~/Alumno/MisCursos.aspx") %>' class="btn btn-sm btn-success me-3 fw-bold shadow-sm">
                                     <i class="bi bi-laptop me-1"></i>Ir a mi Aula
                                 </a>
                             </asp:PlaceHolder>
 
-                           
+
                             <asp:PlaceHolder ID="phAnonimo" runat="server">
                                 <a href='<%= ResolveUrl("~/Auth/Loguin.aspx") %>' class="btn btn-outline-primary me-2">Ingresar</a>
                                 <a href='<%= ResolveUrl("~/Auth/Registro.aspx") %>' class="btn btn-primary">Registrarse</a>
@@ -81,7 +81,7 @@
                                 <div class="dropdown">
                                     <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" data-bs-toggle="dropdown">
                                         <asp:Image ID="imgAvatar" runat="server" CssClass="rounded-circle me-2 border" Width="32" Height="32" />
-                                       
+
                                         <span class="fw-medium  d-none d-lg-inline">
                                             <asp:Literal ID="litNombreUser" runat="server" />
                                         </span>

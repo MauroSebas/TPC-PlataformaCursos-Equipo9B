@@ -121,13 +121,12 @@
                         </div>
                     </div>
 
-                    <div class_="p-3 mt-auto border-top">
-                        <asp:LinkButton ID="btnLogoutSidebar" runat="server"
-                            CssClass="nav-link text-danger d-flex align-items-center gap-3">
-                            <i class="bi bi-box-arrow-right fs-5"></i>
-                            <span class="small fw-medium">Cerrar Sesión</span>
-                        </asp:LinkButton>
-                    </div>
+                    <div class="p-3 mt-auto border-top"> <asp:LinkButton ID="btnLogoutSidebar" runat="server"
+        CssClass="nav-link text-danger d-flex align-items-center gap-3"
+        OnClick="btnLogout_Click"> <i class="bi bi-box-arrow-right fs-5"></i>
+        <span class="small fw-medium">Cerrar Sesión</span>
+    </asp:LinkButton>
+</div>
                 </aside>
 
                 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">

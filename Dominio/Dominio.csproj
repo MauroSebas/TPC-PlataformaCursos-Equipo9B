@@ -41,10 +41,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dashboard\CursoPopular.cs" />
+    <Compile Include="Dashboard\DashboardVista.cs" />
+    <Compile Include="Dashboard\MetricasDashboard.cs" />
     <Compile Include="Contenido\Categoria.cs" />
     <Compile Include="Cursada\Certificado.cs" />
     <Compile Include="Contenido\Curso.cs" />
     <Compile Include="Contenido\CursoObjetivo.cs" />
+    <Compile Include="Dashboard\UsuarioReciente.cs" />
     <Compile Include="Cursada\Entrega.cs" />
     <Compile Include="Enums\EnumExtensions.cs" />
     <Compile Include="Enums\EstadoCuentaEnum.cs" />
@@ -52,7 +56,7 @@
     <Compile Include="Enums\RolEnum.cs" />
     <Compile Include="Enums\TipoTokenEnum.cs" />
     <Compile Include="Seguridad\EstadoCuenta.cs" />
-    <Compile Include="Contenido\Examen.cs" />
+    <Compile Include="Cursada\Examen.cs" />
     <Compile Include="Comercial\Inscripcion.cs" />
     <Compile Include="Contenido\Leccion.cs" />
     <Compile Include="Contenido\Modulo.cs" />

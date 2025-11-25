@@ -46,8 +46,8 @@
     <Content Include="Administrador\Curso\CursoForm.aspx" />
     <Content Include="Administrador\Curso\CursoPanel.aspx" />
     <Content Include="Administrador\Curso\LeccionPanel.aspx" />
-    <Content Include="Administrador\LeccionForm.aspx" />
     <Content Include="Administrador\Curso\ModuloGestion.aspx" />
+    <Content Include="Administrador\GestionEntregas.aspx" />
     <Content Include="Administrador\PagosPanel.aspx" />
     <Content Include="Administrador\PerfilAdministrador.aspx" />
     <Content Include="Alumno\PerfilAlumno.aspx" />
@@ -93,6 +93,13 @@
     <Compile Include="Administrador\Curso\LeccionPanel.aspx.designer.cs">
       <DependentUpon>LeccionPanel.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Administrador\GestionEntregas.aspx.cs">
+      <DependentUpon>GestionEntregas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administrador\GestionEntregas.aspx.designer.cs">
+      <DependentUpon>GestionEntregas.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Administrador\PerfilAdministrador.aspx.cs">
       <DependentUpon>PerfilAdministrador.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -134,13 +141,6 @@
     </Compile>
     <Compile Include="Administrador\Curso\CursoPanel.aspx.designer.cs">
       <DependentUpon>CursoPanel.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Administrador\LeccionForm.aspx.cs">
-      <DependentUpon>LeccionForm.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Administrador\LeccionForm.aspx.designer.cs">
-      <DependentUpon>LeccionForm.aspx</DependentUpon>
     </Compile>
     <Compile Include="Administrador\Curso\ModuloGestion.aspx.cs">
       <DependentUpon>ModuloGestion.aspx</DependentUpon>

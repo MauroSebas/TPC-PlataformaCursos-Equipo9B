@@ -82,7 +82,7 @@ namespace Vistas
                     lblSinObjetivos.Visible = true;
                 }
             }
-            catch (Exception ex) { /* Log error */ }
+            catch (Exception ) { /* Log error */ }
         }
 
         // ================================

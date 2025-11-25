@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Dominio.Enums
 {
+   
     public enum ModalidadPagoEnum
     {        
         [Description("Pago Único")]

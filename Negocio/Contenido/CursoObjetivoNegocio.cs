@@ -19,7 +19,7 @@ namespace Negocio.Contenido
 
         public void Agregar(CursoObjetivo nuevo)
         {
-            // Validaciones
+           
             if (nuevo.Curso == null || nuevo.Curso.Id <= 0)
                 throw new Exception("El objetivo debe estar asociado a un curso válido.");
 

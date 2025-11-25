@@ -83,7 +83,7 @@
                                         </div>
 
                                         <div class="col-md-12">
-                                            <div class="d-flex justify-content-center align-items-center bg-white border rounded overflow-hidden position-relative" style="height: 180px; border-style: dashed !important;">
+                                            <div class="d-flex justify-content-center align-items-center  border rounded overflow-hidden position-relative" style="height: 180px; border-style: dashed !important;">
                                                 <asp:Image ID="imgPortadaActual" runat="server" CssClass="img-fluid w-100 h-100 object-fit-cover" Visible="false" />
                                                 
                                                 <% if (!imgPortadaActual.Visible) { %>
@@ -169,8 +169,32 @@
                                     </label>
                                 </div>
                             </div>
+                            <div class="p-3 bg-body-tertiary rounded mt-2 border-top border-white">
+    
+    <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" id="chkRequiereExamen" runat="server" onchange="toggleExamenPanel()" />
+        <label class="form-check-label fw-bold ms-2" for="<%= chkRequiereExamen.ClientID %>">
+            Requiere Examen Final
+        </label>
+    </div>
 
-                        </div> </div> <div class="d-flex justify-content-end pt-4 mt-4 border-top">
+    <div id="divLinkExamen" style="display: none;" class="mt-3 ps-1 animate-fade">
+        <label class="form-label small text-muted mb-1">Link de la Consigna (Google Drive / PDF)</label>
+        <div class="input-group input-group-sm">
+            <span class="input-group-text "><i class="bi bi-link-45deg"></i></span>
+            <asp:TextBox ID="txtUrlExamen" runat="server" CssClass="form-control" placeholder="https://..." />
+        </div>
+        <div class="form-text x-small mt-1">
+            El alumno deberá descargar este archivo para realizar el trabajo práctico.
+        </div>
+    </div>
+
+</div>
+
+                        </div> 
+
+                    </div> 
+                    <div class="d-flex justify-content-end pt-4 mt-4 border-top">
                         <asp:Button ID="btnGuardar" runat="server" Text="Guardar Curso" CssClass="btn btn-primary btn-lg px-5" OnClick="btnGuardar_Click" ValidationGroup="Curso" />
                     </div>
 
@@ -181,6 +205,7 @@
             </asp:UpdatePanel>
         </div>
     </div>
+
 
     <asp:UpdatePanel ID="updObjetivos" runat="server" UpdateMode="Conditional">
         <ContentTemplate>
@@ -248,6 +273,24 @@
             </asp:Panel>
         </ContentTemplate>
     </asp:UpdatePanel>
+    <script>
+    function toggleExamenPanel() {
+        // Buscamos los controles por su ID de cliente (ASP.NET les cambia el ID al renderizar)
+        var chk = document.getElementById('<%= chkRequiereExamen.ClientID %>');
+        var panel = document.getElementById('divLinkExamen');
 
+        if (chk && panel) {
+            panel.style.display = chk.checked ? 'block' : 'none';
+        }
+    }
+
+    // Ejecutar al cargar la página (por si viene editado con el check true)
+    document.addEventListener("DOMContentLoaded", function () {
+        toggleExamenPanel();
+    });
+
+    // Ejecutar después de que el UpdatePanel haga un postback parcial
+    Sys.WebForms.PageRequestManager.getInstance().add_endRequest(toggleExamenPanel);
+</script>
 </asp:Content>
 

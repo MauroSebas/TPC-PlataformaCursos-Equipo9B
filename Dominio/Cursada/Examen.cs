@@ -15,7 +15,7 @@ namespace Dominio
 
         
         public Curso Curso { get; set; }
-        public string UrlConsigna { get; set; } // Link al PDF/Doc
+        public string UrlConsigna { get; set; } 
         public bool EstaActivo { get; set; }
 
     }

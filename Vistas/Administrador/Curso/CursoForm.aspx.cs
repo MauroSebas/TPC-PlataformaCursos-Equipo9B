@@ -17,7 +17,7 @@ namespace Vistas.Aministrador
         private readonly CursoNegocio _cursoNegocio = new CursoNegocio();
         private readonly CategoriaNegocio _catNegocio = new CategoriaNegocio();
 
-        // Propiedad para manejar el ID en ViewState
+       
         private int CursoIdEnEdicion
         {
             get
@@ -37,7 +37,7 @@ namespace Vistas.Aministrador
             {
                 CargarListasDesplegables();
 
-                // Verificar si es Edición
+                
                 string idStr = Request.QueryString["id"];
                 if (idStr != null)
                 {
@@ -49,7 +49,7 @@ namespace Vistas.Aministrador
                 }
                 else
                 {
-                    // Si es Alta, inicializamos la UI por defecto
+                    
                     rbTipoImagen_CheckedChanged(null, null);
                     ddlModalidadPago_SelectedIndexChanged(null, null);
                     pnlObjetivos.Visible = false;
@@ -61,14 +61,14 @@ namespace Vistas.Aministrador
         {
             try
             {
-                // 1. Categorías
+               
                 ddlCategoria.DataSource = _catNegocio.Listar();
                 ddlCategoria.DataValueField = "Id";
                 ddlCategoria.DataTextField = "Nombre";
                 ddlCategoria.DataBind();
                 ddlCategoria.Items.Insert(0, new ListItem("-- Seleccione Categoría --", "0"));
 
-                // 2. Modalidad Pago (Sin LINQ)
+              
                 ddlModalidadPago.Items.Clear();
                 Array valoresEnum = Enum.GetValues(typeof(ModalidadPagoEnum));
 
@@ -108,6 +108,23 @@ namespace Vistas.Aministrador
                 ddlNivel.SelectedValue = curso.NivelDificultad;
                 ddlIdioma.SelectedValue = curso.Idioma;
                 chkCertificadoHTML.Checked = curso.ConCertificado;
+
+
+                ExamenNegocio exNeg = new ExamenNegocio();
+                Examen examen = exNeg.ObtenerPorCurso(curso.Id);
+
+                if (examen != null && examen.EstaActivo)
+                {
+                    chkRequiereExamen.Checked = true;
+                    txtUrlExamen.Text = examen.UrlConsigna;
+                }
+                else
+                {
+                    chkRequiereExamen.Checked = false;
+                    txtUrlExamen.Text = string.Empty;
+                }
+
+
                 // Habilitar el Panel de Objetivos si estamos editando
                 pnlObjetivos.Visible = true;
                 CargarGrillaObjetivos(idCurso);
@@ -151,7 +168,7 @@ namespace Vistas.Aministrador
 
         // --- EVENTOS DE UI ---
 
-        // 1. Bloquea precio si es Gratuito
+        //  Bloquea precio si es Gratuito
         protected void ddlModalidadPago_SelectedIndexChanged(object sender, EventArgs e)
         {
             bool esGratuito = (ddlModalidadPago.SelectedValue == "Gratuito");
@@ -163,7 +180,7 @@ namespace Vistas.Aministrador
             }
         }
 
-        // 2. Switch entre Archivo y URL
+        // Switch entre Archivo y URL
         protected void rbTipoImagen_CheckedChanged(object sender, EventArgs e)
         {
             if (rbImagenArchivo.Checked)
@@ -193,10 +210,10 @@ namespace Vistas.Aministrador
                 curso.Titulo = txtTitulo.Text.Trim();
                 curso.Descripcion = txtDescripcion.Text.Trim();
 
-                // Lógica Precio Gratuito vs Pago
+                
                 if (ddlModalidadPago.SelectedValue == "Gratuito")
                 {
-                    curso.Precio = 0; // Forzamos 0 en el backend
+                    curso.Precio = 0; 
                 }
                 else
                 {
@@ -216,47 +233,55 @@ namespace Vistas.Aministrador
                 curso.Categoria.Id = int.Parse(ddlCategoria.SelectedValue);
                 curso.ModalidadPago = ddlModalidadPago.SelectedValue;
 
-                // --- AGREGAR ESTE MAPEO ---
+               //Mapeo
                 curso.NivelDificultad = ddlNivel.SelectedValue;
                 curso.Idioma = ddlIdioma.SelectedValue;
                 curso.ConCertificado = chkCertificadoHTML.Checked;
 
-                // Estados
+               
                 curso.EstaActivo = true;
 
                 if (curso.Id == 0)
                 {
-                    curso.Publicado = false; // Alta nace despublicado
+                    curso.Publicado = false; 
                 }
                 else
                 {
-                    // Recuperamos estado original
+                    
                     Curso original = _cursoNegocio.BuscarCurso(curso.Id);
                     if (original != null) curso.Publicado = original.Publicado;
                     else curso.Publicado = false;
                 }
 
-                // Imagen
+               
                 string urlImagen = ManejarImagen(curso.Id);
                 curso.UrlImagenPortada = urlImagen;
 
-                // Guardar en BD
+               
                 int idGuardado = _cursoNegocio.GuardarCurso(curso);
+                if (chkRequiereExamen.Checked)
+                {
+                    ExamenNegocio exNeg = new ExamenNegocio();
+                    // Si marcó el check pero dejó vacío el link, podemos validar o dejarlo pasar (mejor validar)
+                    if (!string.IsNullOrEmpty(txtUrlExamen.Text))
+                    {
+                        exNeg.Guardar(idGuardado, txtUrlExamen.Text);
+                    }
+                }
 
-                // Renombrar si era nuevo y archivo temporal
                 if (curso.Id == 0 && !string.IsNullOrEmpty(urlImagen) && urlImagen.Contains("temp"))
                 {
                     RenombrarImagenDefinitiva(urlImagen, idGuardado);
                 }
 
-                if (this.CursoIdEnEdicion == 0) // Si era nuevo
+                if (this.CursoIdEnEdicion == 0) 
                 {
-                    // Redirigimos A LA MISMA PAGINA con el ID para habilitar objetivos
+                    
                     Response.Redirect("~/Administrador/Curso/CursoForm.aspx?id=" + idGuardado, false);
                 }
                 else
                 {
-                    // Si ya existía, volvemos al panel
+                    
                     Session["CursoPanelMensaje"] = "¡Curso guardado con éxito!";
                     Response.Redirect("~/Administrador/Curso/CursoPanel.aspx", false);
                 }
@@ -269,13 +294,13 @@ namespace Vistas.Aministrador
 
         private string ManejarImagen(int cursoId)
         {
-            // A. Eligió URL
+           
             if (rbImagenUrl.Checked)
             {
                 if (!string.IsNullOrWhiteSpace(txtUrlImagen.Text))
                     return txtUrlImagen.Text.Trim();
             }
-            // B. Eligió Archivo
+            
             else if (rbImagenArchivo.Checked && fileUploadPortada.HasFile)
             {
                 string extension = Path.GetExtension(fileUploadPortada.FileName).ToLower();
@@ -294,7 +319,7 @@ namespace Vistas.Aministrador
                 return rutaVirtual;
             }
 
-            // C. Mantener existente (Edición)
+           
             if (cursoId > 0 && ViewState["UrlImagenActual"] != null)
             {
                 return ViewState["UrlImagenActual"].ToString();
@@ -316,7 +341,7 @@ namespace Vistas.Aministrador
 
                     File.Move(rutaFisicaTemp, nuevaRutaFisica);
 
-                    // Actualizar solo la ruta en la DB
+                   
                     _cursoNegocio.ActualizarImagen(nuevoId, nuevaRutaVirtual);
                 }
             }
@@ -340,14 +365,14 @@ namespace Vistas.Aministrador
             CursoObjetivoNegocio negocioObj = new CursoObjetivoNegocio();
             dgvObjetivos.DataSource = negocioObj.Listar(idCurso);
             dgvObjetivos.DataBind();
-            updObjetivos.Update(); // Forzamos actualización del panel
+            updObjetivos.Update(); 
         }
 
         protected void btnAgregarObjetivo_Click(object sender, EventArgs e)
         {
             try
             {
-                // Usamos CursoIdEnEdicion que ya tenés definido como propiedad
+                
                 if (this.CursoIdEnEdicion == 0) return;
 
                 CursoObjetivoNegocio negocioObj = new CursoObjetivoNegocio();
@@ -363,7 +388,7 @@ namespace Vistas.Aministrador
             }
             catch (Exception ex)
             {
-                // Mostrar error sutilmente o en el global
+                
                 MostrarMensajeGlobal("Error al agregar objetivo: " + ex.Message, true);
             }
         }

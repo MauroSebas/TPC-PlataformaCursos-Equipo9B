@@ -133,6 +133,49 @@ namespace Datos.Cursada
             }
         }
 
+        public List<Entrega> ListarAdmin(string estado = null)
+        {
+            List<Entrega> lista = new List<Entrega>();
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConSP("sp_Entrega_ListarAdmin");
 
+                // Si estado es null, el SP trae todos (Historial)
+                if (estado == null)
+                    datos.setearParametro("@Estado", DBNull.Value);
+                else
+                    datos.setearParametro("@Estado", estado);
+
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Entrega aux = new Entrega();
+                    aux.Id = (int)datos.Lector["EntregaID"];
+                    aux.InscripcionId = (int)datos.Lector["InscripcionID"]; // Importante para el certificado
+                    aux.FechaEntrega = (DateTime)datos.Lector["FechaEntrega"];
+                    aux.UrlResolucion = (string)datos.Lector["UrlResolucion"];
+                    aux.Estado = (string)datos.Lector["Estado"];
+
+                    // Devolución (para poder editarla)
+                    if (!(datos.Lector["DevolucionProfesor"] is DBNull))
+                        aux.DevolucionProfesor = (string)datos.Lector["DevolucionProfesor"];
+
+                    // Datos Auxiliares (Joins)
+                    aux.EmailAlumno = (string)datos.Lector["AlumnoEmail"];
+
+                    if (!(datos.Lector["AlumnoNombre"] is DBNull))
+                        aux.NombreAlumno = (string)datos.Lector["AlumnoNombre"];
+
+                    aux.TituloCurso = (string)datos.Lector["CursoTitulo"];
+
+                    lista.Add(aux);
+                }
+                return lista;
+            }
+            catch (Exception ex) { throw ex; }
+            finally { datos.cerrarConexion(); }
+        }
     }
 }

@@ -12,10 +12,10 @@ namespace Vistas
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            // 1. SEGURIDAD: Si se cayó la sesión, lo sacamos del aula
+            
             if (Session["Usuario"] == null)
             {
-                // Redirigimos al login y guardamos la URL para que vuelva directo a esta clase
+                
                 string urlActual = Request.Url.PathAndQuery;
                 Response.Redirect($"~/Auth/Loguin.aspx?error=SesionExpirada&ReturnUrl={Server.UrlEncode(urlActual)}", true);
                 return;
@@ -31,8 +31,8 @@ namespace Vistas
         {
             Usuario user = (Usuario)Session["Usuario"];
 
-            // Lógica para mostrar Nombre o Email
-            string nombreMostrar = user.Email.Split('@')[0]; // Default
+           
+            string nombreMostrar = user.Email.Split('@')[0]; 
             string inicial = user.Email.Substring(0, 1).ToUpper();
             string urlAvatar = "";
 
@@ -44,11 +44,7 @@ namespace Vistas
                     inicial = user.Perfil.Nombre.Substring(0, 1).ToUpper();
                 }
                 urlAvatar = user.Perfil.UrlFotoPerfil;
-            }
-
-            // Asignamos a los controles del Header (si existen en tu HTML de Aula.Master)
-            // Como en tu HTML anterior no vi los controles runat="server" para el nombre en el Aula.Master,
-            // verificá que existan o agregalos:
+            }           
 
             if (litNombreUsuario != null)
                 litNombreUsuario.Text = nombreMostrar;

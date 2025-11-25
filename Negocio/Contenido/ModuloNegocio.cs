@@ -15,7 +15,7 @@ namespace Negocio.Contenido
         {
             try
             {
-                // Validación básica: No intentar ir a la DB si el ID es inválido
+              
                 if (idCurso <= 0) return new List<Modulo>();
 
                 return datos.Listar(idCurso);

@@ -12,6 +12,21 @@ namespace Vistas
             if (!IsPostBack)
             {
                 pnlError.Visible = false;
+
+                if (Session["Usuario"] != null)
+                {
+                    Usuario usuario = (Usuario)Session["Usuario"];
+                    if (usuario.Rol.NombreRol == "Administrador")
+                    {
+                        Response.Redirect("~/Administrador/AdminPanel.aspx");
+                        return;
+                    }
+                    else if (usuario.Rol.NombreRol == "Participante")
+                    {
+                        Response.Redirect("~/Alumno/MisCursos.aspx");
+                    }
+                }
+
             }
         }
 

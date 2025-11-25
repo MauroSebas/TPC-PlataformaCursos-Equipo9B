@@ -1,5 +1,7 @@
 ﻿using Dominio;
 using Negocio;
+using Negocio.Contenido;
+using Negocio.Cursada;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +15,6 @@ namespace Vistas
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-           
             if (Session["Usuario"] == null)
             {
                 Response.Redirect("~/Auth/Loguin.aspx");
@@ -30,31 +31,42 @@ namespace Vistas
         {
             try
             {
-               
                 Usuario usuario = (Usuario)Session["Usuario"];
-
-               
                 InscripcionNegocio negocio = new InscripcionNegocio();
+
+                // Traemos todas las inscripciones del usuario
                 List<Inscripcion> listaInscripciones = negocio.ListarPorUsuario(usuario.UsuarioID);
 
-               
-                if (listaInscripciones.Count > 0)
+                // Filtramos solo las que estén Aprobadas (por si el SP trae pendientes)
+                // Hacemos el filtro manual SIN LINQ
+                List<Inscripcion> listaAprobada = new List<Inscripcion>();
+
+                foreach (Inscripcion i in listaInscripciones)
                 {
-                    repMisCursos.DataSource = listaInscripciones;
+                    if (i.Estado == "Aprobado")
+                    {
+                        listaAprobada.Add(i);
+                    }
+                }
+
+                if (listaAprobada.Count > 0)
+                {
+                    repMisCursos.DataSource = listaAprobada;
                     repMisCursos.DataBind();
                 }
                 else
                 {
-                    pnlSinCursos.Visible = true; 
+                    pnlSinCursos.Visible = true;
                 }
             }
             catch (Exception ex)
             {
-               
                 Session.Add("Error", ex.Message);
                 Response.Redirect("Error.aspx");
             }
         }
+
+        // --- MÉTODOS VISUALES PARA EL FRONT ---
 
         public string ObtenerImagen(object urlObj)
         {
@@ -64,5 +76,66 @@ namespace Vistas
 
             return ResolveUrl(url);
         }
+
+        // Calcula el % real recorriendo lecciones (Igual que en el Aula)
+        public int ObtenerPorcentaje(object idCursoObj, object idInscripcionObj)
+        {
+            try
+            {
+                int idCurso = Convert.ToInt32(idCursoObj);
+                int idInscripcion = Convert.ToInt32(idInscripcionObj);
+
+                // 1. Contar Total de Lecciones (Manual sin LINQ)
+                ModuloNegocio mNeg = new ModuloNegocio();
+                LeccionNegocio lNeg = new LeccionNegocio();
+
+                List<Modulo> modulos = mNeg.Listar(idCurso);
+                int totalLecciones = 0;
+
+                foreach (Modulo m in modulos)
+                {
+                    List<Leccion> lecciones = lNeg.Listar(m.Id);
+                    totalLecciones += lecciones.Count;
+                }
+
+                // Si no tiene lecciones, es 0%
+                if (totalLecciones == 0) return 0;
+
+                // 2. Contar Lecciones Vistas
+                ProgresoLeccionNegocio pNeg = new ProgresoLeccionNegocio();
+                List<ProgresoLeccion> progreso = pNeg.ListarProgreso(idInscripcion);
+                int vistas = progreso.Count;
+
+                // 3. Calcular
+                return (vistas * 100) / totalLecciones;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
+        // Calcula texto de expiración
+        public string ObtenerTextoExpiracion(object fechaExpObj)
+        {
+            if (fechaExpObj == null) return "Acceso Ilimitado";
+
+            DateTime fechaExp = (DateTime)fechaExpObj;
+            TimeSpan diferencia = fechaExp - DateTime.Today;
+
+            if (diferencia.Days < 0)
+            {
+                return "<span class='text-danger fw-bold'>Vencido</span>";
+            }
+            else if (diferencia.Days == 0)
+            {
+                return "<span class='text-warning fw-bold'>Vence Hoy</span>";
+            }
+            else
+            {
+                return $"Vence en {diferencia.Days} días";
+            }
+        }
     }
 }
+

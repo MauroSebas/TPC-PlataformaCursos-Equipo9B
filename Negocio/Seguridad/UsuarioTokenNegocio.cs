@@ -14,12 +14,12 @@ namespace Negocio.Seguridad
         {
             try
             {
-                // 1. REGLA DE NEGOCIO: Para el cooldown, busca el último token generado
+               
                 UsuarioToken ultimoToken = datos.ObtenerUltimoToken(usuarioID, tipoToken);
 
                 if (ultimoToken != null)
                 {
-                    // Calculamos hace cuántos segundos lo pidió
+                   
                     var tiempoEspera = (DateTime.Now - ultimoToken.FechaCreacion).TotalMinutes;
 
                     if (tiempoEspera < MINUTOS_COOLDOWN)
@@ -30,10 +30,10 @@ namespace Negocio.Seguridad
                     }
                 }
 
-                //2. Si llego acá, elimino los tokens anteriores
+               //elimino los tokens anteriores
                 datos.EliminarTokensAnteriores(usuarioID, tipoToken);
 
-                // 3. Generamos el nuevo
+                // Generamos el nuevo
                 string tokenString = Guid.NewGuid().ToString();
                 UsuarioToken token = new UsuarioToken
                 {
@@ -44,7 +44,7 @@ namespace Negocio.Seguridad
                     FechaCreacion = DateTime.Now 
                 };
 
-                // 4. Guardamos
+                // Guarda
                 datos.Insertar(token);
                 return tokenString;
             }

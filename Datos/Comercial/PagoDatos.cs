@@ -148,6 +148,25 @@ namespace Datos
 
             return aux;
         }
+        public List<Pago> ListarPorUsuario(int idUsuario)
+        {
+            List<Pago> lista = new List<Pago>();
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConSP("sp_Pago_ListarPorUsuario");
+                datos.setearParametro("@IdUsuario", idUsuario);
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    lista.Add(MapearPago(datos)); 
+                }
+                return lista;
+            }
+            catch (Exception ex) { throw ex; }
+            finally { datos.cerrarConexion(); }
+        }
     }
 }
 

@@ -24,6 +24,21 @@ namespace Vistas.Auth
             if (!IsPostBack)
             {
                 pnlError.Visible = false;
+
+                if (Session["Usuario"] != null)
+                {
+                    Usuario usuario = (Usuario)Session["Usuario"];
+                    if (usuario.Rol.NombreRol == "Administrador")
+                    {
+                        Response.Redirect("~/Administrador/AdminPanel.aspx");
+                        return;
+                    }
+                    else if (usuario.Rol.NombreRol == "Participante")
+                    {
+                        Response.Redirect("~/Alumno/MisCursos.aspx");
+                    }
+                }
+
             }
         }
 
@@ -91,7 +106,7 @@ namespace Vistas.Auth
             
             string script = $@"
                 document.addEventListener('DOMContentLoaded', function() {{
-                    var modalEl = document.getElementById('exitoRecuperacionModal'); // Usar ID del Modal real
+                    var modalEl = document.getElementById('exitoRecuperacionModal'); 
                     if (modalEl) {{
                         var modal = new bootstrap.Modal(modalEl);
                         modal.show();

@@ -50,12 +50,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CertificadoNegocio.cs" />
+    <Compile Include="Cursada\ExamenNegocio.cs" />
+    <Compile Include="Cursada\EntregaNegocio.cs" />
+    <Compile Include="DashboardNegocio.cs" />
+    <Compile Include="Cursada\CertificadoNegocio.cs" />
     <Compile Include="Comercial\InscripcionNegocio.cs" />
     <Compile Include="Comercial\PagoNegocio.cs" />
     <Compile Include="Contenido\CursoObjetivoNegocio.cs" />
     <Compile Include="Contenido\LeccionNegocio.cs" />
     <Compile Include="Contenido\ModuloNegocio.cs" />
+    <Compile Include="Cursada\ProgresoLeccionNegocio.cs" />
     <Compile Include="Seguridad\EstadoCuentaNegocio.cs" />
     <Compile Include="Contenido\CategoriaNegocio.cs" />
     <Compile Include="Seguridad\PerfilNegocio.cs" />
@@ -80,8 +84,6 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Cursada\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

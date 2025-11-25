@@ -57,45 +57,44 @@ namespace Negocio
                 if (curso == null)
                     throw new Exception("El objeto 'curso' es nulo.");
 
-                // Título
+               
                 if (string.IsNullOrWhiteSpace(curso.Titulo))
                     throw new Exception("El título del curso es obligatorio.");
                 if (curso.Titulo.Length > 255)
                     throw new Exception("El título no puede superar los 255 caracteres.");
 
-                // Descripción (Opcional, pero con límite si existe)
+               
                 if (!string.IsNullOrEmpty(curso.Descripcion) && curso.Descripcion.Length > 4000)
-                    // Usamos 4000 como un límite lógico para nvarchar(max)
+                    
                     throw new Exception("La descripción es demasiado larga (máx 4000 caracteres).");
 
-                // Categoría
                 if (curso.Categoria == null || curso.Categoria.Id <= 0)
                     throw new Exception("Debe seleccionar una categoría válida.");
 
-                // Precio
+               
                 if (curso.Precio < 0)
                     throw new Exception("El precio no puede ser negativo.");
 
-                // URL (Opcional, pero con límite si existe)
+               
                 if (!string.IsNullOrEmpty(curso.UrlImagenPortada) && curso.UrlImagenPortada.Length > 2000)
-                    // Límite generoso para URLs
+                   
                     throw new Exception("La URL de la imagen es demasiado larga (máx 2000 caracteres).");
 
-                // Modalidad de Pago (¡NUEVO!)
+               
                 if (string.IsNullOrWhiteSpace(curso.ModalidadPago))
                     throw new Exception("La modalidad de pago es obligatoria.");
                 if (curso.ModalidadPago.Length > 50)
                     throw new Exception("La modalidad de pago no puede superar los 50 caracteres.");
 
-                // Duración (¡NUEVO!)
+               
                 if (curso.DuracionAccesoDias < 0)
                     throw new Exception("La duración de acceso debe ser de al menos 1 día.");
 
-                //Validar Nivel de Dificultad (No puede estar vacío)
+                
                 if (string.IsNullOrWhiteSpace(curso.NivelDificultad))
                     throw new Exception("Debe indicar el Nivel de Dificultad (Principiante, Intermedio, etc).");
 
-                // Validar Idioma (No puede estar vacío)
+               
                 if (string.IsNullOrWhiteSpace(curso.Idioma))
                     throw new Exception("Debe indicar el Idioma del curso.");
 

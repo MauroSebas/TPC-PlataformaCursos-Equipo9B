@@ -89,6 +89,53 @@ namespace Vistas.Aministrador
                 MostrarMensajeGlobal($"Error al limpiar filtros: {ex.Message}", true);
             }    
         }
+        protected void gvPagos_RowCreated(object sender, GridViewRowEventArgs e)
+        {
+            // Preguntamos si la fila que se está creando es la del Paginador (Footer)
+            if (e.Row.RowType == DataControlRowType.Pager)
+            {
+                if (e.Row.Cells.Count > 0 && e.Row.Cells[0].Controls.Count > 0 && e.Row.Cells[0].Controls[0] is Table)
+                {
+                    // 1. Obtenemos la tabla que contiene los números de página
+                    Table pagerTable = (Table)e.Row.Cells[0].Controls[0];
+
+                    // 2. Le aplicamos las clases de Bootstrap para centrar y estilizar
+                    // 'pagination': Estilo base
+                    // 'justify-content-center': Centrado horizontal
+                    // 'mb-0': Sin margen inferior
+                    pagerTable.Attributes.Add("class", "pagination justify-content-center mb-0");
+
+                    // 3. Recorremos cada celda (que contiene los números 1, 2, etc.)
+                    foreach (TableRow row in pagerTable.Rows)
+                    {
+                        foreach (TableCell cell in row.Cells)
+                        {
+                            // A cada celda le ponemos 'page-item'
+                            cell.Attributes.Add("class", "page-item");
+
+                            // 4. Estilizamos los enlaces (números clicables) y el texto (número actual)
+                            if (cell.Controls.Count > 0)
+                            {
+                                if (cell.Controls[0] is LinkButton)
+                                {
+                                    // Es un botón clicable (Página 2, Siguiente, etc.)
+                                    ((LinkButton)cell.Controls[0]).CssClass = "page-link";
+                                }
+                                else if (cell.Controls[0] is Label)
+                                {
+                                    // Es la página actual (ej: 1), la marcamos como activa
+                                    ((Label)cell.Controls[0]).CssClass = "page-link";
+
+                                    // Agregamos la clase 'active' al contenedor padre (el <li>)
+                                    cell.CssClass += " active";
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
 
         //Identifico que boton se presiono y sobre que fila
         protected void gvPagos_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -105,10 +152,15 @@ namespace Vistas.Aministrador
                 if (e.CommandName == "Aprobar")
                 {
                     negocio.AprobarPago(idPago, "Aprobado por administrador");
+
+                    MostrarMensajeGlobal($"Pago Aprobado", false);
+
                 }
                 else if (e.CommandName == "Rechazar")
                 {
                     negocio.RechazarPago(idPago, "Comprobante inválido o ilegible");
+
+                    MostrarMensajeGlobal($"Pago Rechazado", true);
                 }
 
                 //Recargo la grilla
@@ -125,9 +177,7 @@ namespace Vistas.Aministrador
             litMensajeGlobal.Text = mensaje;
             pnlMensajeGlobal.CssClass = esError ? "alert alert-danger" : "alert alert-success";
 
-            // Si usas UpdatePanel en el mensaje, asegúrate de llamarlo. 
-            // Si no tienes el panel 'updMensajeGlobal', esta línea no es necesaria.
-            // updMensajeGlobal.Update(); 
+            updMensajeGlobal.Update();
         }
 
     }

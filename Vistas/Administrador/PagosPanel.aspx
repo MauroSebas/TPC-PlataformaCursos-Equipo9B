@@ -18,7 +18,7 @@
 
     <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4 border-bottom pb-3">
         <div class="d-flex flex-column gap-1">
-            <h1 class="h3 fw-bolder text-body-emphasis mb-0">Aprobacion de Pagos</h1>
+            <h1 class="h3 fw-bolder text-body-emphasis mb-0">Gestion de Pagos</h1>
             <p class="text-body-secondary fs-6 mb-0">Gestiona los pagos realizados por los alumnos.</p>
         </div>
     </div>
@@ -81,8 +81,9 @@
                         DataKeyNames="Id"
                         AllowPaging="true" PageSize="10"
                         OnPageIndexChanging="gvPagos_PageIndexChanging"
-                        OnRowCommand="gvPagos_RowCommand">
-                       
+                        OnRowCommand="gvPagos_RowCommand"
+                        OnRowCreated="gvPagos_RowCreated">
+
 
 
                         <Columns>
@@ -115,7 +116,8 @@
                                         <%-- Ver Comprobante --%>
                                         <asp:HyperLink ID="lnkVerComprobante" runat="server"
                                             NavigateUrl='<%# Eval("UrlComprobante") %>' Target="_blank"
-                                            CssClass="btn btn-sm btn-outline-secondary" ToolTip="Ver Comprobante">
+                                            CssClass="btn btn-sm btn-outline-secondary" ToolTip="Ver Comprobante"
+                                            Visible='<%# !string.IsNullOrEmpty(Eval("UrlComprobante") as string) %>'>
                                             <i class="bi bi-file-earmark-image"></i>
                                         </asp:HyperLink>
 

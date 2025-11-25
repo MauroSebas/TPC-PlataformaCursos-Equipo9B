@@ -42,6 +42,15 @@ namespace Vistas.Administrador
         protected global::System.Web.UI.WebControls.Literal litMensaje;
 
         /// <summary>
+        /// Control ddlFiltroEstado.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlFiltroEstado;
+
+        /// <summary>
         /// Control dgvEntregas.
         /// </summary>
         /// <remarks>
@@ -60,6 +69,15 @@ namespace Vistas.Administrador
         protected global::System.Web.UI.WebControls.Panel pnlCorreccion;
 
         /// <summary>
+        /// Control litTituloAccion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litTituloAccion;
+
+        /// <summary>
         /// Control txtDevolucion.
         /// </summary>
         /// <remarks>
@@ -67,6 +85,15 @@ namespace Vistas.Administrador
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtDevolucion;
+
+        /// <summary>
+        /// Control fuCertificado.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload fuCertificado;
 
         /// <summary>
         /// Control btnAprobar.

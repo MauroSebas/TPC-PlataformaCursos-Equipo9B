@@ -41,10 +41,15 @@
 
                            
                             <asp:PlaceHolder ID="phCart" runat="server">
-                                <a href='<%= ResolveUrl("~/Alumno/PagarCompra.aspx") %>' class="nav-link fs-5 me-3 text-secondary hover-primary">
-                                    <i class="bi bi-cart"></i>
-                                </a>
-                            </asp:PlaceHolder>
+    <a href='<%= ResolveUrl("~/Transaccion/ProcesoPago.aspx") %>' class="nav-link fs-5 me-3 text-secondary hover-primary position-relative">
+        <i class="bi bi-cart"></i>
+        
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" 
+              style="font-size: 0.6rem;">
+            <asp:Literal ID="litCantCarrito" runat="server" Text="0"></asp:Literal>
+        </span>
+    </a>
+</asp:PlaceHolder>
 
                            
                             <a href="#" class="nav-link fs-5 me-3 text-secondary" id="theme-toggler">

@@ -30,7 +30,7 @@ namespace Vistas
 
                 this.IdCursoSeleccionado = id;
                 CargarDatosDelCurso(id);
-              
+                ConfigurarBotones(id);
             }
         }
 
@@ -124,12 +124,12 @@ namespace Vistas
                 Usuario u = (Usuario)Session["Usuario"];
                 InscripcionNegocio insNeg = new InscripcionNegocio();
 
-                // Tu SP ObtenerInscripcionActiva ya trae las pendientes y aprobadas
+                
                 var inscripcion = insNeg.ObtenerInscripcionActiva(u.UsuarioID, idCurso);
 
                 if (inscripcion != null)
                 {
-                    // Bloqueamos todo
+                   
                     btnAgregarCarrito.Enabled = false;
                     btnComprar.Enabled = false;
                     btnInscribirse.Enabled = false;

@@ -11,8 +11,7 @@ using System.Web.UI.WebControls;
 namespace Vistas.Alumno.aula
 {
     public partial class Aula : System.Web.UI.Page
-    {
-       
+    {     
 
         public int IdCursoActual
         {

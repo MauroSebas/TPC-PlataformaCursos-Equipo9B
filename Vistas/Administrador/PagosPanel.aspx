@@ -135,7 +135,7 @@
                 </div>
             </div>
 
-            <!-- MODAL DE RECHAZO (Bootstrap 5) -->
+            <!-- MODAL DE RECHAZO  -->
             <div class="modal fade" id="modalRechazo" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
@@ -164,7 +164,7 @@
         </ContentTemplate>
     </asp:UpdatePanel>
 
-    <!-- SCRIPT PARA ABRIR/CERRAR EL MODAL DESDE C# -->
+    <!-- SCRIPT PARA ABRIR/CERRAR EL MODAL -->
     <script type="text/javascript">
         function mostrarModalRechazo() {
             var myModal = new bootstrap.Modal(document.getElementById('modalRechazo'));

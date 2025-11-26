@@ -1,4 +1,5 @@
 ﻿using Negocio;
+using Negocio.Contenido;
 using Dominio;
 using System;
 using System.Collections.Generic;
@@ -28,14 +29,22 @@ namespace Vistas
         {
             if (!IsPostBack)
             {
-                // 1. Validar sesión
+               
                 if (Session["Usuario"] == null)
                 {
                     Response.Redirect("~/Auth/Loguin.aspx?returnUrl=" + Request.Url.PathAndQuery);
                     return;
                 }
 
-                // 2. Cargar Carrito
+               
+                Usuario usuario = (Usuario)Session["Usuario"];
+                if (usuario.Rol.NombreRol == "Administrador")
+                {
+                    Response.Redirect("~/Administrador/AdminPanel.aspx");
+                    return;
+                }
+
+               
                 CargarCarrito();
             }
         }
@@ -45,66 +54,122 @@ namespace Vistas
             try
             {
                 CursoNegocio cn = new CursoNegocio();
+                InscripcionNegocio insNeg = new InscripcionNegocio();
+                Usuario u = (Usuario)Session["Usuario"];
+
                 List<Curso> cursosAComprar = new List<Curso>();
 
-                // Recuperamos los IDs del carrito (o creamos lista vacía)
+               
                 List<int> idsEnCarrito = Session["Carrito"] as List<int>;
 
-                // Si venimos por URL directa (?idCurso=5), lo agregamos al carrito temporalmente
+               
                 string idUrl = Request.QueryString["idCurso"];
                 if (!string.IsNullOrEmpty(idUrl) && int.TryParse(idUrl, out int idDirecto))
                 {
                     if (idsEnCarrito == null) idsEnCarrito = new List<int>();
                     if (!idsEnCarrito.Contains(idDirecto)) idsEnCarrito.Add(idDirecto);
-                    Session["Carrito"] = idsEnCarrito; // Actualizamos sesión
+                    Session["Carrito"] = idsEnCarrito;
                 }
 
-                // Si sigue vacío, mostramos mensaje
+                
                 if (idsEnCarrito == null || idsEnCarrito.Count == 0)
                 {
-                    pnlCarritoVacio.Visible = true;
-                    btnIniciarPago.Enabled = false;
+                    MostrarCarritoVacio();
                     return;
                 }
 
-                // Buscamos los objetos curso en la DB
+               
+
+                List<int> idsValidos = new List<int>();
                 decimal total = 0;
+
                 foreach (int id in idsEnCarrito)
                 {
-                    Curso c = cn.BuscarCurso(id);
-                    if (c != null)
+                    
+                    var inscripcion = insNeg.ObtenerInscripcionActiva(u.UsuarioID, id);
+
+                    if (inscripcion == null)
                     {
-                        cursosAComprar.Add(c);
-                        total += c.Precio;
+                       
+                        Curso c = cn.BuscarCurso(id);
+                        if (c != null && c.EstaActivo)
+                        {
+                            cursosAComprar.Add(c);
+                            idsValidos.Add(id);
+                            total += c.Precio;
+                        }
                     }
                 }
 
-                // Guardamos la lista de objetos COMPLETA para usarla al momento de pagar
+               
+                Session["Carrito"] = idsValidos;
+
+                
+                if (this.Master is Site1 master) master.ActualizarContadorCarrito();
+
+              
+                if (cursosAComprar.Count == 0)
+                {
+                    MostrarCarritoVacio();
+                    return;
+                }
+
+               
                 this.ListaCursosCompra = cursosAComprar;
 
-                // Renderizamos en el HTML
+                
                 repCarrito.DataSource = cursosAComprar;
                 repCarrito.DataBind();
 
                 litCantidadCursos.Text = cursosAComprar.Count.ToString();
 
-                // Totales
                 lblSubtotal.Text = total.ToString("C");
                 lblTotal.Text = total.ToString("C");
-                lblMontoModal.Text = total.ToString("C"); 
+                lblMontoModal.Text = total.ToString("C");
+
+                pnlCarritoVacio.Visible = false;
+                btnIniciarPago.Enabled = true;
             }
             catch
             {
-               
                 Response.Redirect("~/Home.aspx");
             }
         }
 
-        // --- EVENTOS MODALES ---
-        protected void btnIniciarPago_Click(object sender, EventArgs e) {
-            pnlModalPago.Visible = true;
+        private void MostrarCarritoVacio()
+        {
+            pnlCarritoVacio.Visible = true;
+            btnIniciarPago.Enabled = false;
+            repCarrito.DataSource = null;
+            repCarrito.DataBind();
+            lblTotal.Text = "$0.00";
+            lblSubtotal.Text = "$0.00";
+            litCantidadCursos.Text = "0";
         }
 
+        // --- ELIMINAR ITEM DEL CARRITO ---
+        protected void repCarrito_ItemCommand(object source, RepeaterCommandEventArgs e)
+        {
+            if (e.CommandName == "Eliminar")
+            {
+                int idCurso = Convert.ToInt32(e.CommandArgument);
+
+                List<int> ids = (List<int>)Session["Carrito"];
+                if (ids != null)
+                {
+                    ids.Remove(idCurso);
+                    Session["Carrito"] = ids;
+                }
+
+                CargarCarrito(); 
+            }
+        }
+
+        // --- EVENTOS MODALES ---
+        protected void btnIniciarPago_Click(object sender, EventArgs e)
+        {
+            pnlModalPago.Visible = true;
+        }
 
         protected void btnCerrarModales_Click(object sender, EventArgs e)
         {
@@ -118,7 +183,7 @@ namespace Vistas
             if (!fuComprobante.HasFile)
             {
                 lblMensaje.Text = "⚠️ Debes subir el comprobante de la transferencia.";
-                pnlModalPago.Visible = true; 
+                pnlModalPago.Visible = true;
                 return;
             }
 
@@ -127,33 +192,34 @@ namespace Vistas
                 Usuario usuario = (Usuario)Session["Usuario"];
                 InscripcionNegocio inscNeg = new InscripcionNegocio();
 
-                
+                // Guardar Archivo
                 string carpeta = Server.MapPath("~/Assets/Comprobantes/");
                 if (!Directory.Exists(carpeta)) Directory.CreateDirectory(carpeta);
 
                 string extension = Path.GetExtension(fuComprobante.FileName);
                 string nombreArchivo = $"Pago_Pack_{Guid.NewGuid()}{extension}";
                 string rutaCompleta = Path.Combine(carpeta, nombreArchivo);
-                fuComprobante.SaveAs(rutaCompleta);
 
+                fuComprobante.SaveAs(rutaCompleta);
                 string urlParaDB = "~/Assets/Comprobantes/" + nombreArchivo;
 
-                
-
+                // Recorrer Cursos y Generar Inscripciones
                 foreach (Curso curso in this.ListaCursosCompra)
                 {
-                    
+                    // chequeo  seguridad
                     if (inscNeg.ObtenerInscripcionActiva(usuario.UsuarioID, curso.Id) == null)
                     {
-                        
                         inscNeg.InscribirPago(usuario.UsuarioID, curso.Id, curso.Precio, urlParaDB);
                     }
                 }
 
-                
+                // Limpiar Carrito
                 Session["Carrito"] = null;
                 Session["ListaCursosCompra"] = null;
 
+                if (this.Master is Site1 master) master.ActualizarContadorCarrito();
+
+               
                 pnlModalPago.Visible = false;
                 pnlModalExito.Visible = true;
             }
@@ -170,7 +236,3 @@ namespace Vistas
         }
     }
 }
-
-
-
-

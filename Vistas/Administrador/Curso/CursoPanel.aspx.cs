@@ -110,7 +110,7 @@ namespace Vistas.Aministrador
         {
             if (e.Row.RowType == DataControlRowType.Pager)
             {
-                // Buscamos la tabla que ASP.NET crea
+               
                 if (e.Row.Cells.Count > 0 && e.Row.Cells[0].Controls.Count > 0 && e.Row.Cells[0].Controls[0] is Table)
                 {
                     Table pagerTable = (Table)e.Row.Cells[0].Controls[0];
@@ -127,7 +127,7 @@ namespace Vistas.Aministrador
                             }
                             else if (cell.Controls.Count > 0 && cell.Controls[0] is Label)
                             {
-                                // Página actual
+                               
                                 ((Label)cell.Controls[0]).CssClass = "page-link";
                                 cell.CssClass = "page-item active";
                             }
@@ -140,18 +140,16 @@ namespace Vistas.Aministrador
         {
             try
             {
-                // 1. Recuperamos el ID del HiddenField
+              
                 int idCurso = int.Parse(hfIdCursoEliminar.Value);
 
-                // 2. Llamamos a Negocio para eliminar (que ahora llama al SP corregido)
+                
                 _cursoNegocio.eliminarCursoLogico(idCurso);
 
-                // 3. Actualizamos la grilla
+               
                 CargarGrilla();
 
-                // 4. Feedback visual (Opcional: Cerrar modal por si quedó abierto y mostrar mensaje)
-                // Como estamos dentro de un UpdatePanel, el modal se cierra solo al renderizar de nuevo, 
-                // pero mostramos el mensaje de éxito.
+                
                 MostrarMensajeGlobal("El curso se archivó correctamente.", false);
             }
             catch (Exception ex)

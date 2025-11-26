@@ -124,14 +124,14 @@ namespace Negocio
                 throw new Exception("No se puede eliminar un curso que ya tiene alumnos inscriptos.");
             }
 
-            // 2. DESPUÉS LA OPERACIÓN TÉCNICA (Con Try/Catch)
+           
             try
             {
                 datos.eliminarCursoSP(id);
             }
             catch (Exception ex)
             {
-                // Aquí solo caerá si falla la base de datos (conexión, SP, etc.)
+               
                 throw new Exception("Error al eliminar el curso. Detalle técnico: " + ex.Message);
             }
         }

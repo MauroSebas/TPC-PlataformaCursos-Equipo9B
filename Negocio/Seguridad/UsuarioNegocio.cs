@@ -21,28 +21,28 @@ namespace Negocio
         {
             try
             {
-                // 1. Validar que el email no exista
+                
                 if (usuarioDatos.BuscarPorEmail(nuevoUsuario.Email) != null)
                 {
                     throw new Exception("El email ingresado ya se encuentra registrado.");
                 }
 
-                // 2. Validar reglas de negocio
+               
                 if (string.IsNullOrEmpty(passwordPlano) || passwordPlano.Length < 8)
                 {
                     throw new Exception("La contraseña debe tener al menos 8 caracteres.");
                 }
 
-                // 3. Hashear la contraseña
+               
                 nuevoUsuario.PasswordHash = _hasher.HashPassword(passwordPlano); 
 
-                // 4. Asignar valores por defecto
+               
                 nuevoUsuario.RolID = (int)RolEnum.Participante;
                 nuevoUsuario.EstadoCuentaID = (int)EstadoCuentaEnum.PendienteActivacion;
                 nuevoUsuario.EstaActivo = true;
                 
 
-                // 5. Insertar en BD
+               
                 int idGenerado = usuarioDatos.InsertarNuevo(nuevoUsuario);
 
                 if (idGenerado <= 0)
@@ -50,11 +50,11 @@ namespace Negocio
                     throw new Exception("Error general: No se pudo crear el usuario en la base de datos.");
                 }
 
-                // 6. Crear perfil vacío automáticamente
+                
                 this.CrearPerfilVacio(idGenerado);
 
 
-                // 7. Generar el Token de Activación
+               
                 string token = tokenNegocio.GenerarToken(idGenerado, TipoTokenEnum.ActivacionCuenta);
 
                 
@@ -66,12 +66,12 @@ namespace Negocio
 
                 string linkActivacion = $"{host}{applicationPath}Auth/ActivarCuenta.aspx?token={token}";
 
-                // 9. Estos son los reemplazos para el template HTML
+                // Estos son los reemplazos para el template HTML
                 var reemplazos = new Dictionary<string, string>();
                 reemplazos.Add("{{NOMBRE_USUARIO}}", nuevoUsuario.Email); 
                 reemplazos.Add("{{LINK_ACTIVACION}}", linkActivacion);
 
-                // 10. Enviar el Email
+                // Enviar el Email
                 emailServicio.EnviarTemplateEmail(
                     nuevoUsuario.Email,
                     "¡Activa tu cuenta en nuestra Plataforma!",

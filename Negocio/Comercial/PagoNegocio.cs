@@ -30,10 +30,10 @@ namespace Negocio
             
             if (nuevoPago.Monto <= 0 && nuevoPago.Estado != "Gratuito" && nuevoPago.Estado != "Aprobado")
                 throw new Exception("El monto debe ser positivo para un pago pendiente.");
-          
-            if (nuevoPago.MetodoPago == "Transferencia" && string.IsNullOrEmpty(nuevoPago.UrlComprobante))
+
+            if (nuevoPago.Monto > 0 && string.IsNullOrEmpty(nuevoPago.UrlComprobante))
             {
-                throw new Exception("Es obligatorio subir un comprobante para el pago por Transferencia.");
+                throw new Exception("Es obligatorio subir el comprobante para los cursos pagos.");
             }
 
             return datos.RegistrarPago(nuevoPago);

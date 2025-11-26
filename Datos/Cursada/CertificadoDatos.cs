@@ -1,5 +1,4 @@
 ﻿using Dominio;
-using Dominio.Cursada; // Asegurate que apunte a donde está tu clase Certificado
 using System;
 using System.Collections.Generic;
 
@@ -7,7 +6,7 @@ namespace Datos.Cursada
 {
     public class CertificadoDatos
     {
-        // 1. GENERAR (Insertar)
+        
         public void Generar(Certificado nuevo)
         {
             AccesoDatos datos = new AccesoDatos();
@@ -30,7 +29,7 @@ namespace Datos.Cursada
             }
         }
 
-        // 2. LISTAR POR USUARIO (Para "Mis Certificados")
+       
         public List<Certificado> ListarPorUsuario(int idUsuario)
         {
             List<Certificado> lista = new List<Certificado>();
@@ -48,7 +47,7 @@ namespace Datos.Cursada
                     aux.FechaEmision = (DateTime)datos.Lector["FechaEmision"];
                     aux.UrlArchivo = (string)datos.Lector["UrlArchivoCertificado"];
 
-                    // Datos Auxiliares del Curso
+                   
                     aux.NombreCurso = (string)datos.Lector["NombreCurso"];
 
                     if (!(datos.Lector["UrlImagenCurso"] is DBNull))

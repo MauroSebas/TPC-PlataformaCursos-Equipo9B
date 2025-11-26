@@ -30,6 +30,7 @@ namespace Vistas
 
                 this.IdCursoSeleccionado = id;
                 CargarDatosDelCurso(id);
+              
             }
         }
 
@@ -82,12 +83,9 @@ namespace Vistas
                     lblSinObjetivos.Visible = true;
                 }
             }
-            catch (Exception ) { /* Log error */ }
+            catch (Exception ) { }
         }
 
-        // ================================
-        // BOTÓN COMPRAR (El que querés probar)
-        // ================================
         protected void btnComprar_Click(object sender, EventArgs e)
         {
             if (!ValidarSesion()) return;
@@ -119,10 +117,37 @@ namespace Vistas
                 Session["Carrito"] = carrito;
             }
         }
+        private void ConfigurarBotones(int idCurso)
+        {
+            if (Session["Usuario"] != null)
+            {
+                Usuario u = (Usuario)Session["Usuario"];
+                InscripcionNegocio insNeg = new InscripcionNegocio();
 
-        // ================================
-        // BOTÓN INSCRIBIRSE (GRATIS)
-        // ================================
+                // Tu SP ObtenerInscripcionActiva ya trae las pendientes y aprobadas
+                var inscripcion = insNeg.ObtenerInscripcionActiva(u.UsuarioID, idCurso);
+
+                if (inscripcion != null)
+                {
+                    // Bloqueamos todo
+                    btnAgregarCarrito.Enabled = false;
+                    btnComprar.Enabled = false;
+                    btnInscribirse.Enabled = false;
+
+                    if (inscripcion.Estado == "Pendiente")
+                    {
+                        btnAgregarCarrito.Text = "⏳ Pago en Revisión";
+                        btnAgregarCarrito.CssClass = "btn btn-warning btn-lg disabled";
+                    }
+                    else
+                    {
+                        btnAgregarCarrito.Text = "✅ Ya tienes este curso";
+                        btnAgregarCarrito.CssClass = "btn btn-secondary btn-lg disabled";
+                    }
+                }
+            }
+        }
+
         protected void btnInscribirse_Click(object sender, EventArgs e)
         {
             if (!ValidarSesion()) return;

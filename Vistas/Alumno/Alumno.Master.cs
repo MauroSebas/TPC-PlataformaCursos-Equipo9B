@@ -1,4 +1,4 @@
-﻿using Dominio; // <-- ¡Necesitamos esto para "ver" la clase Usuario!
+﻿using Dominio; 
 using System;
 using System.Web.UI;
 

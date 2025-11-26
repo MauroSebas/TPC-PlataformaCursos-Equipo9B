@@ -16,7 +16,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-  <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4 border-bottom pb-3">
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4 border-bottom pb-3">
         <div class="d-flex flex-column gap-1">
             <h1 class="h3 fw-bolder text-body-emphasis mb-0">Aprobación de Pagos</h1>
             <p class="text-body-secondary fs-6 mb-0">Gestiona los pagos realizados por los alumnos.</p>
@@ -34,7 +34,7 @@
 
     <asp:UpdatePanel ID="updPrincipal" runat="server">
         <ContentTemplate>
-            
+
             <!-- CAMPO OCULTO PARA GUARDAR EL ID DEL PAGO A RECHAZAR -->
             <asp:HiddenField ID="hfPagoIdRechazo" runat="server" />
 
@@ -77,14 +77,14 @@
                         AllowPaging="true" PageSize="10"
                         OnPageIndexChanging="gvPagos_PageIndexChanging"
                         OnRowCommand="gvPagos_RowCommand" GridLines="None">
-                        
+
                         <Columns>
                             <asp:BoundField DataField="Inscripcion.Usuario.Email" HeaderText="Email Alumno" HeaderStyle-CssClass="px-4" ItemStyle-CssClass="px-4 fw-medium" />
                             <asp:BoundField DataField="Inscripcion.Curso.Titulo" HeaderText="Curso" />
                             <asp:BoundField DataField="Monto" HeaderText="Monto" DataFormatString="{0:C}" />
                             <asp:BoundField DataField="MetodoPago" HeaderText="Método" />
                             <asp:BoundField DataField="FechaPago" HeaderText="Fecha" DataFormatString="{0:dd/MM/yyyy}" />
-                            
+
                             <asp:TemplateField HeaderText="Estado">
                                 <ItemTemplate>
                                     <span class='badge rounded-pill <%# ObtenerClaseBadge(Eval("Estado").ToString()) %>'>
@@ -94,35 +94,35 @@
                             </asp:TemplateField>
 
                             <asp:TemplateField HeaderText="Acciones" ItemStyle-CssClass="text-end px-4">
-    <ItemTemplate>
-        <div class="d-flex justify-content-end gap-2">
-            
-            <%-- 1. VER COMPROBANTE (Siempre visible) --%>
-            <asp:HyperLink ID="lnkVerComprobante" runat="server" NavigateUrl='<%# Eval("UrlComprobante") %>' Target="_blank"
-                CssClass="btn btn-sm btn-outline-secondary" ToolTip="Ver Comprobante">
-                <i class="bi bi-file-earmark-image"></i>
-            </asp:HyperLink>
+                                <ItemTemplate>
+                                    <div class="d-flex justify-content-end gap-2">
 
-            <%-- 2. BOTÓN APROBAR (Visible si es Pendiente O Rechazado) --%>
-            <%-- Oculto si YA está Aprobado --%>
-            <asp:LinkButton ID="btnAprobar" runat="server" CommandName="Aprobar" CommandArgument='<%# Eval("Id") %>'
-                CssClass="btn btn-sm btn-success fw-bold" ToolTip="Aprobar Pago"
-                Visible='<%# Eval("Estado").ToString() != "Aprobado" %>'
-                OnClientClick="return confirm('¿Confirmar aprobación del pago?');">
-                <i class="bi bi-check-lg"></i>
-            </asp:LinkButton>
+                                        <%-- VER COMPROBANTE (Siempre visible) --%>
+                                        <asp:HyperLink ID="lnkVerComprobante" runat="server" NavigateUrl='<%# Eval("UrlComprobante") %>' Target="_blank"
+                                            CssClass="btn btn-sm btn-outline-secondary" ToolTip="Ver Comprobante">
+                                        <i class="bi bi-file-earmark-image"></i>
+                                        </asp:HyperLink>
 
-            <%-- 3. BOTÓN RECHAZAR (Visible si es Pendiente O Aprobado) --%>
-            <%-- Oculto si YA está Rechazado --%>
-            <asp:LinkButton ID="btnRechazar" runat="server" CommandName="AbrirRechazo" CommandArgument='<%# Eval("Id") %>'
-                CssClass="btn btn-sm btn-danger fw-bold" ToolTip="Rechazar / Anular"
-                Visible='<%# Eval("Estado").ToString() != "Rechazado" %>'>
-                <i class="bi bi-x-lg"></i>
-            </asp:LinkButton>
+                                        <%-- BOTÓN APROBAR (Visible si es Pendiente O Rechazado) --%>
+                                        <%-- Oculto si YA está Aprobado --%>
+                                        <asp:LinkButton ID="btnAprobar" runat="server" CommandName="Aprobar" CommandArgument='<%# Eval("Id") %>'
+                                            CssClass="btn btn-sm btn-success fw-bold" ToolTip="Aprobar Pago"
+                                            Visible='<%# Eval("Estado").ToString() != "Aprobado" %>'
+                                            OnClientClick="return confirm('¿Confirmar aprobación del pago?');">
+                                        <i class="bi bi-check-lg"></i>
+                                        </asp:LinkButton>
 
-        </div>
-    </ItemTemplate>
-</asp:TemplateField>
+                                        <%-- BOTÓN RECHAZAR (Visible si es Pendiente O Aprobado) --%>
+                                        <%-- Oculto si YA está Rechazado --%>
+                                        <asp:LinkButton ID="btnRechazar" runat="server" CommandName="AbrirRechazo" CommandArgument='<%# Eval("Id") %>'
+                                            CssClass="btn btn-sm btn-danger fw-bold" ToolTip="Rechazar / Anular"
+                                            Visible='<%# Eval("Estado").ToString() != "Rechazado" %>'>
+                                        <i class="bi bi-x-lg"></i>
+                                        </asp:LinkButton>
+
+                                    </div>
+                                </ItemTemplate>
+                            </asp:TemplateField>
                         </Columns>
                         <EmptyDataTemplate>
                             <div class="text-center py-5">
@@ -146,15 +146,15 @@
                         <div class="modal-body">
                             <p>Por favor, indica el motivo del rechazo para notificar al alumno:</p>
                             <div class="form-group">
-                                <asp:TextBox ID="txtObservacionRechazo" runat="server" TextMode="MultiLine" Rows="4" 
+                                <asp:TextBox ID="txtObservacionRechazo" runat="server" TextMode="MultiLine" Rows="4"
                                     CssClass="form-control" placeholder="Ej: El comprobante es ilegible, monto incorrecto..."></asp:TextBox>
-                                <asp:RequiredFieldValidator ID="rfvRechazo" runat="server" ControlToValidate="txtObservacionRechazo" 
+                                <asp:RequiredFieldValidator ID="rfvRechazo" runat="server" ControlToValidate="txtObservacionRechazo"
                                     ValidationGroup="Rechazo" ErrorMessage="Debes escribir un motivo." CssClass="text-danger small d-block mt-1" Display="Dynamic" />
                             </div>
                         </div>
                         <div class="modal-footer border-0">
                             <button type="button" class="btn btn-link text-decoration-none text-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <asp:Button ID="btnConfirmarRechazo" runat="server" Text="Confirmar Rechazo" 
+                            <asp:Button ID="btnConfirmarRechazo" runat="server" Text="Confirmar Rechazo"
                                 CssClass="btn btn-danger fw-bold px-4" OnClick="btnConfirmarRechazo_Click" ValidationGroup="Rechazo" />
                         </div>
                     </div>
@@ -176,7 +176,7 @@
             if (modal) {
                 modal.hide();
             }
-            // Limpiar backdrop residual por si acaso
+            
             document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
         }
     </script>

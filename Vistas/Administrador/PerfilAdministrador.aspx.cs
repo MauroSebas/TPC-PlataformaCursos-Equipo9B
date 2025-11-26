@@ -6,7 +6,7 @@ using Negocio.Servicios;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
+
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -172,7 +172,7 @@ namespace Vistas.Administrador
         // --- Eventos del Panel de Email ---
         protected void btnMostrarPanelEmail_Click(object sender, EventArgs e)
         {
-            // PASO 1: Mostramos el panel de pedir datos
+            
             pnlCambiarEmail.Visible = true;
             pnlErrorEmail.Visible = false;
             txtNuevoEmail.Text = "";

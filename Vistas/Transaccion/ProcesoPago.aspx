@@ -103,7 +103,7 @@
 
                         <div>
                             <h6 class="fw-bold mb-3">Subí tu Comprobante</h6>
-                            <div class="p-3 border rounded bg-light text-center">
+                            <div class="p-3 border rounded  text-center">
                                 <asp:FileUpload ID="fuComprobante" runat="server" CssClass="form-control" />
                                 <span class="small text-muted d-block mt-2">JPG, PNG, PDF (Max 5MB)</span>
                             </div>
@@ -112,7 +112,7 @@
                     </div>
 
                     <div class="modal-footer p-4 bg-body-tertiary rounded-bottom-4 border-top">
-                        <asp:Button ID="btnCancelar" runat="server" Text="Cancelar" CssClass="btn btn-light fw-bold" OnClick="btnCerrarModales_Click" />
+                        <asp:Button ID="btnCancelar" runat="server" Text="Cancelar" CssClass="btn  fw-bold" OnClick="btnCerrarModales_Click" />
                         <asp:Button ID="btnEnviarComprobante" runat="server" Text="Enviar Comprobante" CssClass="btn btn-primary fw-bold" OnClick="btnEnviarComprobante_Click" />
                     </div>
                 </div>

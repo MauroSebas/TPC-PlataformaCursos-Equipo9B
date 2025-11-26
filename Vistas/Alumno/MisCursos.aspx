@@ -4,14 +4,14 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-    <h2 class="mb-4 fw-bold">Mis Cursos</h2>
+   
 
     <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4 mb-5">
 
         <asp:Repeater ID="repMisCursos" runat="server">
             <ItemTemplate>
                 <div class="col">
-                    <div class="card h-100 shadow-sm border-0">
+                    <div class="card h-100 shadow-sm border-0"> 
 
                         <img src='<%# ObtenerImagen(Eval("Curso.UrlImagenPortada")) %>' class="card-img-top" alt="Portada" style="height: 200px; object-fit: cover;">
 

@@ -1,7 +1,6 @@
 ﻿using Dominio;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,7 +8,7 @@ namespace Datos
 {
     public class ProgresoLeccionDatos
     {
-        // 1. MARCAR COMO VISTO (Llama al SP que inserta o actualiza la fecha)
+       
         public void MarcarProgreso(int idInscripcion, int idLeccion)
         {
             AccesoDatos datos = new AccesoDatos();
@@ -40,7 +39,6 @@ namespace Datos
             finally { datos.cerrarConexion(); }
         }
 
-        // 2. LISTAR PROGRESO (Trae solo las lecciones completadas de una inscripción)
         public List<ProgresoLeccion> ListarProgreso(int idInscripcion)
         {
             List<ProgresoLeccion> lista = new List<ProgresoLeccion>();

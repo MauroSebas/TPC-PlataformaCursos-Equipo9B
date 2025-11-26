@@ -1,149 +1,117 @@
-🎓 DevCore Academy - Plataforma LMS
+# 🎓 **DevCore Academy - Plataforma LMS**
 
-Trabajo Práctico Final > Materia: Programación III
+### **Trabajo Práctico Final — Programación III**  
+**Tecnología:** ASP.NET WebForms + ADO.NET  
 
-Tecnología: ASP.NET WebForms + ADO.NET
+---
 
-📋 Descripción del Proyecto
+## 📋 **Descripción del Proyecto**
 
-DevCore Academy es una plataforma integral de gestión de cursos online (LMS) diseñada para conectar a estudiantes con contenido educativo de calidad. El sistema administra todo el ciclo de vida educativo: desde la publicación de cursos y la venta, hasta el cursado, evaluación y certificación.
+**DevCore Academy** es una plataforma integral de gestión de cursos online (LMS) diseñada para conectar a estudiantes con contenido educativo de calidad.  
+El sistema administra todo el ciclo de vida educativo: **publicación de cursos**, **venta**, **cursado**, **evaluación** y **certificación**.
 
-La aplicación cuenta con dos roles bien definidos (Administrador y Alumno) y un flujo de negocio robusto que incluye validación de pagos manuales y corrección de exámenes.
+Cuenta con dos roles bien definidos:
 
-🚀 Funcionalidades Principales
+- **Administrador**
+- **Alumno**
 
-👨‍🎓 Módulo Alumno
+Incluye un flujo de negocio robusto: validación manual de pagos, entrega y corrección de exámenes, y generación de certificados PDF.
 
-Catálogo de Cursos: Exploración de cursos con filtros por categoría y detalle completo.
+---
 
-Carrito de Compras: Gestión de inscripciones múltiples.
+## 🚀 **Funcionalidades Principales**
 
-Pagos: Subida de comprobantes de transferencia para validación.
+---
 
-Aula Virtual:
+### 👨‍🎓 **Módulo Alumno**
 
-Visualización de clases (Video y Archivos).
+- **Catálogo de Cursos:** Exploración con filtros por categoría y detalle completo.  
+- **Carrito de Compras:** Permite múltiples inscripciones.  
+- **Pagos:** Subida de comprobantes para validación.  
+- **Aula Virtual:**  
+  - Visualización de clases (video y archivos).  
+  - Barra de progreso en tiempo real.  
+  - Navegación secuencial de lecciones.  
+- **Evaluación:** Entrega de trabajos prácticos o exámenes finales (Google Drive / GitHub).  
+- **Certificación:** Descarga de diplomas en PDF tras aprobación.  
 
-Barra de progreso en tiempo real.
+---
 
-Navegación secuencial de lecciones.
+### 👮‍♂️ **Módulo Administrador**
 
-Evaluación: Entrega de trabajos prácticos/exámenes finales (Google Drive/GitHub).
+- **Dashboard:** Métricas en tiempo real de ingresos, alumnos y cursos.  
+- **Gestión de Cursos (ABM):** Alta de cursos, módulos, lecciones y asignación de exámenes.  
+- **Gestión de Pagos:** Aprobación y rechazo de comprobantes.  
+- **Inscripciones:** Anulación y reactivación.  
+- **Correcciones:** Bandeja de entrada de entregas.  
+- **Feedback:** Devolución al alumno.  
+- **Certificados:** Subida manual del certificado digital.  
+- **Reportes:** Historial completo de transacciones y entregas.  
 
-Certificación: Descarga de diplomas en PDF tras la aprobación.
+---
 
-👮‍♂️ Módulo Administrador
+## 🛠️ **Stack Tecnológico**
 
-Dashboard: Métricas en tiempo real de ingresos, alumnos y cursos.
+El proyecto fue construido siguiendo una arquitectura **N-Tier**, asegurando escalabilidad y mantenimiento.
 
-Gestión de Cursos (ABM): Alta de cursos, módulos, lecciones y asignación de exámenes.
+| **Capa / Área**        | **Tecnologías** |
+|------------------------|------------------|
+| **Frontend**           | ASP.NET WebForms (.aspx), HTML5, CSS3, Bootstrap 5.3 |
+| **Backend**            | C# (.NET Framework 4.8) |
+| **Base de Datos**      | SQL Server 2019+, T-SQL (Stored Procedures) |
+| **Acceso a Datos**     | ADO.NET (Desconectado y Conectado) |
+| **Scripting**          | JavaScript (Modales y UI dinámica) |
+| **Control de Versiones** | Git & GitHub |
 
-Gestión de Pagos: Panel para aprobar o rechazar comprobantes de pago.
+---
 
-Lógica de anulación y reactivación de inscripciones.
+## ⚙️ **Instalación y Puesta en Marcha**
 
-Correcciones: Bandeja de entrada de exámenes entregados.
+### **1. Base de Datos**
 
-Devolución (Feedback) al alumno.
+1. Abrí **SQL Server Management Studio (SSMS)**.  
+2. Ejecutá el script:  
+   **`PlataformaCursosDB`**  
+   Este script crea toda la DB: tablas, SPs y datos de prueba.
 
-Subida manual del Certificado digital.
+---
 
-Reportes: Historial completo de transacciones y entregas.
+### **2. Configuración de Conexión**
 
-🛠️ Stack Tecnológico
+1. Abrí el proyecto en **Visual Studio 2022**.  
+2. Buscá el archivo **Web.config**.  
+3. Modificá la connection string:
 
-El proyecto fue construido siguiendo una arquitectura en capas (N-Tier) para garantizar escalabilidad y mantenimiento.
-
-Capa / Área
-
-Tecnologías
-
-Frontend
-
-ASP.NET WebForms (.aspx), HTML5, CSS3, Bootstrap 5.3
-
-Backend
-
-C# (.NET Framework 4.8)
-
-Base de Datos
-
-SQL Server 2019+, T-SQL (Stored Procedures)
-
-Acceso a Datos
-
-ADO.NET (Desconectado y Conectado)
-
-Scripting
-
-JavaScript (Manejo de Modales y UI dinámica)
-
-Control de Versiones
-
-Git & GitHub
-
-⚙️ Instalación y Puesta en Marcha
-
-Sigue estos pasos para levantar el proyecto en tu entorno local:
-
-1. Base de Datos
-
-Abre SQL Server Management Studio (SSMS).
-
-Ejecuta el script BD/DB_Completa_Final.sql incluido en este repositorio.
-
-Este script crea la DB, las tablas, los procedimientos almacenados y carga datos de prueba.
-
-2. Configuración de Conexión
-
-Abre el proyecto en Visual Studio 2022.
-
-Ubica el archivo Web.config.
-
-Modifica la cadena de conexión CadenaConexion para que apunte a tu instancia local:
-
+```xml
 <connectionStrings>
-  <add name="CadenaConexion" connectionString="Data Source=.\SQLEXPRESS;Initial Catalog=PlataformaCursosDB;Integrated Security=True;" providerName="System.Data.SqlClient" />
+  <add name="CadenaConexion"
+       connectionString="Data Source=.\SQLEXPRESS;Initial Catalog=PlataformaCursosDB;Integrated Security=True;"
+       providerName="System.Data.SqlClient" />
 </connectionStrings>
 
+### **3. Configuración de Email (Opcional)**
 
-3. Configuración de Email (Opcional)
+Para que funcionen los correos de bienvenida y recuperación:
 
-Para que funcionen los correos de bienvenida y recuperación de clave:
+1. Abrí **EmailService.cs**.  
+2. Configurá tus credenciales SMTP  
+   *(Gmail App Password / Mailtrap)*.
 
-Ve a la clase EmailService.cs.
+---
 
-Configura tus credenciales SMTP (Gmail App Password o Mailtrap).
+## 🔑 **Credenciales de Acceso (Demo)**
 
-🔑 Credenciales de Acceso (Demo)
+| **Rol**          | **Email**           | **Contraseña** |
+|------------------|---------------------|----------------|
+| **Administrador** | admin@admin.com     | admin          |
+| **Alumno**        | alumno@demo.com     | 1234           |
 
-El script de base de datos incluye usuarios precargados para probar el sistema inmediatamente.
+---
 
-Rol
+## ✒️ **Autores**
 
-Email
+- **Sebastián Duarte** — Desarrollo Fullstack  
+- **Mauro Arias** — Desarrollo Fullstack  
 
-Contraseña
+Proyecto desarrollado para la **Tecnicatura en Programación — UTN**.
 
-Administrador
-
-admin@admin.com
-
-admin
-
-Alumno
-
-alumno@demo.com
-
-1234
-
-📸 Capturas de Pantalla
-
-
-✒️ Autores
-
-Duarte Sebastián - Desarrollo Fullstack
-
-Arias Mauro - Desarrollo Fullstack
-
-Proyecto desarrollado para la Tecnicatura en Programación - UTN.

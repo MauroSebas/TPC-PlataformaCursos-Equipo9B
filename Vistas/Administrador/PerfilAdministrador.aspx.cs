@@ -53,7 +53,7 @@ namespace Vistas.Administrador
 
                 if (string.IsNullOrEmpty(UsuarioLogueado.Perfil.UrlFotoPerfil))
                 {
-                    imgAvatar.ImageUrl = ResolveUrl("~/Assets/img/avatar_default.png");
+                    imgAvatar.ImageUrl = ResolveUrl("~/Assets/Cursos/placeholder-curso.jpg");
                 }
                 else
                 {

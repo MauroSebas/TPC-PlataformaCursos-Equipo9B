@@ -48,6 +48,17 @@ namespace Vistas
                 CargarCarrito();
             }
         }
+        protected string ObtenerImagen(object url)
+        {
+           
+            string urlStr = url as string;
+            if (string.IsNullOrEmpty(urlStr))
+            {
+                return ResolveUrl("~/Assets/Cursos/placeholder-curso.jpg");
+            }
+
+            return ResolveUrl(urlStr);
+        }
 
         private void CargarCarrito()
         {

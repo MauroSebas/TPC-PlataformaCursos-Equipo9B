@@ -55,9 +55,19 @@ namespace Vistas
                 lblNivel.Text = seleccionado.NivelDificultad;
                 lblIdioma.Text = seleccionado.Idioma;
                 liCertificado.Visible = seleccionado.ConCertificado;
-                imgSidebar.ImageUrl = string.IsNullOrEmpty(seleccionado.UrlImagenPortada) ? ResolveUrl("~/Assets/img/placeholder-curso.jpg") : seleccionado.UrlImagenPortada;
+                string urlImagen;
+                if (!string.IsNullOrEmpty(seleccionado.UrlImagenPortada))
+                {
+                    urlImagen = seleccionado.UrlImagenPortada;
+                }
+                else
+                {
+                    urlImagen = "~/Assets/Cursos/placeholder-curso.jpg";
+                }
+                
+                imgSidebar.ImageUrl = ResolveUrl(urlImagen);
 
-               
+
                 if (seleccionado.Precio > 0)
                 {
                     lblPrecio.Text = seleccionado.PrecioFormateado;

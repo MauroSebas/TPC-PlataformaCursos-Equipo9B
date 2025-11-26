@@ -1,0 +1,39 @@
+Para ejecutar el proyecto correctamente en tu entorno local, sigue estos pasos:
+
+=====================PASO 1: CONEXIÓN (WEB.CONFIG)==================
+
+El proyecto está configurado para conectarse a mi servidor local. Cambialo al tuyo.
+
+En Visual Studio, abrí el archivo "Web.config" que está en el proyecto "Vistas".
+
+Busca la etiqueta <connectionStrings>.
+
+Modifica el valor de "connectionString":
+
+DONDE DICE: Data Source=ESTA_MI_SERVIDOR;...
+CAMBIALO POR: Data Source=.;...  (o localhost, o tu nombre de servidor SQL).
+
+==================PASO 2: CONFIGURACIÓN DE CORREO (IMPORTANTE)=================
+
+Para que el envío de correos (Bienvenida, Recuperación, etc.) funcione, debes configurar tus propias 
+credenciales de Gmail.
+
+AbrÍ el Web.config dentro de <appSettings>.
+
+Busca las credenciales del correo emisor.
+
+Correo: Coloca tu dirección de Gmail.
+
+Contraseña: DEBES generar una "Contraseña de Aplicación" desde tu cuenta de Google 
+(Seguridad > Verificación en 2 pasos > Contraseñas de aplicaciones).
+
+Nota: Por seguridad, las credenciales originales han sido removidas del repositorio.
+
+
+=====================PASO 3: USUARIO ADMINISTRADOR================
+
+Para probar el panel de gestión, usa estas credenciales precargadas:
+
+Usuario: admin@admin.com
+Clave:   admin  
+

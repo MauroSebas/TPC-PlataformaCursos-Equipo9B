@@ -3,7 +3,6 @@ using Negocio.Contenido;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -68,9 +67,7 @@ namespace Vistas.Administrador.Curso
             }
         }
 
-        // =========================================================
-        // 1. MANEJO VISUAL (Paneles Dinámicos)
-        // =========================================================
+       
         protected void ddlTipoMaterial_SelectedIndexChanged(object sender, EventArgs e)
         {
             string tipo = ddlTipoMaterial.SelectedValue;
@@ -94,9 +91,7 @@ namespace Vistas.Administrador.Curso
             }
         }
 
-        // =========================================================
-        // 2. GUARDAR (ALTA / MODIFICACIÓN + ARCHIVOS)
-        // =========================================================
+       
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
             try
@@ -193,9 +188,7 @@ namespace Vistas.Administrador.Curso
             }
         }
 
-        // =========================================================
-        // 3. GRILLA: EDICIÓN, ORDEN Y ESTÉTICA
-        // =========================================================
+       
         protected void gvLecciones_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             LeccionNegocio lNeg = new LeccionNegocio();
@@ -284,9 +277,7 @@ namespace Vistas.Administrador.Curso
             }
         }
 
-        // =========================================================
-        // 4. ELIMINAR
-        // =========================================================
+       
         protected void btnConfirmarEliminar_Click(object sender, EventArgs e)
         {
             try
@@ -308,9 +299,9 @@ namespace Vistas.Administrador.Curso
             }
         }
 
-        // =========================================================
+        
         // AUXILIARES
-        // =========================================================
+       
         protected void btnCancelar_Click(object sender, EventArgs e)
         {
             LimpiarFormulario();

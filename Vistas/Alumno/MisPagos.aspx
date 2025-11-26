@@ -6,7 +6,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     
     <div class="d-flex flex-column gap-4">
-        <h2 class="fw-bold mb-2 text-body-emphasis">Mis Pagos</h2>
+       
 
         <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
             <div class="card-body p-0">

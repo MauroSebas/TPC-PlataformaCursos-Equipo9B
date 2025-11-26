@@ -33,7 +33,7 @@ namespace Negocio.Seguridad
                //elimino los tokens anteriores
                 datos.EliminarTokensAnteriores(usuarioID, tipoToken);
 
-                // Generamos el nuevo
+                // Genera el nuevo
                 string tokenString = Guid.NewGuid().ToString();
                 UsuarioToken token = new UsuarioToken
                 {

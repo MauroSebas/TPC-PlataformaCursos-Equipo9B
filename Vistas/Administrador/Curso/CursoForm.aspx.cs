@@ -70,15 +70,8 @@ namespace Vistas.Aministrador
 
               
                 ddlModalidadPago.Items.Clear();
-                Array valoresEnum = Enum.GetValues(typeof(ModalidadPagoEnum));
-
-                foreach (ModalidadPagoEnum modalidad in valoresEnum)
-                {
-                    ListItem item = new ListItem();
-                    item.Text = modalidad.GetDescription();
-                    item.Value = modalidad.GetDescription();
-                    ddlModalidadPago.Items.Add(item);
-                }
+                ddlModalidadPago.Items.Add(new ListItem("Gratuito", "Gratuito"));
+                ddlModalidadPago.Items.Add(new ListItem("Pago Único", "PagoUnico"));
             }
             catch (Exception ex)
             {

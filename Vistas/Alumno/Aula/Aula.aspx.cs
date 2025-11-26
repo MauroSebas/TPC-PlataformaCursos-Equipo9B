@@ -1,8 +1,8 @@
 ﻿using Dominio;
-using Dominio.Cursada; // Para la clase Entrega y Certificado
+using Dominio.Cursada; 
 using Negocio;
 using Negocio.Contenido;
-using Negocio.Cursada; // Para EntregaNegocio y ExamenNegocio
+using Negocio.Cursada; 
 using System;
 using System.Collections.Generic;
 using System.Web.UI;
@@ -11,10 +11,7 @@ using System.Web.UI.WebControls;
 namespace Vistas.Alumno.aula
 {
     public partial class Aula : System.Web.UI.Page
-    {
-        // ============================================================
-        // 1. PROPIEDADES DE ESTADO (Para no perder datos al recargar)
-        // ============================================================
+    {     
 
         public int IdCursoActual
         {
@@ -55,7 +52,7 @@ namespace Vistas.Alumno.aula
             set { ViewState["IdInscripcion"] = value; }
         }
 
-        // Lista en memoria para pintar rápido los check verdes del menú
+       
         public List<int> LeccionesCompletadas
         {
             get
@@ -69,22 +66,20 @@ namespace Vistas.Alumno.aula
             set { Session["LeccionesVistas"] = value; }
         }
 
-        // ============================================================
-        // 2. CARGA DE LA PÁGINA (Page_Load)
-        // ============================================================
+       
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                // A. Validar que esté logueado
+               
                 if (Session["Usuario"] == null)
                 {
                     Response.Redirect("~/Auth/Loguin.aspx");
                     return;
                 }
 
-                // B. Validar ID del curso en la URL
+               
                 string idCursoStr = Request.QueryString["id"];
                 int idCurso = 0;
 
@@ -94,28 +89,28 @@ namespace Vistas.Alumno.aula
                     return;
                 }
 
-                // C. Validar que el alumno tenga inscripción activa (que haya pagado)
+               
                 Usuario u = (Usuario)Session["Usuario"];
                 InscripcionNegocio insNeg = new InscripcionNegocio();
 
-                // Usamos var para simplificar, pero devuelve una Inscripcion
+                
                 var inscripcion = insNeg.ObtenerInscripcionActiva(u.UsuarioID, idCurso);
 
                 if (inscripcion == null)
                 {
-                    // Si no tiene inscripción válida, lo mandamos al detalle para que compre
+                   
                     Response.Redirect($"~/CursoDetalle.aspx?id={idCurso}");
                     return;
                 }
 
-                // D. Guardar datos clave en memoria
+                // Guardar datos clave en memoria
                 this.IdCursoActual = idCurso;
                 this.IdInscripcionActual = inscripcion.Id;
 
-                // E. Cargar el Progreso (Fundamental hacerlo antes de pintar el menú)
+                //  Cargar el Progreso 
                 CargarProgreso();
 
-                // F. Determinar qué lección mostrar (¿Vino una en la URL o buscamos la primera?)
+                // Determinar qué lección mostrar  
                 string idLeccionStr = Request.QueryString["leccion"];
                 int idLeccion = 0;
 
@@ -125,10 +120,10 @@ namespace Vistas.Alumno.aula
                 }
                 else
                 {
-                    // Buscamos la primera lección del curso
+                    // primera lección del curso
                     idLeccion = ObtenerPrimeraLeccion(idCurso);
 
-                    // Si encontramos una, redirigimos para que la URL quede limpia
+                    // redirigi para que la URL quede limpia
                     if (idLeccion > 0)
                     {
                         Response.Redirect($"Aula.aspx?id={idCurso}&leccion={idLeccion}");
@@ -138,24 +133,22 @@ namespace Vistas.Alumno.aula
 
                 this.IdLeccionActual = idLeccion;
 
-                // G. Pintar la pantalla
-                CargarInfoCurso(idCurso);     // Título del curso arriba
-                CargarMenuLateral(idCurso);   // Árbol de módulos
+                
+                CargarInfoCurso(idCurso);    
+                CargarMenuLateral(idCurso);  
 
-                // Si hay lección válida, cargamos su contenido (video/texto)
+               
                 if (idLeccion > 0)
                 {
                     CargarContenidoLeccion(idLeccion);
                 }
 
-                // H. Configurar el botón de Examen Final (Si corresponde)
+                
                 ConfigurarSidebarExamen();
             }
         }
 
-        // ============================================================
-        // 3. LÓGICA DE PROGRESO (Backend <-> DB)
-        // ============================================================
+       
 
         private void CargarProgreso()
         {
@@ -163,10 +156,10 @@ namespace Vistas.Alumno.aula
             {
                 ProgresoLeccionNegocio pNeg = new ProgresoLeccionNegocio();
 
-                // Traemos de la DB qué lecciones vio este alumno
+                
                 List<ProgresoLeccion> listaProgreso = pNeg.ListarProgreso(this.IdInscripcionActual);
 
-                // Filtramos solo los IDs para usarlos fácil después
+                
                 List<int> listaSoloIds = new List<int>();
                 foreach (var item in listaProgreso)
                 {
@@ -175,7 +168,7 @@ namespace Vistas.Alumno.aula
 
                 this.LeccionesCompletadas = listaSoloIds;
 
-                // Pintamos la barra de porcentaje
+               
                 ActualizarBarraProgreso();
             }
             catch { }
@@ -185,7 +178,7 @@ namespace Vistas.Alumno.aula
         {
             try
             {
-                // Calculamos el porcentaje en un método auxiliar limpio
+              
                 int porcentaje = CalcularPorcentajeInt();
 
                 litPorcentaje.Text = porcentaje + "%";
@@ -194,7 +187,7 @@ namespace Vistas.Alumno.aula
             catch { }
         }
 
-        // Método auxiliar que devuelve el número entero del porcentaje (0 a 100)
+        
         private int CalcularPorcentajeInt()
         {
             try
@@ -206,14 +199,14 @@ namespace Vistas.Alumno.aula
 
                 int totalLecciones = 0;
 
-                // Sumamos manual cuántas lecciones tiene el curso en total
+               
                 foreach (var m in modulos)
                 {
                     int cantidadEnModulo = lNeg.Listar(m.Id).Count;
                     totalLecciones += cantidadEnModulo;
                 }
 
-                // Evitamos división por cero
+               
                 if (totalLecciones == 0) return 0;
 
                 int completadas = this.LeccionesCompletadas.Count;
@@ -227,9 +220,9 @@ namespace Vistas.Alumno.aula
             }
         }
 
-        // ============================================================
-        // 4. LÓGICA DEL EXAMEN Y ENTREGA (NUEVO)
-        // ============================================================
+        
+        //  LÓGICA DEL EXAMEN Y ENTREGA 
+        
 
         private void ConfigurarSidebarExamen()
         {
@@ -238,54 +231,54 @@ namespace Vistas.Alumno.aula
                 ExamenNegocio exNeg = new ExamenNegocio();
                 Examen examen = exNeg.ObtenerPorCurso(this.IdCursoActual);
 
-                // Solo mostramos el panel si el curso tiene un examen activo
+               
                 if (examen != null && examen.EstaActivo)
                 {
                     pnlSidebarExamen.Visible = true;
 
-                    // Preparamos el link de la consigna por si entra
+                    // link de la consigna por si entra
                     lnkDescargarConsigna.NavigateUrl = examen.UrlConsigna;
 
-                    // Verificamos si completó el 100% de las clases
+                    //  100% de las clases
                     int porcentaje = CalcularPorcentajeInt();
 
                     if (porcentaje >= 100)
                     {
-                        // DESBLOQUEADO: Mostramos el link verde
+                        
                         btnIrExamen.Visible = true;
                         divExamenBloqueado.Visible = false;
                     }
                     else
                     {
-                        // BLOQUEADO: Mostramos el candado gris
+                       
                         btnIrExamen.Visible = false;
                         divExamenBloqueado.Visible = true;
                     }
                 }
                 else
                 {
-                    // Si no hay examen, ocultamos todo el bloque del sidebar
+                   
                     pnlSidebarExamen.Visible = false;
                 }
             }
             catch { }
         }
 
-        // Evento al hacer clic en "Examen Final" en el menú lateral
+       
         protected void btnIrExamen_Click(object sender, EventArgs e)
         {
-            // 1. Ocultamos todo lo que sea contenido de lecciones
+            
             divVideo.Visible = false;
             pnlRecursoExterno.Visible = false;
 
-            // Limpiamos títulos para que no confunda
+            
             lblTituloLeccion.Text = "";
             litDescripcion.Text = "";
 
-            // 2. Mostramos el panel principal del examen
+            
             pnlVistaExamen.Visible = true;
 
-            // 3. Cargamos el estado de la entrega (si ya entregó o no)
+           
             CargarEstadoEntrega();
         }
 
@@ -293,18 +286,18 @@ namespace Vistas.Alumno.aula
         {
             EntregaNegocio entNeg = new EntregaNegocio();
 
-            // Buscamos si el alumno ya hizo una entrega para esta inscripción
+           
             Entrega entrega = entNeg.ObtenerUltimaEntrega(this.IdInscripcionActual);
 
             if (entrega == null)
             {
-                // CASO A: Nunca entregó nada -> Mostrar Formulario de carga
+                // CNunca entregó nada -> Mostrar Formulario de carga
                 pnlFormularioEntrega.Visible = true;
                 pnlEstadoEntrega.Visible = false;
             }
             else
             {
-                // CASO B: Ya entregó -> Mostrar Estado
+                //  Ya entregó -> Mostrar Estado
                 pnlFormularioEntrega.Visible = false;
                 pnlEstadoEntrega.Visible = true;
 
@@ -336,7 +329,7 @@ namespace Vistas.Alumno.aula
                     litTituloEstado.Text = "Entrega Rechazada";
                     litMensajeEstado.Text = "Por favor, revisa las correcciones y vuelve a intentarlo.";
 
-                    // Habilitamos el botón para que pueda volver a ver el formulario
+                    // Habilitar el botón para que pueda volver a ver el formulario
                     btnReintentar.Visible = true;
 
                     if (!string.IsNullOrEmpty(entrega.DevolucionProfesor))
@@ -353,26 +346,26 @@ namespace Vistas.Alumno.aula
         {
             try
             {
-                // Validación simple
+               
                 if (string.IsNullOrWhiteSpace(txtLinkEntrega.Text))
                 {
                     return;
                 }
 
-                // Recuperamos el ID del examen
+                // Recuperarr el ID del examen
                 ExamenNegocio exNeg = new ExamenNegocio();
                 Examen ex = exNeg.ObtenerPorCurso(this.IdCursoActual);
 
-                // Guardamos la entrega
+               
                 EntregaNegocio entNeg = new EntregaNegocio();
                 entNeg.RegistrarEntrega(this.IdInscripcionActual, ex.Id, txtLinkEntrega.Text);
 
-                // Recargamos la pantalla para que vea el estado "Pendiente"
+                
                 CargarEstadoEntrega();
             }
             catch (Exception)
             {
-                // Manejar error si hace falta
+               
             }
         }
 
@@ -381,16 +374,16 @@ namespace Vistas.Alumno.aula
         {
             pnlEstadoEntrega.Visible = false;
             pnlFormularioEntrega.Visible = true;
-            txtLinkEntrega.Text = ""; // Limpiamos el campo
+            txtLinkEntrega.Text = ""; 
         }
 
-        // ============================================================
+       
         // 5. CARGA DE CONTENIDO (Lecciones de video/archivo)
-        // ============================================================
+       
 
         private void CargarContenidoLeccion(int idLeccion)
         {
-            // IMPORTANTE: Si estamos cargando una lección, OCULTAMOS el panel de examen
+            
             pnlVistaExamen.Visible = false;
 
             LeccionNegocio lNeg = new LeccionNegocio();
@@ -401,7 +394,7 @@ namespace Vistas.Alumno.aula
 
             Modulo modulo = mNeg.Obtener(leccion.IdModulo);
 
-            // Armar título (Ej: 1.2 - Introducción)
+           
             string numeracion = "";
             if (modulo != null)
             {
@@ -410,7 +403,7 @@ namespace Vistas.Alumno.aula
 
             lblTituloLeccion.Text = numeracion + " - " + leccion.Titulo;
 
-            // Descripción
+           
             if (string.IsNullOrEmpty(leccion.Descripcion))
             {
                 litDescripcion.Text = "Sin descripción.";
@@ -420,7 +413,7 @@ namespace Vistas.Alumno.aula
                 litDescripcion.Text = leccion.Descripcion;
             }
 
-            // --- MANEJO DE VIDEO O ARCHIVO (Logica if/else clara) ---
+            // --- MANEJO DE VIDEO O ARCHIVO  ---
 
             if (leccion.TipoMaterial == "Video")
             {
@@ -428,7 +421,7 @@ namespace Vistas.Alumno.aula
                 pnlRecursoExterno.Visible = false;
 
                 string url = leccion.UrlRecurso;
-                // Transformar URL de Youtube si es necesario para embeber
+                // Transformar URL de Youtube  para embeber
                 if (!string.IsNullOrEmpty(url) && url.Contains("watch?v="))
                 {
                     url = url.Replace("watch?v=", "embed/");
@@ -463,7 +456,7 @@ namespace Vistas.Alumno.aula
                 btnCompletada.CssClass = "btn btn-success text-white w-100 shadow-sm";
                 btnCompletada.CommandArgument = "Desmarcar";
 
-                // Si ya la vio, mostramos el botón "Siguiente"
+               
                 btnSiguiente.Visible = true;
             }
             else
@@ -472,7 +465,7 @@ namespace Vistas.Alumno.aula
                 btnCompletada.CssClass = "btn btn-outline-primary w-100 shadow-sm";
                 btnCompletada.CommandArgument = "Marcar";
 
-                // Si no la vio, ocultamos "Siguiente" para obligarlo a marcar visto
+               
                 btnSiguiente.Visible = false;
             }
 
@@ -491,13 +484,13 @@ namespace Vistas.Alumno.aula
                 {
                     pNeg.MarcarCompleta(this.IdInscripcionActual, this.IdLeccionActual);
 
-                    // Refrescamos el progreso en memoria y visualmente
+                   
                     CargarProgreso();
 
-                    // IMPORTANTE: Al marcar progreso, chequeamos si se desbloquea el examen
+                   
                     ConfigurarSidebarExamen();
 
-                    // Avanzamos automático a la siguiente lección
+                   
                     int siguiente = BuscarLeccionAdyacente(this.IdLeccionActual, true);
 
                     if (siguiente > 0)
@@ -506,7 +499,7 @@ namespace Vistas.Alumno.aula
                     }
                     else
                     {
-                        // Si era la última, recargamos la página actual
+                        
                         Response.Redirect(Request.Url.AbsoluteUri);
                     }
                 }
@@ -516,7 +509,7 @@ namespace Vistas.Alumno.aula
                     pNeg.EliminarProgreso(this.IdInscripcionActual, this.IdLeccionActual);
 
                     CargarProgreso();
-                    ConfigurarSidebarExamen(); // Puede que se vuelva a bloquear el examen
+                    ConfigurarSidebarExamen();
 
                     Response.Redirect(Request.Url.AbsoluteUri);
                 }
@@ -524,14 +517,14 @@ namespace Vistas.Alumno.aula
             catch { }
         }
 
-        // ============================================================
-        // 6. NAVEGACIÓN Y HELPERS
-        // ============================================================
+        
+        //NAVEGACIÓN Y HELPERS
+        
 
         private void ConfigurarNavegacion(int idLeccionActual)
         {
-            int idAnterior = BuscarLeccionAdyacente(idLeccionActual, false); // false = anterior
-            int idSiguiente = BuscarLeccionAdyacente(idLeccionActual, true);  // true = siguiente
+            int idAnterior = BuscarLeccionAdyacente(idLeccionActual, false);
+            int idSiguiente = BuscarLeccionAdyacente(idLeccionActual, true);  
 
             if (idAnterior > 0)
             {
@@ -585,13 +578,13 @@ namespace Vistas.Alumno.aula
             }
         }
 
-        // Método manual para encontrar lecciones adyacentes (SIN LINQ)
+        // Método manual para encontrar lecciones adyacentes
         private int BuscarLeccionAdyacente(int idActual, bool buscarSiguiente)
         {
             ModuloNegocio mNeg = new ModuloNegocio();
             LeccionNegocio lNeg = new LeccionNegocio();
 
-            // Aplanamos la lista de lecciones en orden
+            // Aplanar la lista de lecciones en orden
             List<Modulo> modulos = mNeg.Listar(this.IdCursoActual);
             List<Leccion> listaPlana = new List<Leccion>();
 

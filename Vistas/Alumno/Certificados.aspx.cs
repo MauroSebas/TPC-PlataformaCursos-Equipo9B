@@ -13,7 +13,7 @@ namespace Vistas.Alumno
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            // 1. Validar Sesión
+           
             if (Session["Usuario"] == null)
             {
                 Response.Redirect("~/Auth/Loguin.aspx");
@@ -33,7 +33,7 @@ namespace Vistas.Alumno
                 Usuario u = (Usuario)Session["Usuario"];
                 CertificadoNegocio negocio = new CertificadoNegocio();
 
-                // Llamamos al método que ya creamos en Negocio
+               
                 List<Certificado> lista = negocio.ListarMisCertificados(u.UsuarioID);
 
                 if (lista.Count > 0)
@@ -44,12 +44,12 @@ namespace Vistas.Alumno
                 }
                 else
                 {
-                    pnlVacio.Visible = true; // Mostrar cartel de vacío
+                    pnlVacio.Visible = true; 
                 }
             }
             catch (Exception)
             {
-                // Si falla la base de datos, mostramos vacío para no romper la UI
+                
                 pnlVacio.Visible = true;
             }
         }

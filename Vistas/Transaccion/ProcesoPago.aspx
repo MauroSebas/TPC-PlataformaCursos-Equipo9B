@@ -23,9 +23,9 @@
                                     
                                     <!-- INFO DEL CURSO -->
                                     <div class="d-flex align-items-center">
-                                        <img src='<%# ResolveUrl(Eval("UrlImagenPortada").ToString()) %>' 
+                                       <img src='<%# ObtenerImagen(Eval("UrlImagenPortada")) %>' 
                                              alt="Curso" class="me-3 rounded shadow-sm" width="80" height="50" style="object-fit: cover;" 
-                                             onerror="this.src='../../Assets/Images/placeholder.jpg';" />
+                                             onerror="this.src='<%# ResolveUrl("~/Assets/Images/placeholder.jpg") %>';" />
                                         
                                         <div>
                                             <h6 class="fw-bold text-body-emphasis mb-0"><%# Eval("Titulo") %></h6>

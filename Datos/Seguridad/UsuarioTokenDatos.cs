@@ -23,7 +23,7 @@ namespace Datos
                 datos.Comando.Parameters.AddWithValue("@Token", token.Token);
                 datos.Comando.Parameters.AddWithValue("@TipoToken", token.TipoToken);
                 datos.Comando.Parameters.AddWithValue("@FechaVencimiento", token.FechaVencimiento);
-                datos.Comando.Parameters.AddWithValue("@FechaCreacion", token.FechaCreacion); // <-- ¡NUEVA LÍNEA!
+                datos.Comando.Parameters.AddWithValue("@FechaCreacion", token.FechaCreacion); 
 
                 datos.ejecutarAccion();
             }
@@ -60,7 +60,7 @@ namespace Datos
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                // Agregamos la nueva columna
+                
                 datos.setearConsulta("SELECT TokenID, UsuarioID, Token, TipoToken, FechaVencimiento, FechaCreacion FROM UsuarioTokens WHERE Token = @Token");
                 datos.Comando.Parameters.Clear();
                 datos.Comando.Parameters.AddWithValue("@Token", token);
@@ -86,7 +86,7 @@ namespace Datos
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                // Ordena por fecha de creación DESC y toma el primero (TOP 1)
+                
                 datos.setearConsulta(@"
                     SELECT TOP 1 TokenID, UsuarioID, Token, TipoToken, FechaVencimiento, FechaCreacion 
                     FROM UsuarioTokens 

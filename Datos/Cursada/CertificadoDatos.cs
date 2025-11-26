@@ -1,12 +1,12 @@
-﻿using System;
+﻿using Dominio;
+using System;
 using System.Collections.Generic;
-using Dominio;
 
-namespace Datos
+namespace Datos.Cursada
 {
     public class CertificadoDatos
     {
-        // 1. GENERAR (Insertar)
+        
         public void Generar(Certificado nuevo)
         {
             AccesoDatos datos = new AccesoDatos();
@@ -19,11 +19,17 @@ namespace Datos
 
                 datos.ejecutarAccion();
             }
-            catch (Exception ex) { throw ex; }
-            finally { datos.cerrarConexion(); }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
         }
 
-        // 2. LISTAR POR USUARIO (Para "Mis Certificados")
+       
         public List<Certificado> ListarPorUsuario(int idUsuario)
         {
             List<Certificado> lista = new List<Certificado>();
@@ -41,7 +47,7 @@ namespace Datos
                     aux.FechaEmision = (DateTime)datos.Lector["FechaEmision"];
                     aux.UrlArchivo = (string)datos.Lector["UrlArchivoCertificado"];
 
-                    // Datos Auxiliares del Curso (vienen del JOIN en el SP)
+                   
                     aux.NombreCurso = (string)datos.Lector["NombreCurso"];
 
                     if (!(datos.Lector["UrlImagenCurso"] is DBNull))

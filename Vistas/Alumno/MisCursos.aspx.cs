@@ -37,8 +37,7 @@ namespace Vistas
                 // Traemos todas las inscripciones del usuario
                 List<Inscripcion> listaInscripciones = negocio.ListarPorUsuario(usuario.UsuarioID);
 
-                // Filtramos solo las que estén Aprobadas (por si el SP trae pendientes)
-                // Hacemos el filtro manual SIN LINQ
+                
                 List<Inscripcion> listaAprobada = new List<Inscripcion>();
 
                 foreach (Inscripcion i in listaInscripciones)
@@ -77,7 +76,7 @@ namespace Vistas
             return ResolveUrl(url);
         }
 
-        // Calcula el % real recorriendo lecciones (Igual que en el Aula)
+       
         public int ObtenerPorcentaje(object idCursoObj, object idInscripcionObj)
         {
             try
@@ -85,7 +84,7 @@ namespace Vistas
                 int idCurso = Convert.ToInt32(idCursoObj);
                 int idInscripcion = Convert.ToInt32(idInscripcionObj);
 
-                // 1. Contar Total de Lecciones (Manual sin LINQ)
+               
                 ModuloNegocio mNeg = new ModuloNegocio();
                 LeccionNegocio lNeg = new LeccionNegocio();
 
@@ -101,12 +100,12 @@ namespace Vistas
                 // Si no tiene lecciones, es 0%
                 if (totalLecciones == 0) return 0;
 
-                // 2. Contar Lecciones Vistas
+                //  Contar Lecciones Vistas
                 ProgresoLeccionNegocio pNeg = new ProgresoLeccionNegocio();
                 List<ProgresoLeccion> progreso = pNeg.ListarProgreso(idInscripcion);
                 int vistas = progreso.Count;
 
-                // 3. Calcular
+                // Calcular
                 return (vistas * 100) / totalLecciones;
             }
             catch

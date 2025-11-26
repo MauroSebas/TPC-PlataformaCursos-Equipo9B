@@ -50,7 +50,6 @@
     <Compile Include="Contenido\CursoObjetivo.cs" />
     <Compile Include="Dashboard\UsuarioReciente.cs" />
     <Compile Include="Cursada\Entrega.cs" />
-    <Compile Include="Enums\EnumExtensions.cs" />
     <Compile Include="Enums\EstadoCuentaEnum.cs" />
     <Compile Include="Enums\ModalidadPagoEnum.cs" />
     <Compile Include="Enums\RolEnum.cs" />

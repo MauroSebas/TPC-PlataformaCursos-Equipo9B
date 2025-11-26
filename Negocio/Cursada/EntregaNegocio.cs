@@ -1,5 +1,5 @@
 ﻿using Datos.Cursada;
-using Dominio.Cursada; // <--- IMPORTANTE
+using Dominio.Cursada; 
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,7 +54,7 @@ namespace Negocio.Cursada
 
         public List<Entrega> ListarEntregas(string estado)
         {
-            // "Todos" es la palabra clave del DropDown, la convertimos a null para la DB
+           
             if (estado == "Todos") return datos.ListarAdmin(null);
 
             return datos.ListarAdmin(estado);

@@ -50,6 +50,7 @@
     <Content Include="Administrador\GestionEntregas.aspx" />
     <Content Include="Administrador\PagosPanel.aspx" />
     <Content Include="Administrador\PerfilAdministrador.aspx" />
+    <Content Include="Alumno\Aula\CSS\StyleSheet1.css" />
     <Content Include="Alumno\Certificados.aspx" />
     <Content Include="Alumno\PerfilAlumno.aspx" />
     <Content Include="Assets\css\admin-style.css" />

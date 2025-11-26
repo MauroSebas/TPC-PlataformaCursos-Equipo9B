@@ -5,16 +5,16 @@ using Negocio.Cursada;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
+
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace Vistas.Administrador // Asegurate que coincida con tu namespace (Aministrador o Administrador)
+namespace Vistas.Administrador 
 {
     public partial class GestionEntregas : System.Web.UI.Page
     {
-        // Propiedades temporales
+       
         private int IdEntregaSeleccionada
         {
             get { return (int)(ViewState["IdEntrega"] ?? 0); }
@@ -107,7 +107,7 @@ namespace Vistas.Administrador // Asegurate que coincida con tu namespace (Amini
 
                 string urlCertificado = "";
 
-                // 1. SI APRUEBA -> VALIDAR Y GUARDAR ARCHIVO
+                // SI APRUEBA -> VALIDAR Y GUARDAR ARCHIVO
                 if (aprobado)
                 {
                     if (!fuCertificado.HasFile)
@@ -134,11 +134,11 @@ namespace Vistas.Administrador // Asegurate que coincida con tu namespace (Amini
                     urlCertificado = rutaVirtual;
                 }
 
-                // 2. GUARDAR CORRECCIÓN
+                // GUARDAR CORRECCIÓN
                 EntregaNegocio entNeg = new EntregaNegocio();
                 entNeg.CorregirEntrega(this.IdEntregaSeleccionada, aprobado, txtDevolucion.Text);
 
-                // 3. SI APROBÓ -> GENERAR CERTIFICADO
+                // SI APROBÓ -> GENERAR CERTIFICADO
                 if (aprobado)
                 {
                     CertificadoNegocio certNeg = new CertificadoNegocio();

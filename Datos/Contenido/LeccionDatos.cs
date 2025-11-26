@@ -1,7 +1,6 @@
 ﻿using Dominio;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -115,7 +114,7 @@ namespace Datos.Contenido
             finally { datos.cerrarConexion(); }
         }
 
-        // --- MÉTODOS PRIVADOS PARA NO REPETIR CÓDIGO ---
+        // --- MÉTODOS  PARA NO REPETIR CÓDIGO ---
 
         private Leccion MapearLeccion(AccesoDatos datos)
         {

@@ -1,7 +1,6 @@
 ﻿using Dominio;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,7 +8,6 @@ namespace Datos.Contenido
 {
     public class CursoObjetivoDatos
     {
-        // Traer lista
         public List<CursoObjetivo> Listar(int idCurso)
         {
             List<CursoObjetivo> lista = new List<CursoObjetivo>();

@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Dominio.Cursada; // <--- IMPORTANTE: Usamos la del Dominio
+using Dominio.Cursada; 
 
 namespace Datos.Cursada
 {
     public class EntregaDatos
     {
-        // 1. ALUMNO: REGISTRAR ENTREGA
         public void Registrar(Entrega entrega)
         {
             AccesoDatos datos = new AccesoDatos();
@@ -32,7 +30,6 @@ namespace Datos.Cursada
             }
         }
 
-        // 2. ALUMNO: OBTENER MI ENTREGA
         public Entrega ObtenerPorInscripcion(int idInscripcion)
         {
             AccesoDatos datos = new AccesoDatos();
@@ -71,7 +68,6 @@ namespace Datos.Cursada
             }
         }
 
-        // 3. ADMIN: LISTAR PENDIENTES
         public List<Entrega> ListarPendientes()
         {
             List<Entrega> lista = new List<Entrega>();
@@ -110,7 +106,7 @@ namespace Datos.Cursada
             }
         }
 
-        // 4. ADMIN: CORREGIR
+        
         public void Corregir(int idEntrega, string estado, string devolucion)
         {
             AccesoDatos datos = new AccesoDatos();
@@ -153,16 +149,16 @@ namespace Datos.Cursada
                 {
                     Entrega aux = new Entrega();
                     aux.Id = (int)datos.Lector["EntregaID"];
-                    aux.InscripcionId = (int)datos.Lector["InscripcionID"]; // Importante para el certificado
+                    aux.InscripcionId = (int)datos.Lector["InscripcionID"]; 
                     aux.FechaEntrega = (DateTime)datos.Lector["FechaEntrega"];
                     aux.UrlResolucion = (string)datos.Lector["UrlResolucion"];
                     aux.Estado = (string)datos.Lector["Estado"];
 
-                    // Devolución (para poder editarla)
+                    // Devolución mapeo para despúes poder editarlo.
                     if (!(datos.Lector["DevolucionProfesor"] is DBNull))
                         aux.DevolucionProfesor = (string)datos.Lector["DevolucionProfesor"];
 
-                    // Datos Auxiliares (Joins)
+                    
                     aux.EmailAlumno = (string)datos.Lector["AlumnoEmail"];
 
                     if (!(datos.Lector["AlumnoNombre"] is DBNull))

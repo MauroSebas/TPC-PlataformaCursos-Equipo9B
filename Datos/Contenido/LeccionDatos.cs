@@ -115,7 +115,7 @@ namespace Datos.Contenido
             finally { datos.cerrarConexion(); }
         }
 
-        // --- MÉTODOS PRIVADOS PARA NO REPETIR CÓDIGO ---
+        // --- MÉTODOS  PARA NO REPETIR CÓDIGO ---
 
         private Leccion MapearLeccion(AccesoDatos datos)
         {

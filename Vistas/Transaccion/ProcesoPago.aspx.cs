@@ -101,7 +101,10 @@ namespace Vistas
         }
 
         // --- EVENTOS MODALES ---
-        protected void btnIniciarPago_Click(object sender, EventArgs e) { pnlModalPago.Visible = true; }
+        protected void btnIniciarPago_Click(object sender, EventArgs e) {
+            pnlModalPago.Visible = true;
+        }
+
 
         protected void btnCerrarModales_Click(object sender, EventArgs e)
         {

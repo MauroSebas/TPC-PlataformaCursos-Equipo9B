@@ -177,20 +177,20 @@ namespace Datos
             aux.Inscripcion = new Inscripcion();
             aux.Inscripcion.Id = (int)datos.Lector["InscripcionID"];
 
-            // --- MAPEO INTELIGENTE DE COLUMNAS (Fix) ---
-
+            // --- MAPEO  DE COLUMNAS  ---
+            //Para que sirva para el SP de admin o del alumno.
             // Inicializamos objetos
             aux.Inscripcion.Curso = new Curso();
             aux.Inscripcion.Usuario = new Usuario();
 
-            // Intentamos leer "Titulo" (Nombre original en tabla) O "TituloCurso" (Alias en SP de Admin)
+            
             try { aux.Inscripcion.Curso.Titulo = (string)datos.Lector["Titulo"]; }
             catch
             {
                 try { aux.Inscripcion.Curso.Titulo = (string)datos.Lector["TituloCurso"]; } catch { }
             }
 
-            // Intentamos leer "Email" O "EmailAlumno"
+            
             try { aux.Inscripcion.Usuario.Email = (string)datos.Lector["Email"]; }
             catch
             {

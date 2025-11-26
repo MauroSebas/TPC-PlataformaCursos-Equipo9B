@@ -9,7 +9,7 @@ namespace Datos.Contenido
 {
     public class CursoObjetivoDatos
     {
-        // Traer lista
+        
         public List<CursoObjetivo> Listar(int idCurso)
         {
             List<CursoObjetivo> lista = new List<CursoObjetivo>();
@@ -41,7 +41,7 @@ namespace Datos.Contenido
             }
         }
 
-        // Agregar nuevo
+       
         public void Agregar(CursoObjetivo nuevo)
         {
             AccesoDatos datos = new AccesoDatos();
@@ -62,7 +62,7 @@ namespace Datos.Contenido
             }
         }
 
-        // Eliminar
+       
         public void Eliminar(int idObjetivo)
         {
             AccesoDatos datos = new AccesoDatos();

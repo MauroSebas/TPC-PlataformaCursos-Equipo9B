@@ -43,6 +43,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccesoDatos.cs" />
+    <Compile Include="Contenido\CategoriaDatos.cs" />
+    <Compile Include="Contenido\CursoObjetivoDatos.cs" />
+    <Compile Include="Contenido\CursoDatos.cs" />
+    <Compile Include="Cursada\ExamenDatos.cs" />
+    <Compile Include="Cursada\CertificadoDatos.cs" />
+    <Compile Include="Contenido\LeccionDatos.cs" />
+    <Compile Include="Contenido\ModuloDatos.cs" />
+    <Compile Include="Comercial\InscripcionDatos.cs" />
+    <Compile Include="Comercial\PagoDatos.cs" />
+    <Compile Include="Cursada\EntregaDatos.cs" />
+    <Compile Include="Cursada\ProgresoLeccionDatos.cs" />
     <Compile Include="Seguridad\EstadoCuentaDatos.cs" />
     <Compile Include="Seguridad\PerfilDatos.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -56,5 +67,6 @@
       <Name>Dominio</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

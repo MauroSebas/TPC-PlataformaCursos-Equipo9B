@@ -9,106 +9,158 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-   <link href="<%= ResolveUrl("~/Assets/css/styles.css") %>" rel="stylesheet" />
+    <link href="<%= ResolveUrl("~/Assets/css/styles.css") %>" rel="stylesheet" />
 
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
     <form id="form1" runat="server">
         <asp:ScriptManager ID="ScriptManager1" runat="server" />
         <header>
-            <nav class="navbar navbar-expand-lg bg-white border-bottom shadow-sm" id="main-navbar">
+            <nav class="navbar navbar-expand-lg bg-white border-bottom shadow-sm fixed-top" id="main-navbar">
                 <div class="container">
 
-                    <a class="navbar-brand d-flex align-items-center" href="~/Home.aspx" runat="server">
-                        <asp:Image runat="server" ID="imgLogo" Height="30" CssClass="me-2" />
-                        <asp:Literal runat="server" ID="litNombrePlataforma" Text="Plataforma LMS" />
+                    <!-- Logo  -->
+                    <a class="navbar-brand d-flex align-items-center fw-bold" href='<%= ResolveUrl("~/Home.aspx") %>'>
+                        <i class="bi bi-mortarboard-fill text-primary fs-3 me-2"></i>
+                        <span>DevCore</span>
                     </a>
 
                     <button class="navbar-toggler" type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#navbarMenu"
-                        aria-controls="navbarMenu"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation">
+                        data-bs-toggle="collapse" data-bs-target="#navbarMenu">
                         <span class="navbar-toggler-icon"></span>
                     </button>
 
                     <div class="collapse navbar-collapse" id="navbarMenu">
 
-                        <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                <asp:HyperLink NavigateUrl="~/Home.aspx" Text="Cursos" CssClass="nav-link" runat="server" />
-                            </li>
-                            <li class="nav-item">
-                                <asp:HyperLink NavigateUrl="~/MisCursos.aspx" Text="Mis Cursos" CssClass="nav-link" runat="server" />
-                            </li>
-                            <li class="nav-item">
-                                <asp:HyperLink NavigateUrl="~/Contacto.aspx" Text="Contacto" CssClass="nav-link" runat="server" />
-                            </li>
-                        </ul>
 
-                        <div class="d-flex align-items-center">
 
-                            <a href="#" class="nav-link fs-5 me-3">
-                                <i class="bi bi-cart"></i>
+                        <div class="d-flex align-items-center ms-auto">
+
+
+                            <asp:PlaceHolder ID="phCart" runat="server">
+                                <a href='<%= ResolveUrl("~/Transaccion/ProcesoPago.aspx") %>' class="nav-link fs-5 me-3 text-secondary hover-primary position-relative">
+                                    <i class="bi bi-cart"></i>
+
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                                        style="font-size: 0.6rem;">
+                                        <asp:Literal ID="litCantCarrito" runat="server" Text="0"></asp:Literal>
+                                    </span>
+                                </a>
+                            </asp:PlaceHolder>
+
+
+                            <a href="#" class="nav-link fs-5 me-3 text-secondary" id="theme-toggler">
+                                <i class="bi bi-sun" id="theme-icon"></i>
                             </a>
 
-                            <a href="#" class="nav-link fs-5 me-3" id="theme-toggler">
-                                <i class="bi bi-sun" id="theme-icon"></i> 
-                            </a>
 
-                            <asp:HyperLink NavigateUrl="Auth/Loguin.aspx" Text="Iniciar Sesión"
-                                CssClass="btn btn-light me-2" runat="server" />
-                            <asp:HyperLink NavigateUrl="Auth/Registro.aspx" Text="Registrarse"
-                                CssClass="btn btn-primary" runat="server" />
+                            <asp:PlaceHolder ID="phBotonAdmin" runat="server" Visible="false">
+                                <a href='<%= ResolveUrl("~/Administrador/AdminPanel.aspx") %>' class="btn btn-sm btn-dark me-3 fw-bold shadow-sm">
+                                    <i class="bi bi-speedometer2 me-1"></i>Panel Admin
+                                </a>
+                            </asp:PlaceHolder>
+
+
+                            <asp:PlaceHolder ID="phBotonAlumno" runat="server" Visible="false">
+                                <a href='<%= ResolveUrl("~/Alumno/MisCursos.aspx") %>' class="btn btn-sm btn-success me-3 fw-bold shadow-sm">
+                                    <i class="bi bi-laptop me-1"></i>Ir a mi Aula
+                                </a>
+                            </asp:PlaceHolder>
+
+
+                            <asp:PlaceHolder ID="phAnonimo" runat="server">
+                                <a href='<%= ResolveUrl("~/Auth/Loguin.aspx") %>' class="btn btn-outline-primary me-2">Ingresar</a>
+                                <a href='<%= ResolveUrl("~/Auth/Registro.aspx") %>' class="btn btn-primary">Registrarse</a>
+                            </asp:PlaceHolder>
+
+                            <!-- CASO LOGUEADO -->
+                            <asp:PlaceHolder ID="phLogueado" runat="server" Visible="false">
+                                <div class="dropdown">
+                                    <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" data-bs-toggle="dropdown">
+                                        <asp:Image ID="imgAvatar" runat="server" CssClass="rounded-circle me-2 border" Width="32" Height="32" />
+
+                                        <span class="fw-medium  d-none d-lg-inline">
+                                            <asp:Literal ID="litNombreUser" runat="server" />
+                                        </span>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 mt-2">
+
+
+                                        <li><a class="dropdown-item" href='<%= ResolveUrl("~/Administrador/PerfilAdministrador.aspx") %>'><i class="bi bi-person me-2"></i>Mi Perfil</a></li>
+                                        <li>
+                                            <hr class="dropdown-divider" />
+                                        </li>
+                                        <li>
+                                            <asp:LinkButton ID="btnSalir" runat="server" CssClass="dropdown-item text-danger" OnClick="btnSalir_Click">
+                                                <i class="bi bi-box-arrow-right me-2"></i>Cerrar Sesión
+                                            </asp:LinkButton>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </asp:PlaceHolder>
+
                         </div>
-                    </div>     
+                    </div>
                 </div>
             </nav>
         </header>
 
-        <main class="container mt-4">
+        <div style="height: 70px;"></div>
+
+        <main class="py-4 flex-grow-1">
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
             </asp:ContentPlaceHolder>
         </main>
 
-        <footer class="container mt-5 py-4 border-top">
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <h5>
-                        <asp:Literal runat="server" ID="litNombrePlataformaFooter" Text="Plataforma LMS" /></h5>
-                    <p class="text-muted">
-                        <asp:Literal runat="server" ID="litSloganFooter" Text="Tu slogan aquí" />
-                    </p>
-                    <p class="text-muted">&copy; <%= DateTime.Now.Year %></p>
+        <footer class="text-center text-lg-start mt-5 border-top">
+            <div class="container p-4">
+                <div class="row align-items-start">
+
+                    <!-- Columna izquierda -->
+                    <div class="col-lg-4 col-md-6 mb-4 mb-md-0 text-lg-start text-center">
+                        <h5 class="text-uppercase fw-bold text-primary">DevCore Academy</h5>
+                        <p class="text-muted small mb-0">
+                            Plataforma de formación en tecnología para impulsar tu carrera.  
+                    Aprendé hoy, crecé mañana.
+                        </p>
+                    </div>
+
+                    <!-- Columna centro -->
+                    <div class="col-lg-4 col-md-6 mb-4 mb-md-0 text-center">
+                        <h5 class="text-uppercase h6 fw-bold">Soporte</h5>
+                        <ul class="list-unstyled small mb-0">
+                            <li>
+                                <a href="mailto:soporte@devcore.com" class="text-secondary text-decoration-none">
+                                    <i class="bi bi-envelope"></i>soporte@devcore.com
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Columna derecha -->
+                    <div class="col-lg-4 col-md-12 mb-4 mb-md-0 text-lg-end text-center">
+                        <h5 class="text-uppercase h6 fw-bold">Conectá con nosotros</h5>
+                        <div class="d-flex gap-3 fs-5  justify-content-center">
+                            <a href="#" class="text-secondary"><i class="bi bi-instagram"></i></a>
+                            <a href="#" class="text-secondary"><i class="bi bi-facebook"></i></a>
+                        </div>
+                    </div>
+
                 </div>
-                <div class="col-md-6 mb-3">
-                    <h5>Contacto y Redes</h5>
-                    <ul class="list-unstyled text-small">
-                        <li>Email:
-                            <asp:Literal runat="server" ID="litEmailContacto" Text="contacto@lms.com" /></li>
-                        <li>Tel:
-                            <asp:Literal runat="server" ID="litTelefonoContacto" Text="+54 9 11 123456" /></li>
-                        <li>
-                            <asp:HyperLink runat="server" ID="linkFacebook" NavigateUrl="#" Target="_blank">
-                                <i class="bi bi-facebook fs-4 me-2"></i>
-                            </asp:HyperLink>
-                            <asp:HyperLink runat="server" ID="linkInstagram" NavigateUrl="#" Target="_blank">
-                                <i class="bi bi-instagram fs-4"></i>
-                            </asp:HyperLink>
-                        </li>
-                    </ul>
-                </div>
+            </div>
+
+            <div class="text-center py-3 border-top small text-muted">
+                © <%= DateTime.Now.Year %> DevCore Academy - Todos los derechos reservados.
             </div>
         </footer>
 
     </form>
-    
-   
-    
+
+
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="<%= ResolveUrl("~/Assets/js/main.js") %>"></script>
 </body>

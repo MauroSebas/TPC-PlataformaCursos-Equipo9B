@@ -12,7 +12,7 @@ namespace Vistas.Auth
         private readonly UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
         private readonly UsuarioTokenNegocio tokenNegocio = new UsuarioTokenNegocio();
 
-        // Propiedad para guardar el ID del usuario VÁLIDO (es el ID obtenido del token)
+       
         public int UsuarioIDToken
         {
             get { return (int)(ViewState["UsuarioIDToken"] ?? 0); }

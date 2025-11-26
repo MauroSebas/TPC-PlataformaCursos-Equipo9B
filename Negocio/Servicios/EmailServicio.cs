@@ -22,7 +22,7 @@ namespace Negocio.Servicios
         {
             try
             {
-                // Lee la configuración del Web.config
+               
                 servidorSMTP = ConfigurationManager.AppSettings["Email_SMTP_Server"];
                 puertoSMTP = int.Parse(ConfigurationManager.AppSettings["Email_SMTP_Port"]);
                 usuarioSMTP = ConfigurationManager.AppSettings["Email_User"];
@@ -35,8 +35,7 @@ namespace Negocio.Servicios
                 }
             }
             catch (Exception ex)
-            {
-                // Si la excepción es solo por el formato del puerto, es un error de config.
+            {               
                 throw new Exception("Error fatal al configurar EmailServicio. Revisa el Web.config.", ex);
             }
         }

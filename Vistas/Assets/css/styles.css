@@ -63,7 +63,7 @@ body {
         filter: brightness(85%);
     }
 
-    /* Tarjetas en modo oscuro (pisamos el default de BS) */
+    /* Tarjetas en modo oscuro  */
     .card {
         background-color: var(--bs-dark-bg-subtle);
         box-shadow: 0 4px 6px -1px rgba(255, 255, 255, 0.05), 0 2px 4px -2px rgba(255, 255, 255, 0.05);

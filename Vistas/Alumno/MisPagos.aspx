@@ -1,107 +1,126 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Alumno.Master" AutoEventWireup="true" CodeBehind="MisPagos.aspx.cs" Inherits="Vistas.MisPagos" %>
+﻿<%@ Page Title="Mis Pagos" Language="C#" MasterPageFile="~/Alumno/Alumno.Master" AutoEventWireup="true" CodeBehind="MisPagos.aspx.cs" Inherits="Vistas.MisPagos" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
+
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-  <div class="d-flex flex-column gap-4">
-        
+    
+    <div class="d-flex flex-column gap-4">
        
 
-        <div class="card shadow-sm border-0">
-            
-            <div class="card-body p-0 table-responsive">
-                
-                <table class="table table-hover mb-0">
-                    
-                    <thead class="bg-light border-bottom">
-                        <tr>
-                            <th scope="col" class="text-muted fw-semibold small text-uppercase py-3" style="width: 40%;">Nombre del Curso</th>
-                            <th scope="col" class="text-muted fw-semibold small text-uppercase py-3" style="width: 20%;">Fecha de Compra</th>
-                            <th scope="col" class="text-muted fw-semibold small text-uppercase py-3" style="width: 20%;">Método de Pago</th>
-                            <th scope="col" class="text-muted fw-semibold small text-uppercase py-3 text-end" style="width: 10%;">Monto Total</th>
-                            <th scope="col" class="text-muted fw-semibold small text-uppercase py-3 text-end" style="width: 10%;">Acción</th>
-                        </tr>
-                    </thead>
-                    
-                    <tbody>
+        <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="border-bottom">
+                            <tr>
+                                <th scope="col" class="py-3 ps-4 text-body-secondary small text-uppercase">Curso</th>
+                                <th scope="col" class="py-3 text-body-secondary small text-uppercase">Fecha</th>
+                                <th scope="col" class="py-3 text-body-secondary small text-uppercase">Método</th>
+                                <th scope="col" class="py-3 text-end text-body-secondary small text-uppercase">Monto</th>
+                                <th scope="col" class="py-3 text-center text-body-secondary small text-uppercase">Estado</th>
+                                <th scope="col" class="py-3 text-end pe-4 text-body-secondary small text-uppercase">Acciones</th>
+                            </tr>
+                        </thead>
                         
-                        <tr class="align-middle">
-                            <td class="text-body-emphasis fw-medium small">Introducción a UI/UX</td>
-                            <td class="text-muted small">15 de Ago, 2023</td>
-                            <td class="text-muted small">Tarjeta (**** 1234)</td>
-                            <td class="text-muted small text-end fw-medium">$49.99</td>
-                            <td class="text-end">
-                                <asp:LinkButton ID="btnFactura1" runat="server" CssClass="btn btn-sm btn-outline-secondary">
-                                    <i class="bi bi-download me-1"></i> Factura
-                                </asp:LinkButton>
-                            </td>
-                        </tr>
+                        <tbody>
+                            <asp:Repeater ID="repPagos" runat="server" OnItemCommand="repPagos_ItemCommand">
+                                <ItemTemplate>
+                                    <tr>
+                                        <td class="ps-4 fw-bold text-primary">
+                                            <%# Eval("Inscripcion.Curso.Titulo") %>
+                                        </td>
+                                        <td class="text-body-secondary small">
+                                            <%# Eval("FechaPago", "{0:dd/MM/yyyy}") %>
+                                        </td>
+                                        <td class="text-body-secondary small">
+                                            <%# Eval("MetodoPago") %>
+                                        </td>
+                                        <td class="text-end fw-bold text-body-emphasis">
+                                            <%# Eval("Monto", "{0:C}") %>
+                                        </td>
+                                        <td class="text-center">
+                                            <span class='<%# ObtenerBadgeEstado(Eval("Estado").ToString()) %>'>
+                                                <%# Eval("Estado") %>
+                                            </span>
+                                        </td>
+                                        <td class="text-end pe-4">
+                                            
+                                            <asp:PlaceHolder ID="phVerComprobante" runat="server" Visible='<%# !string.IsNullOrEmpty(Convert.ToString(Eval("UrlComprobante"))) %>'>
+                                                <a href='<%# ResolveUrl(Convert.ToString(Eval("UrlComprobante"))) %>' target="_blank" 
+                                                   class="btn btn-sm btn-outline-secondary border-opacity-25" title="Ver Comprobante">
+                                                    <i class="bi bi-eye"></i>
+                                                </a>
+                                            </asp:PlaceHolder>
 
-                        <tr class="align-middle">
-                            <td class="text-body-emphasis fw-medium small">Marketing Digital Avanzado</td>
-                            <td class="text-muted small">02 de Jul, 2023</td>
-                            <td class="text-muted small">PayPal</td>
-                            <td class="text-muted small text-end fw-medium">$99.99</td>
-                            <td class="text-end">
-                                <asp:LinkButton ID="btnFactura2" runat="server" CssClass="btn btn-sm btn-outline-secondary">
-                                    <i class="bi bi-download me-1"></i> Factura
-                                </asp:LinkButton>
-                            </td>
-                        </tr>
+                                            <asp:LinkButton ID="btnReintentar" runat="server" 
+                                                CommandName="Reintentar" 
+                                                CommandArgument='<%# Eval("Inscripcion.Id") + "|" + Eval("Observaciones") %>'
+                                                CssClass="btn btn-sm btn-outline-danger ms-1" 
+                                                Visible='<%# Eval("Estado").ToString() == "Rechazado" %>'
+                                                ToolTip="Corregir Comprobante">
+                                                <i class="bi bi-arrow-repeat"></i>
+                                            </asp:LinkButton>
 
-                        <tr class="align-middle">
-                            <td class="text-body-emphasis fw-medium small">Fundamentos de Programación con Python</td>
-                            <td class="text-muted small">18 de Jun, 2023</td>
-                            <td class="text-muted small">Tarjeta (**** 5678)</td>
-                            <td class="text-muted small text-end fw-medium">$75.00</td>
-                            <td class="text-end">
-                                <asp:LinkButton ID="btnFactura3" runat="server" CssClass="btn btn-sm btn-outline-secondary">
-                                    <i class="bi bi-download me-1"></i> Factura
-                                </asp:LinkButton>
-                            </td>
-                        </tr>
-                        
-                    </tbody>
-                </table>
-                
-                <%--
-                <div class="d-flex flex-column align-items-center justify-content-center text-center border-2 border-dashed border-secondary-subtle rounded-lg py-5 px-4 bg-light">
-                    <div class="d-flex align-items-center justify-content-center bg-secondary-subtle text-primary rounded-circle mb-3" style="width: 50px; height: 50px;">
-                        <i class="bi bi-receipt-long fs-4"></i>
-                    </div>
-                    <h5 class="text-body-emphasis fw-bold">Aún no has realizado ninguna compra</h5>
-                    <p class="text-muted small mb-3">Los cursos que compres aparecerán aquí. ¡Explora nuestro catálogo para empezar a aprender!</p>
-                    <asp:HyperLink ID="lnkVerCursos" runat="server" NavigateUrl="~/Home.aspx" CssClass="btn btn-primary fw-bold">
-                        Ver Cursos
-                        <i class="bi bi-arrow-right ms-2"></i>
-                    </asp:HyperLink>
+                                        </td>
+                                    </tr>
+                                </ItemTemplate>
+                            </asp:Repeater>
+                        </tbody>
+                    </table>
+                    
+                    <asp:Panel ID="pnlSinPagos" runat="server" Visible="false" CssClass="text-center py-5">
+                        <div class="py-4">
+                            <i class="bi bi-wallet2 fs-1 text-body-tertiary"></i>
+                            <p class="mt-3 text-body-secondary">No tenés pagos registrados.</p>
+                        </div>
+                    </asp:Panel>
                 </div>
-                --%>
-
             </div>
-            
         </div>
-        
-        <div class="d-flex justify-content-center p-3">
-            <nav aria-label="Paginación de Pagos">
-                <ul class="pagination mb-0">
-                    <li class="page-item disabled">
-                        <a class="page-link" href="#" aria-label="Anterior">
-                            <i class="bi bi-chevron-left"></i>
-                        </a>
-                    </li>
-                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item disabled"><span class="page-link">...</span></li>
-                    <li class="page-item"><a class="page-link" href="#">10</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Siguiente">
-                            <i class="bi bi-chevron-right"></i>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-
     </div>
+
+    <asp:Panel ID="pnlModalReintento" runat="server" Visible="false">
+        
+        <asp:HiddenField ID="hfIdInscripcionReintento" runat="server" />
+
+        <div class="modal-backdrop fade show"></div>
+        <div class="modal fade show d-block" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content rounded-4 shadow-lg border-0">
+                    
+                    <div class="modal-header bg-danger ">
+                        <h5 class="modal-title fw-bold">Corregir Pago Rechazado</h5>
+                        <asp:LinkButton ID="btnCerrarX" runat="server" CssClass="btn-close btn-close-white" OnClick="btnCerrarModal_Click"></asp:LinkButton>
+                    </div>
+
+                    <div class="modal-body p-4">
+                        
+                        <div class="alert alert-warning d-flex align-items-start gap-2 mb-4" role="alert">
+                            <i class="bi bi-exclamation-triangle-fill mt-1"></i>
+                            <div>
+                                <strong>Motivo del rechazo:</strong><br/>
+                                <asp:Label ID="lblObservacionAdmin" runat="server" Text="..."></asp:Label>
+                            </div>
+                        </div>
+
+                        <h6 class="fw-bold mb-3">Subir nuevo comprobante</h6>
+                        <div class="file-drop-zone p-3 border rounded  text-center">
+                            <asp:FileUpload ID="fuNuevoComprobante" runat="server" CssClass="form-control" />
+                            <span class="small text-muted d-block mt-2">Subí una imagen clara o PDF.</span>
+                        </div>
+                        <asp:Label ID="lblErrorModal" runat="server" CssClass="text-danger small mt-2 d-block fw-bold"></asp:Label>
+
+                    </div>
+
+                    <div class="modal-footer border-0">
+                        <asp:Button ID="btnCancelar" runat="server" Text="Cancelar" CssClass="btn " OnClick="btnCerrarModal_Click" />
+                        <asp:Button ID="btnGuardarReintento" runat="server" Text="Enviar Corrección" CssClass="btn btn-primary fw-bold" OnClick="btnGuardarReintento_Click" />
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </asp:Panel>
+
 </asp:Content>

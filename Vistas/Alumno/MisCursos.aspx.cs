@@ -71,7 +71,7 @@ namespace Vistas
         {
             string url = urlObj as string;
             if (string.IsNullOrEmpty(url))
-                return ResolveUrl("~/Assets/img/placeholder-curso.jpg");
+                return ResolveUrl("~/Assets/Cursos/placeholder-curso.jpg");
 
             return ResolveUrl(url);
         }
